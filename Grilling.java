@@ -14,12 +14,14 @@ public class Grilling extends ui{
     }
 
 	public static void main(String[] args) {
-        int locale = 1, revert;
+        int locale = 0, revert;
         Boolean loop = true;
         while(true){  
+            header();
             Scanner command = new Scanner(System.in);
             switch (locale){
                 case 0:
+                    main_Menu();
                     break;
                 case 1:
                     break;
@@ -38,12 +40,11 @@ public class Grilling extends ui{
                     break;
                 
             }
-            clear(); // Clear the console
             System.err.print("\tEnter choice: -->\t");
             int Terminate = command.nextInt();
             revert = Terminate;
 
-            
+            clear(); // Clear the console
         }
 	}
 }
