@@ -1,0 +1,168 @@
+﻿========== Hospital Billing ==========
+------------ Main Menu ------------
+1.Consultation Services
+2.Laboratory Services
+3.Room and Admission Services
+4.Transaction Records
+5.Exit
+Enter your choice: -->
+
+
+------------ Consultation Services ------------
+1.Register New Consultation
+2.Edit Consultation Fees
+3.View Consultation Records
+4.Back to Main Menu
+Enter your choice: -->
+
+
+------------ Register New Consultation ------------
+Enter Patient Name: __________
+Enter Patient Age: __________
+Enter Consultation Date: __/__/____
+1.OPD Consultation
+2.ER Consultation
+3.Back to Consultation Services Menu
+Enter Consultation Type: -->
+
+
+--------- Edit Consultation Fee ----------
+1.Consultation OPD
+2.Consultation ER
+3.Exit
+Enter your choice: -->
+=====================================================================================
+------------ Laboratory Services ------------
+1.Register New Laboratory Test
+2.Edit Laboratory Pricing
+3.View Laboratory Records
+4.Back to Main Menu
+Enter your choice: -->
+
+
+------------ Register New Laboratory Test ------------
+Enter Patient Name: __________
+Enter Patient Age: __________
+Select Laboratory Category:
+1.Blood Chemistry
+2.Hematology
+3.Clinical Microscopy
+4.Bacteriology
+5.Blood Bank and Serology
+6.Back to Laboratory Services Menu
+Enter your choice: -->
+
+
+--------- Blood Chemistry ----------
+1.Bua 
+2.Bun
+3.Cholesterol
+4.Creatinine
+5.FBS:RBS
+6.Triglycerides
+7.AST/ GOT
+8.ALT/ GPT
+9.HDL/ LDL
+11.Back
+Enter your choice: -->
+
+
+--------- Hematology ----------
+1.CBC
+2.CT/BT
+3.Hgb/Hct
+4.Peripheral Smear Staining
+5.Peripheral Smear Reading
+6.Platelet Count
+7.Back
+Enter your choice: -->
+
+
+--------- Clinical Microscopy ----------
+1.Fecalysis
+2.Occult Blood Test
+3.Pregnancy Test
+4.Urinalysis
+5.Back
+Enter your choice: -->
+
+
+--------- Bacteriology ----------
+1.Sputum Exam/ AFB
+2.Slit Skin Smear
+3.Gram Stain
+4.KOH Mount
+5.RF/Igm
+6.Typhidot
+7.Back
+Enter your choice: -->
+
+
+--------- Blood Bank and Serology ----------
+1.Blood Typing
+2.HbSAg
+3.HCV
+4.HAV
+5.Bleeding Fee
+6.Back
+Enter your choice: -->
+==========================================================================================
+
+
+------------ Room and Admission Services ------------
+1.Register New Admission
+2.Edit Room Information
+3.View Room Records
+4.Back to Main Menu
+Enter your choice: -->
+
+
+------------ Register New Admission ------------
+Enter Patient Name: __________
+Enter Patient Age: __________
+Select Room Type:
+1.Service Ward
+2.Semi-Private Room
+3.Private Room
+4.Back to Room and Admission Menu
+Enter your choice: -->
+
+
+--------- Edit Rooms ----------
+1.Service Ward Info
+2.Semi-Private Room Info
+3.Private Room Info
+4.Exit
+
+
+==========================================================================================
+------------ Transaction Records ------------
+1. Consultation Records
+2. Laboratory Records
+3. Room Admission Records
+4. Back to Main Menu
+Enter your choice: -->
+
+
+--------- Consultation Record ----------
+1.Consultation History
+2.Exit
+Enter your choice: -->
+
+
+--------- Laboratory Record ----------
+1.Blood Chemistry
+2.Hematology
+3.Clinical Microscopy
+4.Bacteriology
+5.Blood Bank and Serology
+6.Exit
+Enter your choice: -->
+
+
+--------- Room Record ----------
+1.SERVICE WARD History
+2.SEMI-PRIVATE ROOM History
+3.PRIVATE ROOM History
+4.Exit
+==========================================================================================
