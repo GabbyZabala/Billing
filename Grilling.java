@@ -1,4 +1,4 @@
-public class Index{
+public class Grilling{
 
     public static void clear() {
         if (System.getProperty("os.name").contains("Windows")) {
