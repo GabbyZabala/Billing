@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class Index extends ui{
 
     public static void clear() {
@@ -17,7 +19,6 @@ public class Index extends ui{
         while(true){
             switch (locale){
                 case 0:
-    
                     break;
                 case 1:
                     break;
@@ -28,13 +29,18 @@ public class Index extends ui{
                 case 4:
                     break;
                 case 5:
+                    clear();
+                    System.out.print("Your Exiting the program..");
+                    Sleep(100);
+                    loop = false;
                     break;
                 default:
-    
+                    locale = 5;
                     break;
                 
             }
             clear(); // Clear the console
         }
+        System.out.print("Program ended");
 	}
 }
