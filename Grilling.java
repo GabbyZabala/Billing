@@ -14,9 +14,10 @@ public class Grilling extends ui{
     }
 
 	public static void main(String[] args) {
-        int locale = 1;
+        int locale = 1, revert;
         Boolean loop = true;
-        while(true){
+        while(true){  
+            Scanner command = new Scanner(System.in);
             switch (locale){
                 case 0:
                     break;
@@ -31,16 +32,18 @@ public class Grilling extends ui{
                 case 5:
                     clear();
                     System.out.print("Your Exiting the program..");
-                    Sleep(100);
                     loop = false;
                     break;
                 default:
-                    locale = 5;
                     break;
                 
             }
             clear(); // Clear the console
+            System.err.print("\tEnter choice: -->\t");
+            int Terminate = command.nextInt();
+            revert = Terminate;
+
+            
         }
-        System.out.print("Program ended");
 	}
 }
