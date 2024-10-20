@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class Grilling extends ui{
-
+    Boolean loop = true;
     public static void clear() {
         if (System.getProperty("os.name").contains("Windows")) {
             // For Windows
@@ -13,36 +13,43 @@ public class Grilling extends ui{
         }
     }
 
+    public static void Display_Screen(int screen) {
+        switch (screen){
+            case 0:
+                main_Menu();
+                break;
+            case 1:
+
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            
+            default:
+                break;
+            
+        }
+    }
 	public static void main(String[] args) {
         int locale = 0, revert;
-        Boolean loop = true;
         while(true){  
+            revert = locale;
             header();
-            Scanner command = new Scanner(System.in);
-            switch (locale){
-                case 0:
-                    main_Menu();
-                    break;
-                case 1:
-                    break;
-                case 2:
-                    break;
-                case 3:
-                    break;
-                case 4:
-                    break;
-                case 5:
-                    clear();
-                    System.out.print("Your Exiting the program..");
-                    loop = false;
-                    break;
-                default:
-                    break;
-                
-            }
+            Scanner command= new Scanner(System.in);
+            Display_Screen(locale);
             System.err.print("\tEnter choice: -->\t");
             int Terminate = command.nextInt();
-            revert = Terminate;
+            switch (revert) {
+                case 0:
+                    
+                    break;
+                default:
+                    throw new AssertionError();
+            }
+            locale = Terminate;
 
             clear(); // Clear the console
         }
