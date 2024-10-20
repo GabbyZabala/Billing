@@ -1,4 +1,6 @@
-public class Grilling{
+import java.util.Scanner;
+
+public class Grilling extends ui{
 
     public static void clear() {
         if (System.getProperty("os.name").contains("Windows")) {
@@ -17,7 +19,6 @@ public class Grilling{
         while(true){
             switch (locale){
                 case 0:
-    
                     break;
                 case 1:
                     break;
@@ -28,13 +29,18 @@ public class Grilling{
                 case 4:
                     break;
                 case 5:
+                    clear();
+                    System.out.print("Your Exiting the program..");
+                    Sleep(100);
+                    loop = false;
                     break;
                 default:
-    
+                    locale = 5;
                     break;
                 
             }
             clear(); // Clear the console
         }
+        System.out.print("Program ended");
 	}
 }
