@@ -1,4 +1,4 @@
-public class Index extends ui{
+public class Index{
 
     public static void clear() {
         if (System.getProperty("os.name").contains("Windows")) {
