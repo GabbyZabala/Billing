@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public class ui {
     public static void header() {
         System.out.println("== Hospital Billing=======");
@@ -181,7 +183,7 @@ public class ui {
     public static void animation(String input) {
         for (int i = 0; i < input.length(); ++i) {
             System.out.print(input.charAt(i));
-            sleep(250); // Adjust the delay in milliseconds
+            sleep(150); // Adjust the delay in milliseconds
         }
     }
 
@@ -191,6 +193,31 @@ public class ui {
             Thread.sleep(numbers);
         } catch (InterruptedException e) {
             e.printStackTrace();
+        }
+    }
+
+    public static int randomNum(int maxNumber) {
+        Random ran = new Random();
+        int labelnumber = ran.nextInt(maxNumber);
+        return labelnumber;
+    }
+
+    public static void loading_Animation() {// loading animation
+        boolean animation_finish = true;
+        int max_number = 20;
+        int queue_number = 0;
+        while (animation_finish) {
+            queue_number += randomNum(20);
+            System.err.println(" --------------------");
+            System.err.print("|");
+            for (int i = 1; i <= max_number; i++) {
+                System.err.print("#");
+            }
+            for (int x = 1; x <= queue_number; x++) {
+                System.err.print(" ");
+            }
+            System.err.print("|\n");
+            System.err.println(" --------------------");
         }
     }
 }

@@ -19,8 +19,11 @@ public class Grilling extends ui {
             case 4:
                 transaction_Records();// +40
                 break;
-            case 5:
+            case 11:
+                register_Consulatation();
                 break;
+            case 12:
+
             default:
 
                 break;
@@ -32,13 +35,13 @@ public class Grilling extends ui {
         animation("Loading.....");
         clear();
         Boolean loop = true, force = true;
-        int locale = 0, revert = 0, tempo = 0;
+        int locale = 0, revert = 0;
         while (loop) {
             clear();
             header();
-            Scanner command = new Scanner(System.in);
             Display_Screen(locale);
             System.err.print("\tEnter choice: -->\t");
+            Scanner command = new Scanner(System.in);
             int Terminate = command.nextInt();
             switch (revert) {
                 case 0:
@@ -73,7 +76,7 @@ public class Grilling extends ui {
                                 break;
                             case 4:
                             default:
-                                locale = tempo;
+                                locale = 0;
                                 break;
                         }
 
@@ -88,7 +91,6 @@ public class Grilling extends ui {
             }
             clear(); // Clear the console
             animation("Loading.....");
-            tempo = revert;
         }
     }
 }
