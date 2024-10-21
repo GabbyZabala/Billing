@@ -3,12 +3,17 @@ import java.util.Scanner;
 class Patients_Data {
     String name;
     int age;
+    String Bloodtype;
 
     public Patients_Data(String name_entered, int age) { // Constructor
         this.name = name_entered;
         this.age = age;
     }// Node pass na this
 
+    public void View_PatientsData() {
+        System.err.println("PATIENTS NAME:\t" + name);
+        System.err.println("-- AGE:\t" + age);
+    }
 }
 
 public class Grilling extends ui {
@@ -34,6 +39,15 @@ public class Grilling extends ui {
                 register_Consulatation();
                 break;
             case 12:
+                edit_Consultation();
+                break;
+            case 13:
+                // view Consultation records
+                break;
+            case 21:
+                ls_newLaboratorytest();
+                break;
+            case 22:
 
             default:
 
@@ -42,6 +56,8 @@ public class Grilling extends ui {
     }
 
     public static void main(String[] args) {
+        Scanner command = new Scanner(System.in);
+        Patients_Data[] patients;// for records and data
         clear();
         loading_Animation();
         // animation("Loading.....");
@@ -55,8 +71,8 @@ public class Grilling extends ui {
             header();
             Display_Screen(locale);
             System.err.print("\tEnter choice: -->\t");
-            Scanner command = new Scanner(System.in);
             int Terminate = command.nextInt();
+            command.close();// happy now COMPILER ^v^ kainis pangit tingan namay yellow eh XD
             switch (revert) {
                 case 0:
                     if (force) {
