@@ -202,22 +202,32 @@ public class ui {
         return labelnumber;
     }
 
-    public static void loading_Animation() {// loading animation
+    public static void loading_Animation() {// just a loading animation nothing special here
         boolean animation_finish = true;
-        int max_number = 20;
+        int max_number = 40;
         int queue_number = 0;
         while (animation_finish) {
-            queue_number += randomNum(20);
-            System.err.println(" --------------------");
+            System.err.println("Loading...");
+            System.err.println(" ----------------------------------------");
             System.err.print("|");
-            for (int i = 1; i <= max_number; i++) {
+            for (int i = 1; i <= queue_number; i++) {
                 System.err.print("#");
             }
-            for (int x = 1; x <= queue_number; x++) {
+            for (int x = 1; x <= max_number; x++) {
                 System.err.print(" ");
             }
             System.err.print("|\n");
-            System.err.println(" --------------------");
+            System.err.println(" ----------------------------------------");
+
+            queue_number += randomNum(10);
+            if (queue_number > 40) {
+                queue_number = 40;
+                animation_finish = false;
+            } else {
+                max_number = 40 - queue_number;
+            }
+            sleep(1000);
+            clear();
         }
     }
 }

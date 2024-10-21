@@ -1,5 +1,16 @@
 import java.util.Scanner;
 
+class Patients_Data {
+    String name;
+    int age;
+
+    public Patients_Data(String name_entered, int age) { // Constructor
+        this.name = name_entered;
+        this.age = age;
+    }// Node pass na this
+
+}
+
 public class Grilling extends ui {
 
     public static void Display_Screen(int screen) {
@@ -32,10 +43,13 @@ public class Grilling extends ui {
 
     public static void main(String[] args) {
         clear();
-        animation("Loading.....");
+        loading_Animation();
+        // animation("Loading.....");
         clear();
         Boolean loop = true, force = true;
-        int locale = 0, revert = 0;
+        int locale = 0;// Display location replant
+        int revert = 0;// Function access will be added here start layout | layer 1 | layer 2| layer 3
+                       // | so on
         while (loop) {
             clear();
             header();
