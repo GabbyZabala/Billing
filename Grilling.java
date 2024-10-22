@@ -44,11 +44,21 @@ public class Grilling extends ui {
             case 13:
                 // view Consultation records
                 break;
-            case 21:
+            case 21:// add lab test
                 ls_newLaboratorytest();
                 break;
             case 22:
+                // Edit Laboratory Pricing
+                break;
+            case 23:
+                // view lab records
+                break;
+            case 24:// +11 for registrar
+                ls_category_blood_Chemistry();
+                break;
+            case 25:
 
+                break;
             default:
 
                 break;
