@@ -3,6 +3,20 @@
   "configurations": [
     {
       "type": "java",
+      "name": "Testing_Array",
+      "request": "launch",
+      "mainClass": "Testing_Array",
+      "projectName": "Billing_f24ef731"
+    },
+    {
+      "type": "java",
+      "name": "Testing_Array",
+      "request": "launch",
+      "mainClass": "Testing.Testing_Array",
+      "projectName": "Billing_f24ef731"
+    },
+    {
+      "type": "java",
       "name": "Grilling",
       "request": "launch",
       "mainClass": "Grilling",

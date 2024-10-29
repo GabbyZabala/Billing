@@ -166,7 +166,19 @@ public class ui {
             System.out.println((i + 1) + ": " + choices[i]);
         }
     }
+
     // TRANSACTION RECORDS ENDS HERE
+    public static void Error_Desktop() {
+        String lines = "\n\t--------------------------------------------";
+        for (int i = 0; i <= 3; i++) {
+            if (i % 2 != 0) {
+                System.err.println(lines);
+            } else {
+                System.err.println(
+                        "\n\t\tYou found the error display Screen\n\tidk how you got here but nice.. \n\n\tpls exit the app.. - Kurt");
+            }
+        }
+    }
 
     // Function detailes on GRILLING
     public static void clear() {// clear function
@@ -183,13 +195,12 @@ public class ui {
     public static void animation(String input) {
         for (int i = 0; i < input.length(); ++i) {
             System.out.print(input.charAt(i));
-            sleep(150); // Adjust the delay in milliseconds
+            sleep(1); // Adjust the delay in milliseconds
         }
     }
 
-    public static void sleep(int numbers) {// sleep function
+    public static void sleep(int numbers){// sleep function
         try {
-            // Sleep for 2 seconds
             Thread.sleep(numbers);
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -217,9 +228,9 @@ public class ui {
                 System.err.print(" ");
             }
             System.err.print("|\n");
-            System.err.println(" ----------------------------------------");
+            System.out.println(" ----------------------------------------");
 
-            queue_number += randomNum(10);
+            queue_number += randomNum(5);
             if (queue_number > 40) {
                 queue_number = 40;
                 animation_finish = false;
@@ -230,4 +241,5 @@ public class ui {
             clear();
         }
     }
+
 }

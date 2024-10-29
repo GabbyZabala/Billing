@@ -94,20 +94,20 @@
  				--------- Edit Rooms ----------
  				1.Service Ward Info
  				2.Semi-Private Room Info
-      3.Private Room Info
+        		3.Private Room Info
  				4.Exit
   		3.View Room Records
  		4.Back to Main Menu
 	
 
 4.Transaction Records
- 		------------ Transaction Records ------------
+		------------ Transaction Records ------------
  		1. Consultation Records
- 				--------- Consultation Record ----------
+				--------- Consultation Record ----------
  				1.Consultation History
  				2.Exit
  		2. Laboratory Records
-	 			--------- Laboratory Record ----------
+				--------- Laboratory Record ----------
  				1.Blood Chemistry
  				2.Hematology
  				3.Clinical Microscopy
@@ -115,7 +115,7 @@
  				5.Blood Bank and Serology
  				6.Exit
  		3. Room Admission Records
- 				--------- Room Record ----------
+				--------- Room Record ----------
  				1.SERVICE WARD History
  				2.SEMI-PRIVATE ROOM History
  				3.PRIVATE ROOM History
