@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public class ui {
     public static void header() {
         System.out.println("== Hospital Billing=======");
@@ -164,7 +166,19 @@ public class ui {
             System.out.println((i + 1) + ": " + choices[i]);
         }
     }
+
     // TRANSACTION RECORDS ENDS HERE
+    public static void Error_Desktop() {
+        String lines = "\n\t--------------------------------------------";
+        for (int i = 0; i <= 3; i++) {
+            if (i % 2 != 0) {
+                System.err.println(lines);
+            } else {
+                System.err.println(
+                        "\n\t\tYou found the error display Screen\n\tidk how you got here but nice.. \n\n\tpls exit the app.. - Kurt");
+            }
+        }
+    }
 
     // Function detailes on GRILLING
     public static void clear() {// clear function
@@ -181,16 +195,51 @@ public class ui {
     public static void animation(String input) {
         for (int i = 0; i < input.length(); ++i) {
             System.out.print(input.charAt(i));
-            sleep(250); // Adjust the delay in milliseconds
+            sleep(1); // Adjust the delay in milliseconds
         }
     }
 
-    public static void sleep(int numbers) {// sleep function
+    public static void sleep(int numbers){// sleep function
         try {
-            // Sleep for 2 seconds
             Thread.sleep(numbers);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
+
+    public static int randomNum(int maxNumber) {
+        Random ran = new Random();
+        int labelnumber = ran.nextInt(maxNumber);
+        return labelnumber;
+    }
+
+    public static void loading_Animation() {// just a loading animation nothing special here
+        boolean animation_finish = true;
+        int max_number = 40;
+        int queue_number = 0;
+        while (animation_finish) {
+            System.err.println("Loading...");
+            System.err.println(" ----------------------------------------");
+            System.err.print("|");
+            for (int i = 1; i <= queue_number; i++) {
+                System.err.print("#");
+            }
+            for (int x = 1; x <= max_number; x++) {
+                System.err.print(" ");
+            }
+            System.err.print("|\n");
+            System.out.println(" ----------------------------------------");
+
+            queue_number += randomNum(5);
+            if (queue_number > 40) {
+                queue_number = 40;
+                animation_finish = false;
+            } else {
+                max_number = 40 - queue_number;
+            }
+            sleep(1000);
+            clear();
+        }
+    }
+
 }
