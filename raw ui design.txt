@@ -20,23 +20,43 @@ Enter your choice: -->
 Enter Patient Name: __________
 Enter Patient Age: __________
 Enter Consultation Date: __/__/____
-1.OPD Consultation
-2.ER Consultation
+1.OPD Consultation.....₱ 50.00
+2.ER Consultation......₱ 100.00
 3.Back to Consultation Services Menu
 Enter Consultation Type: -->
 
+----------- Patient Information ----------
+Patient:
+Age:
+Date:
+Consultation:
+Fee:
+
+Registration Complete!
+Press any button to continue.......
 
 --------- Edit Consultation Fee ----------
+        ===== Current Prices =====
+
+Consultation OPD:₱ 50.00
+Consultation ER:₱ 100.00
+
 1.Consultation OPD
 2.Consultation ER
-3.Exit
-Enter your choice: -->
+3.Back to Menu
+choose one your choice: -->
+
+Update Price:
+Consultation Fee Updated!
+Press any button to continue.......
+
 =====================================================================================
 ------------ Laboratory Services ------------
 1.Register New Laboratory Test
 2.Edit Laboratory Pricing
 3.View Laboratory Records
 4.Back to Main Menu
+
 Enter your choice: -->
 
 
@@ -54,58 +74,181 @@ Enter your choice: -->
 
 
 --------- Blood Chemistry ----------
-1.Bua 
-2.Bun
-3.Cholesterol
-4.Creatinine
-5.FBS:RBS
-6.Triglycerides
-7.AST/ GOT
-8.ALT/ GPT
-9.HDL/ LDL
-11.Back
+
+1.Bua...........................₱ 160.00
+2.Bun...........................₱ 160.00
+3.Cholesterol...................₱ 160.00
+4.Creatinine....................₱ 195.00
+5.FBS:RBS.......................₱ 160.00
+6.Triglycerides.................₱ 250.00
+7.AST/ GOT......................₱ 200.00
+8.ALT/ GPT......................₱ 200.00
+9.HDL/ LDL......................₱ 300.00
+10.Back
 Enter your choice: -->
 
+Patient Name:
+Patient Age:
+Laboratory Test:
+Registration Complete!
+Press any button to continue.......
 
 --------- Hematology ----------
-1.CBC
-2.CT/BT
-3.Hgb/Hct
-4.Peripheral Smear Staining
-5.Peripheral Smear Reading
-6.Platelet Count
+
+1.CBC...........................₱ 250.00
+2.CT/BT.........................₱ 100.00
+3.Hgb/Hct.......................₱ 100.00
+4.Peripheral Smear Staining.....₱ 100.00
+5.Peripheral Smear Reading......₱ 300.00
+6.Platelet Count................₱ 250.00
 7.Back
 Enter your choice: -->
+
+Patient Name:
+Patient Age:
+Laboratory Test:
+Registration Complete!
+Press any button to continue.......
 
 
 --------- Clinical Microscopy ----------
-1.Fecalysis
-2.Occult Blood Test
-3.Pregnancy Test
-4.Urinalysis
+
+1.Fecalysis.....................₱ 100.00
+2.Occult Blood Test.............₱ 100.00
+3.Pregnancy Test................₱ 150.00
+4.Urinalysis....................₱ 125.00
 5.Back
 Enter your choice: -->
 
+Patient Name:
+Patient Age:
+Laboratory Test:
+Registration Complete!
+Press any button to continue.......
+
 
 --------- Bacteriology ----------
-1.Sputum Exam/ AFB
-2.Slit Skin Smear
-3.Gram Stain
-4.KOH Mount
-5.RF/Igm
-6.Typhidot
+
+1.Sputum Exam/ AFB............₱ 130.00
+2.Slit Skin Smear.............₱ 130.00
+3.Gram Stain..................₱ 130.00
+4.KOH Mount...................₱ 130.00
+5.RF/Igm......................₱ 450.00
+6.Typhidot....................₱ 550.00
 7.Back
 Enter your choice: -->
 
+Patient Name:
+Patient Age:
+Laboratory Test:
+Registration Complete!
+Press any button to continue.......
+
 
 --------- Blood Bank and Serology ----------
-1.Blood Typing
-2.HbSAg
-3.HCV
-4.HAV
-5.Bleeding Fee
+
+1.Blood Typing..................₱ 65.00
+2.HbSAg.........................₱ 230.00
+3.HCV...........................₱ 350.00
+4.HAV...........................₱ 350.00
+5.Bleeding Fee..................₱ 200.00
 6.Back
 Enter your choice: -->
+
+Patient Name:
+Patient Age:
+Laboratory Test:
+Registration Complete!
+Press any button to continue.......
+
+------------ Edit Laboratory Pricing ------------
+Select Laboratory Category:
+1.Blood Chemistry
+2.Hematology
+3.Clinical Microscopy
+4.Bacteriology
+5.Blood Bank and Serology
+6.Back to Laboratory Services Menu
+Enter your choice: -->
+
+--------- Blood Chemistry ----------
+
+1.Bua...........................₱ 160.00
+2.Bun...........................₱ 160.00
+3.Cholesterol...................₱ 160.00
+4.Creatinine....................₱ 195.00
+5.FBS:RBS.......................₱ 160.00
+6.Triglycerides.................₱ 250.00
+7.AST/ GOT......................₱ 200.00
+8.ALT/ GPT......................₱ 200.00
+9.HDL/ LDL......................₱ 300.00
+11.Back
+Enter your choice: -->
+
+Update Price:
+Laboratory Fee Updated!
+Press any button to continue.......
+
+--------- Hematology ----------
+
+1.CBC...........................₱ 250.00
+2.CT/BT.........................₱ 100.00
+3.Hgb/Hct.......................₱ 100.00
+4.Peripheral Smear Staining.....₱ 100.00
+5.Peripheral Smear Reading......₱ 300.00
+6.Platelet Count................₱ 250.00
+7.Back
+Enter your choice: -->
+
+Update Price:
+Laboratory Fee Updated!
+Press any button to continue.......
+
+
+--------- Clinical Microscopy ----------
+
+1.Fecalysis.....................₱ 100.00
+2.Occult Blood Test.............₱ 100.00
+3.Pregnancy Test................₱ 150.00
+4.Urinalysis....................₱ 125.00
+5.Back
+Enter your choice: -->
+
+Update Price:
+Laboratory Fee Updated!
+Press any button to continue.......
+
+
+--------- Bacteriology ----------
+
+1.Sputum Exam/ AFB............₱ 130.00
+2.Slit Skin Smear.............₱ 130.00
+3.Gram Stain..................₱ 130.00
+4.KOH Mount...................₱ 130.00
+5.RF/Igm......................₱ 450.00
+6.Typhidot....................₱ 550.00
+7.Back
+Enter your choice: -->
+
+Update Price:
+Laboratory Fee Updated!
+Press any button to continue.......
+
+
+--------- Blood Bank and Serology ----------
+
+1.Blood Typing..................₱ 65.00
+2.HbSAg.........................₱ 230.00
+3.HCV...........................₱ 350.00
+4.HAV...........................₱ 350.00
+5.Bleeding Fee..................₱ 200.00
+6.Back
+Enter your choice: -->
+
+Update Price:
+Laboratory Fee Updated!
+Press any button to continue.......
+
 ==========================================================================================
 
 
@@ -114,17 +257,20 @@ Enter your choice: -->
 2.Edit Room Information
 3.View Room Records
 4.Back to Main Menu
+
 Enter your choice: -->
 
 
 ------------ Register New Admission ------------
 Enter Patient Name: __________
 Enter Patient Age: __________
+
 Select Room Type:
-1.Service Ward
-2.Semi-Private Room
-3.Private Room
+1.Service Ward...............
+2.Semi-Private Room..........
+3.Private Room...............
 4.Back to Room and Admission Menu
+
 Enter your choice: -->
 
 
@@ -165,4 +311,5 @@ Enter your choice: -->
 2.SEMI-PRIVATE ROOM History
 3.PRIVATE ROOM History
 4.Exit
+Enter your choice: -->
 ==========================================================================================
