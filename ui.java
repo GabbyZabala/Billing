@@ -25,17 +25,22 @@ public class ui {
     }
 
     // Cosultation Service START here
+    public static void hsa_register_Consulatation() {
+        System.out.println("----------Register New Consultation---------");
+    }
+
     public static void register_Consulatation() {
         String[] choices = { "OPD Consultation", "ER Consultation", "Back to Consultation Services Menu" };
-        System.out.println("----------Register New Consultation---------");
         for (int i = 0; i < choices.length; i++) {
             System.out.println((i + 1) + ": " + choices[i]);
         }
     }
 
+    public static void hsa_edit_Consultation(){
+        System.out.println("----------Edit Consultation Fee---------");
+    }
     public static void edit_Consultation() {
         String[] choices = { "Consultation OPD", "Consultation ER", "Exit" };
-        System.out.println("----------Edit Consultation Fee---------");
         for (int i = 0; i < choices.length; i++) {
             System.out.println((i + 1) + ": " + choices[i]);
         }
@@ -199,7 +204,7 @@ public class ui {
         }
     }
 
-    public static void sleep(int numbers){// sleep function
+    public static void sleep(int numbers) {// sleep function
         try {
             Thread.sleep(numbers);
         } catch (InterruptedException e) {
@@ -230,7 +235,7 @@ public class ui {
             System.err.print("|\n");
             System.out.println(" ----------------------------------------");
 
-            queue_number += randomNum(5);
+            queue_number += randomNum(20);
             if (queue_number > 40) {
                 queue_number = 40;
                 animation_finish = false;
