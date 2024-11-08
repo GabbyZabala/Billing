@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 class Patients_Data {
@@ -29,7 +30,7 @@ class Patients_Data {
         this.Bloodtype = Blood;
     }
 
-    public void Add_Account_Lodge(String name_input, int consulation_TorF) {// di ako marunong nung dynamic array eh
+    public void Add_Account_Lodge(String name_input) {// di ako marunong nung dynamic array eh
         this.account_lodge[account_usage] = name_input;
         this.account_usage++;
     }
@@ -151,8 +152,8 @@ public class Grilling extends ui {
                            // | so on
             int[] user = new int[90];// storage for possible user to be bind with
             int user_count = 0;
-            int chosen_account = 0;// account that will be use as a storage with the combination of class storage
-                                   // function
+            int chosen_account = 1;// account that will be use as a storage with the combination of class storage
+            // function
             int Terminate = 0;
             while (loop) {
                 clear();
@@ -264,76 +265,201 @@ public class Grilling extends ui {
                         if (force) {
                             switch (Terminate) {
                                 case 1: // Register new consultation
-                                    String[] patientsidentifier = { "LastName", "FirstName", "Age" };
-                                    int latel = patients_avalable;
-                                    String[] Data_input = new String[2]; // For both string input
-                                    int cdata_ageinput = 0; // For age input
-                                    int repaciet = 0; // For Data input automation
-                                    for (int patients_idno = 0; patients_idno < 2; patients_idno++) {
+                                    String[] conclu_option = { "FirstName", "LastName", "Age" };// Optional loopers
+                                    String[] conclu_input = new String[3];// System Concluder
+                                    // Add chose if input is finished so the data can be mastered fast
+                                    boolean Patient_found = false;
+                                    for (int crea = 0; crea < conclu_option.length; crea++) {
                                         clear();
                                         header();
-                                        System.err.print(patients_idno + " - Enter Patient Name:\n");
-                                        switch (patients_idno) {
+                                        hsa_register_Consulatation();
+                                        switch (crea) {
                                             case 2:
-                                                System.out.print("\t" + patientsidentifier[patients_idno - 2] + ":\t"
-                                                        + Data_input[repaciet - 1] + "\n");
                                             case 1:
-                                                System.out.print("\t" + patientsidentifier[patients_idno - 1] + ":\t"
-                                                        + Data_input[repaciet] + "\n");
-                                            case 0:
-                                                System.out.print("\t" + patientsidentifier[patients_idno] + ":\t");
+                                                if (conclu_input[1] != null) {
+                                                    System.out.println("Enter Patient Name:\t" + conclu_input[crea - 1]
+                                                            + ", " + conclu_input[crea - 2]);
+                                                } else {
+                                                    System.out.println("Patient " + conclu_option[crea - 1] + ":\t"
+                                                            + conclu_input[crea - 1]);
+                                                }
+                                            default:
+                                                System.out.print("Enter Patient " + conclu_option[crea] + ":\t");
                                                 break;
                                         }
-
-                                        // Case sensitive handling here, to be modified if needed
-                                        if (patients_idno != 2) {
-                                            String data = command.nextLine(); // Read input from the user
-                                            if (patients_avalable != 0) {
-                                                System.err.print("Searching for possible patients.");
-                                                for (int check = 0; check < patients.length; check++) {
-                                                    if (data.equals(patients[check].lastname)) { // Using .equals for
-                                                                                                 // string comparison
-                                                        user[user_count] = check;
-                                                    }
-                                                    if (check < 10) {
-                                                        System.err.println(".");
-                                                    } else {
-                                                        if (check == 10) {
-                                                            System.err.println("Too many Patients Data please wait.");
-                                                        }
-                                                    }
-                                                }
-                                                System.err.println("Here are some results:");
-                                                for (int show_check = 0; show_check < user.length; show_check++) {
-                                                    System.out.print("[ " + (show_check + 1) + " ]");
-                                                    patients[user[show_check]].show_PatientsData();
-                                                }
-                                                System.out.println(
-                                                        "If the patient you're looking for is listed, please input accordingly.");
-                                            } else {
-                                                System.err.println("No patients are present in the database.");
-                                                Data_input[repaciet] = data;
-                                            }
-                                            repaciet++;
+                                        String conclu_coms = command.nextLine();
+                                        if (crea != 2) {
+                                            conclu_input[crea] = conclu_coms;
                                         } else {
-                                            // Collecting integer input for age
-                                            int cidata = command.nextInt();
-                                            cdata_ageinput = cidata;
-                                            command.nextLine(); // Clear newline from buffer to avoid skipping next
-                                                                // input
+                                            try {
+                                                int number_catcher = Integer.parseInt(conclu_coms);
+                                                conclu_input[crea] = conclu_coms;
+                                                System.out.println(number_catcher);
+                                            } catch (NumberFormatException e) {
+                                                System.err.println("try again");
+                                                crea--;
+                                            }
                                         }
-                                        sleep(10); // Add any necessary delay here
-                                    }
+                                        if (patients_avalable != 0 && crea != 2) {// checking for duplicates
+                                            System.out.print("Searching the database/");
+                                            for (int i = 0; i < patients.length; i++) {
+                                                if (i < 5) {
+                                                    System.out.print(".");
+                                                }
+                                                String comparison = "";// compares if action found~~
+                                                switch (crea) {
+                                                    case 1: // Use the patient's last name for comparison
+                                                        if (patients[i].lastname != null) {
+                                                            comparison = patients[i].lastname;
+                                                        }
+                                                        break;
+                                                    default: // Default to first name
+                                                        if (patients[i].firstname != null) {
+                                                            comparison = patients[i].firstname;
+                                                        }
+                                                        break;
+                                                }
+                                                if (comparison != null) {
+                                                    // for debugging purposes!!!
+                                                    // System.out.println("Comparing patient: " + comparison);
+                                                    // System.out.println("With input: "
+                                                    // + (conclu_input[crea] != null ? conclu_input[crea]
+                                                    // : "null"));
+                                                    // sleep(5000);
+                                                    // Check if the comparison value matches the input
+                                                    if (comparison.equalsIgnoreCase(conclu_input[crea])) {
+                                                        user[user_count] = i;// sana diako mamali sakit sa ulo mag
+                                                                             // recheck ng code XD
+                                                        user_count++;
+                                                        Patient_found = true;
+                                                    }
+                                                }
+                                            }
+                                            String casolore = (user_count > 2 ? "some" : "is");
+                                            String status = (Patient_found ? "Found" : "Not Found");
+                                            System.out.print("Patient " + casolore + " " + status);
 
-                                    if (patients_avalable == 0) {
-                                        chosen_account = 0;
+                                        }
+                                        if (Patient_found) {
+                                            clear();
+                                            int choices;
+                                            while (true) {
+                                                System.err.println("Input the patient you want to choose");
+                                                for (int i = 0; i < user_count; i++) {
+                                                    System.out.println("[ " + i + " ]");
+                                                    patients[user[i]].show_PatientsData();
+                                                }
+                                                System.out.print("Pls Enter The Patient or type [" + user_count
+                                                        + "] to cancel the sel3ction\n\t:-->");
+                                                try {
+                                                    String lan = command.nextLine();
+                                                    choices = Integer.parseInt(lan);
+                                                    break;
+                                                } catch (NumberFormatException e) {
+                                                    System.out.println("retry handling./.");
+                                                }
+                                            }
+                                            boolean lo = false;
+                                            for (int i = 0; i < user_count; i++) {
+                                                if (choices == user[i]) {
+                                                    lo = true;
+                                                }
+                                            }
+                                            if (lo) {
+                                                chosen_account = choices + 1;
+                                                break;
+                                            }
+                                        }
                                     }
-                                    // Add patient data to chosen account
-                                    patients[chosen_account].add_Patients_Data(Data_input[0], Data_input[1],
-                                            cdata_ageinput);
-                                    if (latel - 1 == chosen_account) {
+                                    if (!Patient_found) {// registers new patients
+                                        if (patients[patients_avalable].equals(null)) {
+                                            chosen_account = patients_avalable;
+                                        }
+                                        int addy = Integer.parseInt(conclu_input[2]);
+                                        patients[chosen_account - 1].add_Patients_Data(conclu_input[1], conclu_input[0],
+                                                addy);
                                         patients_avalable++;
                                     }
+                                    String[] comrad = new String[3];
+                                    String[] qoutes = { "Day", "Month", "Year" };
+                                    for (int i = 0; i < comrad.length; i++) {
+                                        clear();
+                                        header();
+                                        hsa_register_Consulatation();
+                                        System.out.print("Patient Name:\t" + patients[chosen_account - 1].fullname
+                                                + "\nPatient Age:\t" + patients[chosen_account - 1].age
+                                                + "\nEnter the Layout in this order[ Day/Month/Year] type \"~\" to go back in date\nEnter "
+                                                + qoutes[i] + ":\t");
+                                        switch (i) {
+                                            case 2:
+                                                System.err.print(comrad[i - 2] + "/");
+                                            case 1:
+                                                System.err.print(comrad[i - 1] + "/");
+                                            default:
+                                                break;
+                                        }
+                                        try {
+                                            String Date = command.nextLine();
+                                            int number_checker = Integer.parseInt(Date);
+                                            System.out.print(number_checker);
+                                            comrad[i] = Date;
+                                        } catch (NumberFormatException e) {
+                                            if (i != 0) {
+                                                i--;
+                                            }
+                                        }
+                                    }
+                                    String nano = "";
+                                    for (int dlan = 0; dlan < comrad.length; dlan++) {
+                                        nano += comrad[dlan];
+                                        if (dlan != 2) {
+                                            nano += "/";
+                                        }
+                                    }
+                                    while (true) {
+                                        clear();
+                                        header();
+                                        boolean exit = false, saveprocess = true;
+                                        hsa_register_Consulatation();
+                                        System.out.print("Patient Name:\t" + patients[chosen_account - 1].fullname
+                                                + "\nPatient Age:\t" + patients[chosen_account - 1].age
+                                                + "\nConsulation Date:\t" + nano + "\n");
+                                        register_Consulatation();
+                                        try {
+                                            System.out.print("[]:-->");
+                                            String nan = "";
+                                            String blan = command.nextLine();
+                                            int blaconsule = Integer.parseInt(blan);
+                                            switch (blaconsule) {
+                                                case 1:
+                                                    nan = "OPD";
+                                                    exit = true;
+                                                    break;
+                                                case 2:
+                                                    nan = "ER";
+                                                    exit = true;
+                                                    break;
+                                                case 3:
+                                                    exit = true;
+                                                    saveprocess = false;
+                                                    break;
+                                            }
+                                            if (saveprocess) {
+                                                patients[chosen_account - 1].Add_Account_Lodge(nan);
+                                                patients[chosen_account - 1].Add_Consultation(nano);
+                                            }
+                                            if (exit) {
+                                                break;
+                                            }
+                                        } catch (NumberFormatException e) {
+                                            System.out.print("Error..");// place holder di kasi nacacatchyung error eh
+                                        }
+                                    }
+                                    locale = 0;
+                                    revert = 0;
+                                    Arrays.fill(user, 0);// for reset purposes the rest here
+                                    user_count = 0;
+                                    Arrays.fill(conclu_input, null);
                                     break;
 
                                 case 2:
