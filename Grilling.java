@@ -565,7 +565,6 @@ public class Grilling extends ui {
                 }
                 clear(); // Clear the console
                 animation("Loading.....");
-                command.nextLine();
             }
         }
         // this problem here fix,
