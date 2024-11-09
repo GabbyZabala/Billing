@@ -12,11 +12,18 @@
  				3.Back to Consultation Services Menu
 
  		2.Edit Consultation Fees
-				--------- Edit Consultation Fee ----------
- 		 		1.Consultation OPD
- 				2.Consultation ER
- 				3.Exit
+        				===== Current Prices =====
 
+				Consultation OPD:₱ 50.00
+				Consultation ER:₱ 100.00
+
+				1.Consultation OPD
+				2.Consultation ER
+				3.Back to Menu
+				choose one your choice: -->
+
+				Update Price:
+				Consultation Fee Updated!
  		3.View Consultation Records
  		4.Back to Main Menu
 	

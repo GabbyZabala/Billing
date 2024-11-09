@@ -2,7 +2,7 @@ import java.util.Random;
 
 public class ui {
     public static void header() {
-        System.out.println("== Hospital Billing=======");
+        System.out.println("======= Hospital Billing=======");
     }
 
     public static void main_Menu() {// Data number: 0
@@ -36,9 +36,10 @@ public class ui {
         }
     }
 
-    public static void hsa_edit_Consultation(){
+    public static void hsa_edit_Consultation() {
         System.out.println("----------Edit Consultation Fee---------");
     }
+
     public static void edit_Consultation() {
         String[] choices = { "Consultation OPD", "Consultation ER", "Exit" };
         for (int i = 0; i < choices.length; i++) {
@@ -247,4 +248,73 @@ public class ui {
         }
     }
 
+    public static boolean Display_Properties(int lanpla) {
+        switch (lanpla) {
+            case 0:
+                main_Menu();
+                break;
+            case 1:
+                consultation_Services();
+                break;// +10
+            case 2:
+                laboratory_Services();
+                break;// +20
+            case 3:
+                room_Record();
+                break;// +30
+            case 4:
+                transaction_Records();
+                break;// +40
+            case 11:
+                register_Consulatation();
+                break;
+            case 12:
+                edit_Consultation();
+                break;
+            case 13:// view Consultation records
+                hsa_edit_Consultation();
+                break;
+            case 21:
+                ls_newLaboratorytest();
+                break;
+            case 22:// Edit Laboratory Pricing
+                break;
+            case 23:// view lab records
+                break;
+            case 24:
+                ls_category_blood_Chemistry();
+                break;// +3 registrar
+            case 25:
+                hematology();
+                break;// +4
+            case 26:
+                clinical_Microscopy();
+                break; // +5
+            case 27:
+                bacteriology();
+                break;// +6
+            case 28:
+                bloodBank_Serology();
+                break;// +7
+            case 31:
+                register_Admission();
+                break;
+            case 32:
+                edit_Rooms();
+                break;
+            case 41:
+                consulation_Record();
+                break;
+            case 42:
+                laboratory_Record();
+                break;
+            case 43:
+                room_Record();
+                break;
+            default:
+                Error_Desktop();
+                return false;
+        }
+        return true;
+    }
 }
