@@ -66,6 +66,23 @@ class Patients_Data {
 public class Grilling extends ui {
     public static boolean noterror_dis = true;
 
+    static class Pricing {
+        double Hospital_bill = 0.0, // for getting the total
+                // Consultation Fee
+                OPD = 100.9,
+                ER = 109.0,
+                // Lab testign Divider
+                Blood_Chemistry = 10.9,
+                Hematology = 100,
+                Clinical_Microscopy = 210,
+                Bacteriology = 190,
+                BloodBankAndSerology = 10,
+                // Room Service Divider
+                Service_Ward = 100.0,
+                SemiPrivate_Room = 90.9,
+                Private_Room = 100;
+    }
+
     public static void Display_Screen(int screen) {
         switch (screen) {
             case 0:
@@ -137,7 +154,10 @@ public class Grilling extends ui {
 
     public static void main(String[] args) {
         try (Scanner command = new Scanner(System.in)) {
+            Pricing[] priceof = new Pricing[1];
+            priceof[0] = new Pricing();// For Pricing
             Patients_Data[] patients = new Patients_Data[90];// for records and data
+
             for (int i = 0; i < patients.length; i++) {
                 patients[i] = new Patients_Data();
             }
@@ -406,6 +426,7 @@ public class Grilling extends ui {
                                         } catch (NumberFormatException e) {
                                             if (i != 0) {
                                                 i--;
+                                                i--;
                                             }
                                         }
                                     }
@@ -461,7 +482,6 @@ public class Grilling extends ui {
                                     user_count = 0;
                                     Arrays.fill(conclu_input, null);
                                     break;
-
                                 case 2:
 
                                     break;
