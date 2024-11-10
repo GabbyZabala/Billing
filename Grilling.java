@@ -65,9 +65,24 @@ class Patients_Data {
             }
         }
         if (blanka != 0) {
-            System.out.println("\tOPD lines");
+            System.out.print("Consultation Status: " + blanka);
+            System.out.println("\tOPD Status");
             if (opd_count != 0) {
-
+                for (int i = 0; i < opd_count; i++) {
+                    System.out.println(
+                            "\t\t - " + account_lodge[OPD_storage[i]] + "\t" + consultation_data[OPD_dateStorage[i]]);
+                }
+            } else {
+                System.out.println("\t\t - No Data Recorded");
+            }
+            System.out.println("\tER Status");
+            if (er_count != 0) {
+                for (int i = 0; i < er_count; i++) {
+                    System.out.println(
+                            "\t\t - " + account_lodge[ER_storage[i]] + "\t" + consultation_data[ER_dateStorage[i]]);
+                }
+            } else {
+                System.out.println("\t\t - No Data Recorded");
             }
         }
     }
@@ -132,276 +147,270 @@ public class Grilling extends ui {
     public static Pricing priceof = new Pricing();
 
     // New registration
-    public static void consultation_function1() {// dont judge me i just learned this one ^v^ - Kurt
-        try (Scanner command = new Scanner(System.in)) {
-            String[] conclu_option = { "FirstName", "LastName", "Age" };// Optional loopers
-            String[] conclu_input = new String[3];// System Concluder
-            // Add chose if input is finished so the data can be mastered fast
-            boolean Patient_found = false;
-            for (int crea = 0; crea < conclu_option.length; crea++) {
-                clear();
-                header();
-                System.err.println(conclu_option.length);
-                hsa_register_Consulatation();
-                switch (crea) {
-                    case 2:
-                    case 1:
-                        if (conclu_input[1] != null) {
-                            System.out.println(
-                                    "Enter Patient Name:\t" + conclu_input[1]
-                                            + ", " + conclu_input[0]);
-                        } else {
-                            System.out.println("Patient " + conclu_option[crea - 1] + ":\t"
-                                    + conclu_input[crea - 1]);
-                        }
-                    default:
-                        System.out.print("Enter Patient " + conclu_option[crea] + ":\t");
-                        break;
-                }
-                String conclu_coms = command.nextLine();
-                if (crea != 2) {
-                    conclu_input[crea] = conclu_coms;
-                } else {
-                    try {
-                        int number_catcher = Integer.parseInt(conclu_coms);
-                        conclu_input[crea] = conclu_coms;
-                        System.out.println(number_catcher);
-                    } catch (NumberFormatException e) {
-                        System.err.println("try again");
-                        crea--;
-                    }
-                }
-                if (crea != 2 && patients_avalable != 0) {// checking for duplicates
-                    System.out.print("Searching the database/");
-                    for (int i = 0; i < patients.length; i++) {
-                        if (i < 5) {
-                            System.out.print(".");
-                        }
-                        String comparison = "";// compares if action found~~
-                        switch (crea) {
-                            case 1: // Use the patient's last name for comparison
-                                if (patients[i].lastname != null) {
-                                    comparison = patients[i].lastname;
-                                    System.out.println(comparison);
-                                }
-                                break;
-                            default: // Default to first name
-                                if (patients[i].firstname != null) {
-                                    comparison = patients[i].firstname;
-                                    System.out.println(comparison);
-                                }
-                                break;
-                        }
-                        if (comparison != null) {
-                            // for debugging purposes!!!
-                            // System.out.println("Comparing patient: " + comparison);
-                            // System.out.println("With input: "
-                            // + (conclu_input[crea] != null ? conclu_input[crea]
-                            // : "null"));
-                            // sleep(5000);
-                            // Check if the comparison value matches the input
-                            if (comparison.equalsIgnoreCase(conclu_input[crea])) {
-                                user[user_count] = i;// sana diako mamali sakit sa ulo mag
-                                                     // recheck ng code XD
-                                user_count++;
-                                Patient_found = true;
-                            }
-                        }
-                    }
-                    String casolore = (user_count > 2 ? "some" : "is");
-                    String status = (Patient_found ? "Found" : "Not Found");
-                    System.out.print("Patient " + casolore + " " + status);
-                    sleep(1000);
-
-                }
-                if (Patient_found) {
-                    clear();
-                    int choices = 0;
-                    boolean lanml = false;
-                    while (true) {
-                        System.err.println("Input the patient you want to choose");
-                        for (int i = 0; i < user_count; i++) {
-                            System.out.println("[ " + i + " ]");
-                            patients[user[i]].show_PatientsData();
-                        }
-                        System.out.print("Pls Enter The Patient or type [" + user_count
-                                + "] to cancel the sel3ction\n\t:-->");
-                        try {
-                            String lan = command.nextLine();
-                            choices = Integer.parseInt(lan);
-                            if (choices == user_count) {
-                                lanml = true;
-                                Arrays.fill(user, 0);// for reset purposes the rest here
-                                user_count = 0;
-                            }
-                            Patient_found = false;
-                            break;
-                        } catch (NumberFormatException e) {
-                            System.out.println("retry handling./.");
-                        }
-                    }
-                    if (!lanml) {
-                        boolean lo = false;
-                        for (int i = 0; i < user_count; i++) {
-                            if (choices == user[i]) {
-                                lo = true;
-                            }
-                        }
-                        if (lo) {
-                            chosen_account = choices + 1;
-                            conclu_input[0] = patients[chosen_account - 1].firstname;
-                            conclu_input[1] = patients[chosen_account - 1].lastname;
-                            conclu_input[2] = patients[chosen_account - 1].age + "";
-                            break;
-                        }
-                    }
-                }
-            }
-            String[] comrad = new String[3];
-            String[] qoutes = { "Day", "Month", "Year" };
-            String fname = conclu_input[1] + ", " + conclu_input[0];
-            for (int i = 0; i < comrad.length; i++) {
-                clear();
-                header();
-                hsa_register_Consulatation();
-                System.out.print("Patient Name:\t" + fname
-                        + "\nPatient Age:\t" + conclu_input[2]
-                        + "\nEnter the Layout in this order[ Day/Month/Year] type \"~\" to go back in date\nEnter "
-                        + qoutes[i] + ":\t");
-                switch (i) {
-                    case 2:
-                        System.err.print(comrad[i - 2] + "/");
-                    case 1:
-                        System.err.print(comrad[i - 1] + "/");
-                    default:
-                        break;
-                }
-                try {
-                    String Date = command.nextLine();
-                    int number_checker = Integer.parseInt(Date);
-                    System.out.print(number_checker);
-                    comrad[i] = Date;
-                } catch (NumberFormatException e) {
-                    if (i != 0) {
-                        i--;
-                        i--;
-                    }
-                }
-            }
-            String nano = "";
-            for (int dlan = 0; dlan < comrad.length; dlan++) {
-                nano += comrad[dlan];
-                if (dlan != 2) {
-                    nano += "/";
-                }
-            }
-            while (true) {
-                clear();
-                header();
-                boolean exit = false, saveprocess = true;
-                hsa_register_Consulatation();
-                System.out.print("Patient Name:\t" + fname
-                        + "\nPatient Age:\t" + conclu_input[2]
-                        + "\nConsulation Date:\t" + nano + "\n");
-                register_Consulatation();
-                try {
-                    System.out.print("[]:-->");
-                    String nan = "";
-                    String blan = command.nextLine();
-                    int blaconsule = Integer.parseInt(blan);
-                    switch (blaconsule) {
-                        case 1:
-                            nan = "OPD";
-                            exit = true;
-                            break;
-                        case 2:
-                            nan = "ER";
-                            exit = true;
-                            break;
-                        case 3:
-                            exit = true;
-                            saveprocess = false;
-                            break;
-                    }
-                    if (saveprocess) {
-                        patients[chosen_account - 1].Add_Account_Lodge(nan);
-                        patients[chosen_account - 1].Add_Consultation(nano);
-                    }
-                    if (exit) {
-                        break;
-                    }
-                } catch (NumberFormatException e) {
-                    System.out.print("Error..");// place holder di kasi nacacatchyung error
-                                                // eh
-                }
-            }
-
-            if (!Patient_found) {// registers new patients
-                if (patients[patients_avalable].equals(null)) {
-                    chosen_account = patients_avalable;
-                }
-                patients_avalable++;
-                int addy = Integer.parseInt(conclu_input[2]);
-                patients[chosen_account - 1].add_Patients_Data(conclu_input[1],
-                        conclu_input[0],
-                        addy);
-            }
-            Arrays.fill(conclu_input, null);
-        }
-    }
-
-    // Change Price in Consultation
-    public static void consultation_function2() {
-        try (Scanner command = new Scanner(System.in)) {
-            int PriceDweller = 0;
-            boolean exit = false;
-            while (true) {
-                clear();
-                header();
-                hsa_edit_Consultation();
-                if (PriceDweller < 1) {// display part for price
-                    System.out.println("\n\t Consultation OPD:\t₱ " + priceof.OPD);
-                    System.out.println("\n\t Consultation ER:\t₱ " + priceof.ER);
-                } else {
-                    if (PriceDweller == 1)
-                        System.out.println("\n\t Consultation OPD:\t₱ " + priceof.OPD);
-                    if (PriceDweller == 2)
-                        System.out.println("\n\t Consultation ER:\t₱ " + priceof.ER);
-                }
-                if (PriceDweller < 1) {
-                    edit_Consultation();
-                    try {
-                        System.err.print("\tEnter choice: -->\t");
-                        String nlab = command.nextLine();
-                        PriceDweller = Integer.parseInt(nlab);
-                        if (nlab.equals("3")) {
-                            exit = true;
-                        }
-                    } catch (NumberFormatException e) {
-                        System.out.println("error");
-                    }
-                } else {
-                    String ednano = (PriceDweller == 2 ? "OPD" : "ER");
-                    System.err.print("Update " + ednano + " Price:\t₱ ");
-                    double price = command.nextDouble();
-                    if (PriceDweller == 1) {
-                        priceof.OPD = price;
+    public static void consultation_function1(Scanner command) {// dont judge me i just learned this one ^v^ - Kurt
+        String[] conclu_option = { "FirstName", "LastName", "Age" };// Optional loopers
+        String[] conclu_input = new String[3];// System Concluder
+        // Add chose if input is finished so the data can be mastered fast
+        boolean Patient_found = false;
+        for (int crea = 0; crea < conclu_option.length; crea++) {
+            clear();
+            header();
+            System.err.println(conclu_option.length);
+            hsa_register_Consulatation();
+            switch (crea) {
+                case 2:
+                case 1:
+                    if (conclu_input[1] != null) {
+                        System.out.println(
+                                "Enter Patient Name:\t" + conclu_input[1]
+                                        + ", " + conclu_input[0]);
                     } else {
-                        priceof.ER = price;
+                        System.out.println("Patient " + conclu_option[crea - 1] + ":\t"
+                                + conclu_input[crea - 1]);
                     }
-                    PriceDweller = 0;
+                default:
+                    System.out.print("Enter Patient " + conclu_option[crea] + ":\t");
+                    break;
+            }
+            String conclu_coms = command.nextLine();
+            if (crea != 2) {
+                conclu_input[crea] = conclu_coms;
+            } else {
+                try {
+                    int number_catcher = Integer.parseInt(conclu_coms);
+                    conclu_input[crea] = conclu_coms;
+                    System.out.println(number_catcher);
+                } catch (NumberFormatException e) {
+                    System.err.println("try again");
+                    crea--;
+                }
+            }
+            if (crea != 2 && patients_avalable != 0) {// checking for duplicates
+                System.out.print("Searching the database/");
+                for (int i = 0; i < patients.length; i++) {
+                    if (i < 5) {
+                        System.out.print(".");
+                    }
+                    String comparison = "";// compares if action found~~
+                    switch (crea) {
+                        case 1: // Use the patient's last name for comparison
+                            if (patients[i].lastname != null) {
+                                comparison = patients[i].lastname;
+                                System.out.println(comparison);
+                            }
+                            break;
+                        default: // Default to first name
+                            if (patients[i].firstname != null) {
+                                comparison = patients[i].firstname;
+                                System.out.println(comparison);
+                            }
+                            break;
+                    }
+                    if (comparison != null) {
+                        // for debugging purposes!!!
+                        // System.out.println("Comparing patient: " + comparison);
+                        // System.out.println("With input: "
+                        // + (conclu_input[crea] != null ? conclu_input[crea]
+                        // : "null"));
+                        // sleep(5000);
+                        // Check if the comparison value matches the input
+                        if (comparison.equalsIgnoreCase(conclu_input[crea])) {
+                            user[user_count] = i;// sana diako mamali sakit sa ulo mag
+                                                 // recheck ng code XD
+                            user_count++;
+                            Patient_found = true;
+                        }
+                    }
+                }
+                String casolore = (user_count > 2 ? "some" : "is");
+                String status = (Patient_found ? "Found" : "Not Found");
+                System.out.print("Patient " + casolore + " " + status);
+                sleep(1000);
+
+            }
+            if (Patient_found) {
+                clear();
+                int choices = 0;
+                boolean lanml = false;
+                while (true) {
+                    System.err.println("Input the patient you want to choose");
+                    for (int i = 0; i < user_count; i++) {
+                        System.out.println("[ " + i + " ]");
+                        patients[user[i]].show_PatientsData();
+                    }
+                    System.out.print("Pls Enter The Patient or type [" + user_count
+                            + "] to cancel the sel3ction\n\t:-->");
+                    try {
+                        String lan = command.nextLine();
+                        choices = Integer.parseInt(lan);
+                        if (choices == user_count) {
+                            lanml = true;
+                            Arrays.fill(user, 0);// for reset purposes the rest here
+                            user_count = 0;
+                        }
+                        Patient_found = false;
+                        break;
+                    } catch (NumberFormatException e) {
+                        System.out.println("retry handling./.");
+                    }
+                }
+                if (!lanml) {
+                    boolean lo = false;
+                    for (int i = 0; i < user_count; i++) {
+                        if (choices == user[i]) {
+                            lo = true;
+                        }
+                    }
+                    if (lo) {
+                        chosen_account = choices + 1;
+                        conclu_input[0] = patients[chosen_account - 1].firstname;
+                        conclu_input[1] = patients[chosen_account - 1].lastname;
+                        conclu_input[2] = patients[chosen_account - 1].age + "";
+                        break;
+                    }
+                }
+            }
+        }
+        String[] comrad = new String[3];
+        String[] qoutes = { "Day", "Month", "Year" };
+        String fname = conclu_input[1] + ", " + conclu_input[0];
+        for (int i = 0; i < comrad.length; i++) {
+            clear();
+            header();
+            hsa_register_Consulatation();
+            System.out.print("Patient Name:\t" + fname
+                    + "\nPatient Age:\t" + conclu_input[2]
+                    + "\nEnter the Layout in this order[ Day/Month/Year] type \"~\" to go back in date\nEnter "
+                    + qoutes[i] + ":\t");
+            switch (i) {
+                case 2:
+                    System.err.print(comrad[i - 2] + "/");
+                case 1:
+                    System.err.print(comrad[i - 1] + "/");
+                default:
+                    break;
+            }
+            try {
+                String Date = command.nextLine();
+                int number_checker = Integer.parseInt(Date);
+                System.out.print(number_checker);
+                comrad[i] = Date;
+            } catch (NumberFormatException e) {
+                if (i != 0) {
+                    i--;
+                    i--;
+                }
+            }
+        }
+        String nano = "";
+        for (int dlan = 0; dlan < comrad.length; dlan++) {
+            nano += comrad[dlan];
+            if (dlan != 2) {
+                nano += "/";
+            }
+        }
+        while (true) {
+            clear();
+            header();
+            boolean exit = false, saveprocess = true;
+            hsa_register_Consulatation();
+            System.out.print("Patient Name:\t" + fname
+                    + "\nPatient Age:\t" + conclu_input[2]
+                    + "\nConsulation Date:\t" + nano + "\n");
+            register_Consulatation();
+            try {
+                System.out.print("[]:-->");
+                String nan = "";
+                String blan = command.nextLine();
+                int blaconsule = Integer.parseInt(blan);
+                switch (blaconsule) {
+                    case 1:
+                        nan = "OPD";
+                        exit = true;
+                        break;
+                    case 2:
+                        nan = "ER";
+                        exit = true;
+                        break;
+                    case 3:
+                        exit = true;
+                        saveprocess = false;
+                        break;
+                }
+                if (saveprocess) {
+                    patients[chosen_account - 1].Add_Account_Lodge(nan);
+                    patients[chosen_account - 1].Add_Consultation(nano);
                 }
                 if (exit) {
                     break;
                 }
+            } catch (NumberFormatException e) {
+                System.out.print("Error..");// place holder di kasi nacacatchyung error
+                                            // eh
+            }
+        }
+
+        if (!Patient_found) {// registers new patients
+            if (patients[patients_avalable].equals(null)) {
+                chosen_account = patients_avalable;
+            }
+            patients_avalable++;
+            int addy = Integer.parseInt(conclu_input[2]);
+            patients[chosen_account - 1].add_Patients_Data(conclu_input[1],
+                    conclu_input[0],
+                    addy);
+        }
+        Arrays.fill(conclu_input, null);
+    }
+
+    // Change Price in Consultation
+    public static void consultation_function2(Scanner command) {
+        int PriceDweller = 0;
+        while (true) {
+            clear();
+            header();
+            hsa_edit_Consultation();
+            if (PriceDweller < 1) {// display part for price
+                System.out.println("\n\t Consultation OPD:\t₱ " + priceof.OPD);
+                System.out.println("\n\t Consultation ER:\t₱ " + priceof.ER);
+            } else {
+                if (PriceDweller == 1)
+                    System.out.println("\n\t Consultation OPD:\t₱ " + priceof.OPD);
+                if (PriceDweller == 2)
+                    System.out.println("\n\t Consultation ER:\t₱ " + priceof.ER);
+            }
+            System.out.println("\n");
+            if (PriceDweller < 1) {
+                edit_Consultation();
+                try {
+                    System.err.print("\tEnter choice: -->\t");
+                    String nlab = command.nextLine();
+                    PriceDweller = Integer.parseInt(nlab);
+                    if (nlab.equals("3")) {
+                        return;
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("error");
+                }
+            } else {
+                String ednano = (PriceDweller == 2 ? "OPD" : "ER");
+                System.err.print("Update " + ednano + " Price:\t₱ ");
+                double price = command.nextDouble();
+                command.nextLine();
+                if (PriceDweller == 1) {
+                    priceof.OPD = price;
+                } else {
+                    priceof.ER = price;
+                }
+                PriceDweller = 0;
             }
         }
     }
 
     public static void Display_Screen(int screen) {// This void is for display Properties
         boolean tring;
-        tring = Display_Properties(screen);
-        if (!tring) {
+        tring = Display_Properties(screen); // ang haba kasi nung display_propeties kaya ginawan ko ng paraan
+        if (!tring) { // ang sakit kasi sa kamay mag scroll up eh XD
             noterror_dis = false;
         }
     }
@@ -535,12 +544,19 @@ public class Grilling extends ui {
                             if (force) {
                                 switch (Terminate) {
                                     case 1: // Register new consultation
-                                        consultation_function1();
+                                        consultation_function1(command);
                                         locale = 1;
                                         revert = 1;
                                         break;
                                     case 2:
-                                        consultation_function2();
+                                        consultation_function2(command);
+                                        /*
+                                         * command imported due to some error that
+                                         * i didnt know that but chatgpt suggested
+                                         * i import scanner not create a duplicate
+                                         * so yeah learned in a hard way, there's
+                                         * first time on everything
+                                         */
                                         revert = 1;
                                         locale = 1;
                                         break;
