@@ -1,29 +1,33 @@
 import java.util.Arrays;// for auto reset on my array, idk reddits suggestion
 import java.util.Scanner;
 
-class Patients_Data {
+class Patients_Data {// Patients Database
     String lastname;
     String firstname;
     String fullname;
-    int age;
+    int age = 0;
     String Bloodtype;
     int account_usage = 0;
     String[] account_lodge = new String[99];// 99 for max usage of the account that can carry
     int consultation_data_usage = 0;
     String[] consultation_data = new String[99];// for date purposes
+    /*
+     * Constructor Below
+     * Node pass na this
+     */
 
-    public void add_Patients_Data(String last, String first, int age) { // Constructor
+    public void add_Patients_Data(String last, String first, int age) {
         this.lastname = last;
         this.firstname = first;
         this.fullname = last + ", " + first;
         this.age = age;
-    }// Node pass na this
+    }
 
     public void show_PatientsData() {
         System.out.print("PATIENTS FULLNAME:\t" + fullname);
         System.out.println("\t---Details: First[ " + firstname + " ] Last [ " + lastname + " ]");
-        System.out.println("-- AGE:\t\t" + age);
-        System.out.println("-- BLOODTYPE:\t" + Bloodtype);
+        System.out.println("-- AGE:\t\t" + (age == 0 ? "[ NO DATA ] " : age));
+        System.out.println("-- BLOODTYPE:\t" + (Bloodtype == null ? "[ NO DATA ] " : Bloodtype));
     }
 
     public void Add_Bloodtype(String Blood) {
@@ -40,6 +44,21 @@ class Patients_Data {
         this.consultation_data_usage++;
     }
 
+    public boolean Scan_Consultation() {
+        int blanka = 0;
+        for (int i = 0; i < account_lodge.length; i++) {// scanning purposess
+            if (account_lodge[i] != null) {
+                if (account_lodge[i].equals("OPD") || account_lodge[i].equals("ER")) {
+                    blanka++;
+                }
+            }
+        }
+        if (blanka != 0)
+            return true;
+        else
+            return false;
+    }
+
     public void View_Conconsultation() {
         int OPD_storage[] = new int[90];
         int ER_storage[] = new int[90];
@@ -50,41 +69,55 @@ class Patients_Data {
         int er_count = 0;
         for (int i = 0; i < account_lodge.length; i++) {// scanning purposess
             if (account_lodge[i] != null) {
-                if (account_lodge[i].equals("OPD") || account_lodge[i].equals("ER")) {
-                    if (account_lodge[i].equals("OPD")) {
-                        OPD_storage[opd_count] = i;
-                        OPD_dateStorage[opd_count] = blanka;
-                        opd_count++;
-                    } else {
-                        ER_storage[er_count] = i;
-                        ER_dateStorage[opd_count] = blanka;
-                        er_count++;
-                    }
+                if (account_lodge[i].equals("OPD")) {
+                    OPD_storage[opd_count] = i;
+                    OPD_dateStorage[opd_count] = blanka;
+                    opd_count++;
+                    blanka++;
+                } else if (account_lodge[i].equals("ER")) {
+                    ER_storage[er_count] = i;
+                    ER_dateStorage[er_count] = blanka;
+                    er_count++;
                     blanka++;
                 }
+                // if (account_lodge[i].equals("OPD") || account_lodge[i].equals("ER")) {
+                // if (account_lodge[i].equals("OPD")) {
+                // OPD_storage[opd_count] = i;
+                // OPD_dateStorage[opd_count] = blanka;
+                // opd_count++;
+                // } else {
+                // ER_storage[er_count] = i;
+                // ER_dateStorage[opd_count] = blanka;
+                // er_count++;
+                // }
+                // blanka++;
+                // }
             }
         }
         if (blanka != 0) {
-            System.out.print("Consultation Status: " + blanka);
-            System.out.println("\tOPD Status");
+            System.out.println("Consultation Status: " + blanka);
+            System.out.print("\tOPD Status:");
             if (opd_count != 0) {
+                System.out.print("\t Found " + (er_count > 1 ? "Some" : "One") + " Data Recorded\n");
                 for (int i = 0; i < opd_count; i++) {
                     System.out.println(
                             "\t\t - " + account_lodge[OPD_storage[i]] + "\t" + consultation_data[OPD_dateStorage[i]]);
                 }
             } else {
-                System.out.println("\t\t - No Data Recorded");
+                System.out.print("\t No Data Recorded\n");
             }
-            System.out.println("\tER Status");
+            System.out.print("\tER Status:");
             if (er_count != 0) {
+                System.out.print("\t Found " + (er_count > 1 ? "Some" : "One") + " Data Recorded\n");
                 for (int i = 0; i < er_count; i++) {
                     System.out.println(
                             "\t\t - " + account_lodge[ER_storage[i]] + "\t" + consultation_data[ER_dateStorage[i]]);
                 }
             } else {
-                System.out.println("\t\t - No Data Recorded");
+                System.out.print("\t No Data Recorded\n");
             }
         }
+
     }
 
     public void show_PatientsHistory() {
@@ -155,7 +188,6 @@ public class Grilling extends ui {
         for (int crea = 0; crea < conclu_option.length; crea++) {
             clear();
             header();
-            System.err.println(conclu_option.length);
             hsa_register_Consulatation();
             switch (crea) {
                 case 2:
@@ -268,6 +300,16 @@ public class Grilling extends ui {
                         conclu_input[2] = patients[chosen_account - 1].age + "";
                         break;
                     }
+                } else {
+                    if (crea == 1) {
+                        clear();
+                        header();
+                        hsa_register_Consulatation();
+                        System.out.println("Enter Patient Name:\t" + conclu_input[1] + ", " + conclu_input[0]);
+                        System.out.println("Enter Patients Suffix[ex: Jr, Sr, etc]:\t");
+                        String suffix = command.nextLine();
+                        conclu_input[1] += " " + suffix;
+                    }
                 }
             }
         }
@@ -333,9 +375,7 @@ public class Grilling extends ui {
                         exit = true;
                         break;
                     case 3:
-                        exit = true;
-                        saveprocess = false;
-                        break;
+                        return;
                 }
                 if (saveprocess) {
                     patients[chosen_account - 1].Add_Account_Lodge(nan);
@@ -404,6 +444,86 @@ public class Grilling extends ui {
                 }
                 PriceDweller = 0;
             }
+        }
+    }
+
+    // View Consultation lodge
+    public static void consultation_function3(Scanner command) {// Function 3 is bugged
+        boolean showUtils = true;
+        int[][] index = new int[90][3];
+        int row = 0;
+        int column = 0;
+        int stotal = 0;
+
+        // Populate the index array based on available patients
+        for (int scanned = 0; scanned < patients.length; scanned++) {
+            if (patients[scanned] != null) {
+                if (patients[scanned].Scan_Consultation()) {
+                    index[column][row] = scanned + 1;
+                    row++;
+                    if (row >= 3) {
+                        row = 0;
+                        column++;
+                    }
+                    stotal++;
+                }
+            }
+        }
+        clear();
+        // System.out.println("!!Debugging purpose!!\nStatus:\t" + stotal + "\nRow\t" +
+        // row + "\nColumn:\t" + column);
+        sleep(1000);
+        if (stotal != 0) {
+            // Main loop for displaying and navigating pages
+            for (int i = 0; i <= column; i++) {
+                clear();
+                header();
+                // Display patients on the current page
+                for (int y : index[i]) {
+                    if (y != 0) {
+                        System.out.println("[ " + (y - 1) + " ]");
+                        patients[y - 1].show_PatientsData();
+                        patients[y - 1].View_Conconsultation();
+                        line();
+                    }
+                }
+
+                records_pages_indecator(showUtils, i, column);
+
+                // Get user input
+                System.err.print("\t[]:-->");
+                String input = command.nextLine();
+                char clad = input.charAt(0);
+                if (!showUtils && (clad == 'T' || clad == 't')) {// Toggle `showUtils` if 'T' or 't' is pressed
+                    showUtils = true;
+                }
+                // Page navigation handling
+                switch (clad) {
+                    case '1': // Next page
+                        if (i < column)
+                            i++;
+                        else
+                            System.out.println("No more pages.");
+                        break;
+                    case '2': // Previous page
+                        if (i > 0)
+                            i--;
+                        else
+                            System.out.println("Already on the first page.");
+                        break;
+                    case '3': // Exit consultation view
+                        return;
+                    default:
+                        System.out.println("Invalid command.");
+                }
+                sleep(1000);
+            }
+            sleep(1000);
+        } else {
+            clear();
+            header();
+            System.out.println("No Data is Present!!");
+            sleep(5000);
         }
     }
 
@@ -561,10 +681,10 @@ public class Grilling extends ui {
                                         locale = 1;
                                         break;
                                     case 3:
-
+                                        consultation_function3(command);
+                                        revert = 1;
+                                        locale = 1;
                                         break;
-                                    case 4:
-
                                 }
                                 break;
                             }

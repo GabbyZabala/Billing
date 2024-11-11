@@ -317,4 +317,28 @@ public class ui {
         }
         return true;
     }
+
+    public static void line() {
+        System.out.println("==================================================");
+    }
+
+    public static void records_pages_indecator(boolean showTools, int TotalStatus, int max_number) {
+        String[] stamp = { "Previous", "Next", "Exit" };
+        System.out.println("\nGuide tools: " + (showTools ? "^\t [ Press T to show Tools]" : "v"));
+        if (max_number != 0) {
+            if (showTools) {
+                for (int i = (TotalStatus != 0 || TotalStatus != max_number ? 0 : 1); i < stamp.length; i++) {
+                    // ang sakit mag dynamic ng display hays
+                    System.out.println("\t[ " + (i + 1) + " ]\t"
+                            + stamp[(TotalStatus != max_number ? i : (TotalStatus == 1 ? 0 : i))]);
+                    /*
+                     * naka redbull pala ako ngayon kaya kung gumana to
+                     * diko na sure kung pano to nangyare XDDD
+                     */
+                }
+            }
+        } else {
+            System.out.println("\t[ 3 ]\t" + stamp[2] + "\n");
+        }
+    }
 }
