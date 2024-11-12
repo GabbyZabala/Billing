@@ -60,64 +60,26 @@ class Patients_Data {// Patients Database
     }
 
     public void View_Conconsultation() {
-        int OPD_storage[] = new int[90];
-        int ER_storage[] = new int[90];
-        int OPD_dateStorage[] = new int[90];
-        int ER_dateStorage[] = new int[90];
-        int blanka = 0;
-        int opd_count = 0;
-        int er_count = 0;
-        for (int i = 0; i < account_lodge.length; i++) {// scanning purposess
+        int opdCount = 0, erCount = 0, vias = 0;
+        for (int i = 0; i < account_lodge.length; i++) {
             if (account_lodge[i] != null) {
                 if (account_lodge[i].equals("OPD")) {
-                    OPD_storage[opd_count] = i;
-                    OPD_dateStorage[opd_count] = blanka;
-                    opd_count++;
-                    blanka++;
+                    opdCount++;
+                    System.out.println("OPD - " + consultation_data[vias]);
+                    vias++;
                 } else if (account_lodge[i].equals("ER")) {
-                    ER_storage[er_count] = i;
-                    ER_dateStorage[er_count] = blanka;
-                    er_count++;
-                    blanka++;
+                    erCount++;
+                    System.out.println("ER - " + consultation_data[vias]);
+                    vias++;
                 }
-                // if (account_lodge[i].equals("OPD") || account_lodge[i].equals("ER")) {
-                // if (account_lodge[i].equals("OPD")) {
-                // OPD_storage[opd_count] = i;
-                // OPD_dateStorage[opd_count] = blanka;
-                // opd_count++;
-                // } else {
-                // ER_storage[er_count] = i;
-                // ER_dateStorage[opd_count] = blanka;
-                // er_count++;
-                // }
-                // blanka++;
-                // }
             }
         }
-        if (blanka != 0) {
-            System.out.println("Consultation Status: " + blanka);
-            System.out.print("\tOPD Status:");
-            if (opd_count != 0) {
-                System.out.print("\t Found " + (er_count > 1 ? "Some" : "One") + " Data Recorded\n");
-                for (int i = 0; i < opd_count; i++) {
-                    System.out.println(
-                            "\t\t - " + account_lodge[OPD_storage[i]] + "\t" + consultation_data[OPD_dateStorage[i]]);
-                }
-            } else {
-                System.out.print("\t No Data Recorded\n");
-            }
-            System.out.print("\tER Status:");
-            if (er_count != 0) {
-                System.out.print("\t Found " + (er_count > 1 ? "Some" : "One") + " Data Recorded\n");
-                for (int i = 0; i < er_count; i++) {
-                    System.out.println(
-                            "\t\t - " + account_lodge[ER_storage[i]] + "\t" + consultation_data[ER_dateStorage[i]]);
-                }
-            } else {
-                System.out.print("\t No Data Recorded\n");
-            }
+        if (opdCount == 0) {
+            System.out.println("No OPD data recorded.");
         }
-
+        if (erCount == 0) {
+            System.out.println("No ER data recorded.");
+        }
     }
 
     public void show_PatientsHistory() {
@@ -131,7 +93,7 @@ class Patients_Data {// Patients Database
                     if (lata != null) {
                         System.out.print("\n\tActivity Log: " + lata);
                         if (lata.equals("OPD") || lata.equals("ER")) {
-                            System.err.print("\tDate: " + consultation_data[con] + "\n");
+                            System.out.println("\tDate: " + consultation_data[con]);
                             con++;
                         }
                         System.err.println(
@@ -144,6 +106,7 @@ class Patients_Data {// Patients Database
 }
 
 public class Grilling extends ui {
+    public static boolean DebugMode = true;// turn off this function if your gonna use it for presentation
     // needed to be a global variable
     public static boolean noterror_dis = true;
     public static Patients_Data[] patients = new Patients_Data[90];// for records and data
@@ -219,45 +182,52 @@ public class Grilling extends ui {
             }
             if (crea != 2 && patients_avalable != 0) {// checking for duplicates
                 System.out.print("Searching the database/");
-                for (int i = 0; i < patients.length; i++) {
-                    if (i < 5) {
+                for (int patientID = 0; patientID < patients.length; patientID++) {
+                    if (patientID < 5) {
                         System.out.print(".");
                     }
                     String comparison = "";// compares if action found~~
                     switch (crea) {
                         case 1: // Use the patient's last name for comparison
-                            if (patients[i].lastname != null) {
-                                comparison = patients[i].lastname;
+                            if (patients[patientID].lastname != null) {
+                                comparison = patients[patientID].lastname;
                                 System.out.println(comparison);
                             }
                             break;
                         default: // Default to first name
-                            if (patients[i].firstname != null) {
-                                comparison = patients[i].firstname;
+                            if (patients[patientID].firstname != null) {
+                                comparison = patients[patientID].firstname;
                                 System.out.println(comparison);
                             }
                             break;
                     }
                     if (comparison != null) {
                         // for debugging purposes!!!
-                        // System.out.println("Comparing patient: " + comparison);
-                        // System.out.println("With input: "
-                        // + (conclu_input[crea] != null ? conclu_input[crea]
-                        // : "null"));
-                        // sleep(5000);
+                        if (DebugMode) {
+                            System.out.print(
+                                    patientID + "Comparing patient: " + (comparison != null ? comparison : "null"));
+                            System.out.print("With input: "
+                                    + (conclu_input[crea] != null ? conclu_input[crea]
+                                            : "null")
+                                    + "\n");
+                        }
                         // Check if the comparison value matches the input
                         if (comparison.equalsIgnoreCase(conclu_input[crea])) {
-                            user[user_count] = i;// sana diako mamali sakit sa ulo mag
-                                                 // recheck ng code XD
+                            user[user_count] = patientID;// sana diako mamali sakit sa ulo mag
+                            // recheck ng code XD
                             user_count++;
                             Patient_found = true;
+                            System.err.println("\tFound");
                         }
                     }
                 }
                 String casolore = (user_count > 2 ? "some" : "is");
                 String status = (Patient_found ? "Found" : "Not Found");
                 System.out.print("Patient " + casolore + " " + status);
-                sleep(1000);
+                if (DebugMode)
+                    command.nextLine();
+                else
+                    sleep(1000);
 
             }
             if (Patient_found) {
@@ -266,9 +236,9 @@ public class Grilling extends ui {
                 boolean lanml = false;
                 while (true) {
                     System.err.println("Input the patient you want to choose");
-                    for (int i = 0; i < user_count; i++) {
-                        System.out.println("[ " + i + " ]");
-                        patients[user[i]].show_PatientsData();
+                    for (int foundPatientData = 0; foundPatientData < user_count; foundPatientData++) {
+                        System.out.println("[ " + foundPatientData + " ]");
+                        patients[user[foundPatientData]].show_PatientsData();
                     }
                     System.out.print("Pls Enter The Patient or type [" + user_count
                             + "] to cancel the sel3ction\n\t:-->");
@@ -279,8 +249,8 @@ public class Grilling extends ui {
                             lanml = true;
                             Arrays.fill(user, 0);// for reset purposes the rest here
                             user_count = 0;
+                            Patient_found = false;
                         }
-                        Patient_found = false;
                         break;
                     } catch (NumberFormatException e) {
                         System.out.println("retry handling./.");
@@ -316,19 +286,19 @@ public class Grilling extends ui {
         String[] comrad = new String[3];
         String[] qoutes = { "Day", "Month", "Year" };
         String fname = conclu_input[1] + ", " + conclu_input[0];
-        for (int i = 0; i < comrad.length; i++) {
+        for (int dateLine = 0; dateLine < comrad.length; dateLine++) {
             clear();
             header();
             hsa_register_Consulatation();
             System.out.print("Patient Name:\t" + fname
                     + "\nPatient Age:\t" + conclu_input[2]
                     + "\nEnter the Layout in this order[ Day/Month/Year] type \"~\" to go back in date\nEnter "
-                    + qoutes[i] + ":\t");
-            switch (i) {
+                    + qoutes[dateLine] + ":\t");
+            switch (dateLine) {
                 case 2:
-                    System.err.print(comrad[i - 2] + "/");
+                    System.err.print(comrad[dateLine - 2] + "/");
                 case 1:
-                    System.err.print(comrad[i - 1] + "/");
+                    System.err.print(comrad[dateLine - 1] + "/");
                 default:
                     break;
             }
@@ -336,11 +306,10 @@ public class Grilling extends ui {
                 String Date = command.nextLine();
                 int number_checker = Integer.parseInt(Date);
                 System.out.print(number_checker);
-                comrad[i] = Date;
+                comrad[dateLine] = Date;
             } catch (NumberFormatException e) {
-                if (i != 0) {
-                    i--;
-                    i--;
+                if (dateLine != 0) {
+                    dateLine -= 2;
                 }
             }
         }
@@ -378,6 +347,14 @@ public class Grilling extends ui {
                         return;
                 }
                 if (saveprocess) {
+                    if (!Patient_found) {// registers new patients
+                        if (patients[patients_avalable].equals(null)) {
+                            chosen_account = patients_avalable + 1;
+                            patients_avalable++;
+                        }
+                        int addy = Integer.parseInt(conclu_input[2]);
+                        patients[chosen_account - 1].add_Patients_Data(conclu_input[1], conclu_input[0], addy);
+                    }
                     patients[chosen_account - 1].Add_Account_Lodge(nan);
                     patients[chosen_account - 1].Add_Consultation(nano);
                 }
@@ -389,16 +366,13 @@ public class Grilling extends ui {
                                             // eh
             }
         }
-
-        if (!Patient_found) {// registers new patients
-            if (patients[patients_avalable].equals(null)) {
-                chosen_account = patients_avalable;
+        if (!Patient_found && patients_avalable == 0) {// registers new patients
+            if (patients[patients_avalable] == null) {
+                chosen_account = patients_avalable + 1;
+                patients_avalable++;
             }
-            patients_avalable++;
             int addy = Integer.parseInt(conclu_input[2]);
-            patients[chosen_account - 1].add_Patients_Data(conclu_input[1],
-                    conclu_input[0],
-                    addy);
+            patients[chosen_account - 1].add_Patients_Data(conclu_input[1], conclu_input[0], addy);
         }
         Arrays.fill(conclu_input, null);
     }
