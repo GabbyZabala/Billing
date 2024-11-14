@@ -3,6 +3,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "Grilling_Bruteforce",
+      "request": "launch",
+      "mainClass": "Grilling_Bruteforce",
+      "projectName": "Billing_f24ef731"
+    },
+    {
+      "type": "java",
       "name": "Testing_Array",
       "request": "launch",
       "mainClass": "Testing_Array",

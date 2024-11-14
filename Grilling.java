@@ -347,16 +347,8 @@ public class Grilling extends ui {
                         return;
                 }
                 if (saveprocess) {
-                    if (!Patient_found) {// registers new patients
-                        if (patients[patients_avalable].equals(null)) {
-                            chosen_account = patients_avalable + 1;
-                            patients_avalable++;
-                        }
-                        int addy = Integer.parseInt(conclu_input[2]);
-                        patients[chosen_account - 1].add_Patients_Data(conclu_input[1], conclu_input[0], addy);
-                    }
-                    patients[chosen_account - 1].Add_Account_Lodge(nan);
-                    patients[chosen_account - 1].Add_Consultation(nano);
+                    patients[chosen_account].Add_Account_Lodge(nan);
+                    patients[chosen_account].Add_Consultation(nano);
                 }
                 if (exit) {
                     break;
@@ -366,13 +358,13 @@ public class Grilling extends ui {
                                             // eh
             }
         }
-        if (!Patient_found && patients_avalable == 0) {// registers new patients
+        if (!Patient_found) {// registers new patients
             if (patients[patients_avalable] == null) {
-                chosen_account = patients_avalable + 1;
-                patients_avalable++;
+                chosen_account = patients_avalable;
             }
+            patients_avalable++;
             int addy = Integer.parseInt(conclu_input[2]);
-            patients[chosen_account - 1].add_Patients_Data(conclu_input[1], conclu_input[0], addy);
+            patients[chosen_account].add_Patients_Data(conclu_input[1], conclu_input[0], addy);
         }
         Arrays.fill(conclu_input, null);
     }

@@ -47,6 +47,13 @@ public class ui {
         }
     }
 
+    public static void edit_ConsultationBrute(int type1toremoveexit) {
+        String[] choices = { "Consultation OPD", "Consultation ER", "Exit" };
+        for (int i = 0; i < choices.length - type1toremoveexit; i++) {
+            System.out.println((i + 1) + ": " + choices[i]);
+        }
+    }
+
     // Cosultation Service END here
     public static void laboratory_Services() {// Data number: 2
         String[] choices = { "Register New Laboratory Test", "Edit Laboratory Pricing", "View Laboratory Records",
