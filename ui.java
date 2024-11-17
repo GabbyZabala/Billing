@@ -64,11 +64,24 @@ public class ui {
         }
     }
 
+    // Cosultation Service END here
+    public static void laboratory_Servicesbrute() {// Data number: 2
+        String[] choices = { "Register New Laboratory Test", "Edit Laboratory Pricing", "View Laboratory Records",
+                "Back to Main Menu" };
+        System.out.println("----------Laboratory Services---------");
+        for (int i = 0; i < choices.length; i++) {
+            System.out.println((i + 1) + ": " + choices[i]);
+        }
+    }
+
     // LAB SERVICE START HERE
+    public static void hsa_newLaboratoryTest() {
+        System.out.println("\n------------ Register New Laboratory Test ------------");
+    }
+
     public static void ls_newLaboratorytest() {
         String[] choices = { "Blood Chemistry", "Hermatology", "Clinical Microscopy", "Bacteriology",
                 "Blood Bank and Serology", "Back to Laboratory Services Menu" };
-        System.out.println("----------Register New Laboratory Test---------");
         for (int i = 0; i < choices.length; i++) {
             System.out.println((i + 1) + ": " + choices[i]);
         }
