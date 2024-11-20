@@ -7,8 +7,7 @@ import java.util.Scanner;
      * github link: https://github.com/GabbyZabala/Billing
      * just click on the file>BLAME
      * 
-     * di ko muna aad yung advance tas parang ito nalng yung project namin XD
-     * nag sesecond thougths na ako eh XD
+     * error lab data handling need to be proccess, saving seems errer 
      */
 public class Grilling_Bruteforce extends ui {
     static Scanner scanner = new Scanner(System.in);
@@ -182,143 +181,257 @@ public class Grilling_Bruteforce extends ui {
     }
 
     public static void registerLaboratoryTest() {
-        clear();
-        hsa_newLaboratoryTest();
-        System.out.print("Enter Patient Name: ");
-        String name = scanner.nextLine();
-
-        System.out.print("Enter Patient Age: ");
-        int age = scanner.nextInt();
-        scanner.nextLine(); // Consume newline
-
-        // Display available tests
-        System.out.println("\nAvailable Laboratory Tests:");
-        ls_newLaboratorytest();
-        System.out.print("\nEnter test choice: ");
-        int testChoice = scanner.nextInt();
-        scanner.nextLine(); // Consume newline
-        int Tester = switch (testChoice) {
-            case 1 -> regLabBloodChemistry();
-            case 2 -> regLabHematology();
-            case 3 -> regLabClinicalMicroscopyy();
-            case 4 -> regLabBacteriology();
-            case 5 -> regLabBloodBankandSerology();
-            default -> 1;
-        };
-
-        String test = labPrices.keySet().toArray(new String[0])[Tester - 1];
-        double fee = labPrices.get(test);
-
-        System.out.println("\nSelected Test: " + test + " | Fee: ₱" + fee);
-
-        // Registration complete
-        labRecords.add("Name: " + name + ", Age: " + age + ", Test: " + test + ", Fee: ₱" + fee);
-        System.out.println("\nRegistration Complete!");
-        sleep(3000);
-    }
-
-    public static int regLabBloodChemistry() {
         do {
-            int counting = 1;
             clear();
-            header();
             hsa_newLaboratoryTest();
-            for (String blockChategory : labPrices.keySet()) {
-                if (blockChategory.matches("^Blood Chemistry.*")) {
-                    System.out.printf("%d. %s...........................\\t₱ %.2f\n", counting++, blockChategory,
-                            labPrices.get(blockChategory));
-                }
-            }
 
-            System.out.print("\nEnter Choice:\t");
-            int blockChoice = scanner.nextInt();
-            scanner.nextLine();
-            if (blockChoice < counting + 1) {
-                return blockChoice + 1;
+            // Patient Information
+            System.out.print("Enter Patient Name: ");
+            String name = scanner.nextLine();
+
+            System.out.print("Enter Patient Age: ");
+            int age = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+
+            // Display available tests
+            System.out.println("\nAvailable Laboratory Tests:");
+            ls_newLaboratorytest();
+            System.out.print("\nEnter test choice: ");
+            int testChoice = scanner.nextInt();
+
+            // Select test category and return selected test
+            int testIndex = switch (testChoice) {
+                case 1 -> regLabBloodChemistry(name, age);
+                case 2 -> regLabHematology(name, age);
+                case 3 -> regLabClinicalMicroscopyy(name, age);
+                case 4 -> regLabBacteriology(name, age);
+                case 5 -> regLabBloodBankandSerology(name, age);
+                default -> -1; // Invalid choice
+            };
+
+            if (testIndex == -1) {
+                System.out.println("\nInvalid Test Choice! Please try again.");
+                sleep(3000);
+                return; // Exit
+            } else {
+                return;
             }
         } while (true);
     }
 
-    public static int regLabHematology() {
+    public static int regLabBloodChemistry(String PatientName, int PatientAge) {
         do {
-            int counting = 1;
             clear();
             header();
             hsa_newLaboratoryTest();
-            for (String blockChategory : labPrices.keySet()) {
-                if (blockChategory.matches("^Hematology.*")) {
-                    System.out.printf("%d. %s...........................\t₱ %.2f\n", counting++, blockChategory,
-                            labPrices.get(blockChategory));
+
+            // Filtered list to store valid test names
+            ArrayList<String> validTests = new ArrayList<>();// storage for found samples
+            int counting = 1;
+
+            // Display valid tests with correct numbering
+            for (String blockCategory : labPrices.keySet()) {
+                if (blockCategory.matches("^Blood Chemistry.*")) {
+                    System.out.printf("%d. %s...........................\t₱ %.2f\n", counting++, blockCategory,
+                            labPrices.get(blockCategory));
+                    validTests.add(blockCategory);// adds the data to make to propely structured
                 }
             }
+
             System.out.print("\nEnter Choice:\t");
             int blockChoice = scanner.nextInt();
-            scanner.nextLine();
-            if (blockChoice < counting + 1) {
-                return blockChoice + 10;
+            scanner.nextLine(); // Consume newline
+
+            if (blockChoice >= 1 && blockChoice <= validTests.size()) {
+                // Get selected test details
+                String test = validTests.get(blockChoice - 1);
+                double fee = labPrices.get(test);
+
+                // Display selected test and fee
+                clear();
+                System.out.println("\nSelected Test: " + test + " | Fee: ₱" + fee);
+
+                // Register test
+                labRecords.add("Name: " + PatientName + ", Age: " + PatientAge + ", Test: " + test + ", Fee: ₱" + fee);
+                System.out.println("\nRegistration Complete!");
+                sleep(3000);
+                return blockChoice; // Return the choice index
+            } else {
+                System.out.println("Invalid Choice! Please try again.");
+                sleep(2000);
+            }
+        } while (true); // Repeat until a valid choice is made
+    }
+
+    public static int regLabHematology(String PatientName, int PatientAge) {
+        do {
+            clear();
+            header();
+            hsa_newLaboratoryTest();
+
+            // Filtered list to store valid test names
+            ArrayList<String> validTests = new ArrayList<>();// storage for found samples
+            int counting = 1;
+
+            // Display valid tests with correct numbering
+            for (String blockCategory : labPrices.keySet()) {
+                if (blockCategory.matches("^Hematology.*")) {
+                    System.out.printf("%d. %s...........................\t₱ %.2f\n", counting++, blockCategory,
+                            labPrices.get(blockCategory));
+                    validTests.add(blockCategory);// adds the data to make to propely structured
+                }
+            }
+
+            System.out.print("\nEnter Choice:\t");
+            int blockChoice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+
+            if (blockChoice >= 1 && blockChoice <= validTests.size()) {
+                // Get selected test details
+                String test = validTests.get(blockChoice - 1);
+                double fee = labPrices.get(test);
+
+                // Display selected test and fee
+                clear();
+                System.out.println("\nSelected Test: " + test + " | Fee: ₱" + fee);
+
+                // Register test
+                labRecords.add("Name: " + PatientName + ", Age: " + PatientAge + ", Test: " + test + ", Fee: ₱" + fee);
+                System.out.println("\nRegistration Complete!");
+                sleep(3000);
+                return blockChoice; // Return the choice index
+            } else {
+                System.out.println("Invalid Choice! Please try again.");
+                sleep(2000);
+            }
+        } while (true); // Repeat until a valid choice is made
+    }
+
+    public static int regLabClinicalMicroscopyy(String PatientName, int PatientAge) {
+        do {
+            clear();
+            header();
+            hsa_newLaboratoryTest();
+            // Filtered list to store valid test names
+            ArrayList<String> validTests = new ArrayList<>();// storage for found samples
+            int counting = 1;
+
+            // Display valid tests with correct numbering
+            for (String blockCategory : labPrices.keySet()) {
+                if (blockCategory.matches("^Clinical Microscopy.*")) {
+                    System.out.printf("%d. %s...........................\t₱ %.2f\n", counting++, blockCategory,
+                            labPrices.get(blockCategory));
+                    validTests.add(blockCategory);// adds the data to make to propely structured
+                }
+            }
+
+            System.out.print("\nEnter Choice:\t");
+            int blockChoice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+
+            if (blockChoice >= 1 && blockChoice <= validTests.size()) {
+                // Get selected test details
+                String test = validTests.get(blockChoice - 1);
+                double fee = labPrices.get(test);
+
+                // Display selected test and fee
+                clear();
+                System.out.println("\nSelected Test: " + test + " | Fee: ₱" + fee);
+
+                // Register test
+                labRecords.add("Name: " + PatientName + ", Age: " + PatientAge + ", Test: " + test + ", Fee: ₱" + fee);
+                System.out.println("\nRegistration Complete!");
+                sleep(3000);
+                return blockChoice; // Return the choice index
+            } else {
+                System.out.println("Invalid Choice! Please try again.");
+                sleep(2000);
             }
         } while (true);
     }
 
-    public static int regLabClinicalMicroscopyy() {
+    public static int regLabBacteriology(String PatientName, int PatientAge) {
         do {
-            int counting = 1;
             clear();
             header();
             hsa_newLaboratoryTest();
-            for (String blockChategory : labPrices.keySet()) {
-                if (blockChategory.matches("^Clinical Microscopy.*")) {
-                    System.out.printf("%d. %s...........................\t₱ %.2f\n", counting++, blockChategory,
-                            labPrices.get(blockChategory));
+            // Filtered list to store valid test names
+            ArrayList<String> validTests = new ArrayList<>();// storage for found samples
+            int counting = 1;
+
+            // Display valid tests with correct numbering
+            for (String blockCategory : labPrices.keySet()) {
+                if (blockCategory.matches("^Bacteriology.*")) {
+                    System.out.printf("%d. %s...........................\t₱ %.2f\n", counting++, blockCategory,
+                            labPrices.get(blockCategory));
+                    validTests.add(blockCategory);// adds the data to make to propely structured
                 }
             }
+
             System.out.print("\nEnter Choice:\t");
             int blockChoice = scanner.nextInt();
-            scanner.nextLine();
-            if (blockChoice < counting + 1) {
-                return blockChoice + 16;
+            scanner.nextLine(); // Consume newline
+
+            if (blockChoice >= 1 && blockChoice <= validTests.size()) {
+                // Get selected test details
+                String test = validTests.get(blockChoice - 1);
+                double fee = labPrices.get(test);
+
+                // Display selected test and fee
+                clear();
+                System.out.println("\nSelected Test: " + test + " | Fee: ₱" + fee);
+
+                // Register test
+                labRecords.add("Name: " + PatientName + ", Age: " + PatientAge + ", Test: " + test + ", Fee: ₱" + fee);
+                System.out.println("\nRegistration Complete!");
+                sleep(3000);
+                return blockChoice; // Return the choice index
+            } else {
+                System.out.println("Invalid Choice! Please try again.");
+                sleep(2000);
             }
         } while (true);
     }
 
-    public static int regLabBacteriology() {
+    public static int regLabBloodBankandSerology(String PatientName, int PatientAge) {
         do {
-            int counting = 1;
             clear();
             header();
             hsa_newLaboratoryTest();
-            for (String blockChategory : labPrices.keySet()) {
-                if (blockChategory.matches("^Bacteriology.*")) {
-                    System.out.printf("%d. %s...........................\t₱ %.2f\n", counting++, blockChategory,
-                            labPrices.get(blockChategory));
-                }
-            }
-            System.out.print("\nEnter Choice:\t");
-            int blockChoice = scanner.nextInt();
-            scanner.nextLine();
-            if (blockChoice < counting + 1) {
-                return blockChoice + 20;
-            }
-        } while (true);
-    }
+            // Filtered list to store valid test names
+            ArrayList<String> validTests = new ArrayList<>();// storage for found samples
+            int counting = 1;
 
-    public static int regLabBloodBankandSerology() {
-        do {
-            int counting = 1;
-            clear();
-            header();
-            hsa_newLaboratoryTest();
-            for (String blockChategory : labPrices.keySet()) {
-                if (blockChategory.matches("^Blood Bank and Serology.*")) {
-                    System.out.printf("%d. %s...........................\t₱ %.2f\n", counting++, blockChategory,
-                            labPrices.get(blockChategory));
+            // Display valid tests with correct numbering
+            for (String blockCategory : labPrices.keySet()) {
+                if (blockCategory.matches("^Blood Bank and Serology..*")) {
+                    System.out.printf("%d. %s...........................\t₱ %.2f\n", counting++, blockCategory,
+                            labPrices.get(blockCategory));
+                    validTests.add(blockCategory);// adds the data to make to propely structured
                 }
             }
+
             System.out.print("\nEnter Choice:\t");
             int blockChoice = scanner.nextInt();
-            scanner.nextLine();
-            if (blockChoice < counting + 1) {
-                return blockChoice + 26;
+            scanner.nextLine(); // Consume newline
+
+            if (blockChoice >= 1 && blockChoice <= validTests.size()) {
+                // Get selected test details
+                String test = validTests.get(blockChoice - 1);
+                double fee = labPrices.get(test);
+
+                // Display selected test and fee
+                clear();
+                System.out.println("\nSelected Test: " + test + " | Fee: ₱" + fee);
+
+                // Register test
+                labRecords.add("Name: " + PatientName + ", Age: " + PatientAge + ", Test: " + test + ", Fee: ₱" + fee);
+                System.out.println("\nRegistration Complete!");
+                sleep(3000);
+                return blockChoice; // Return the choice index
+            } else {
+                System.out.println("Invalid Choice! Please try again.");
+                sleep(2000);
             }
         } while (true);
     }
