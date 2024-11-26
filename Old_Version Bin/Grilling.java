@@ -142,6 +142,187 @@ public class Grilling extends ui {
 
     public static Pricing priceof = new Pricing();
 
+    public static void Display_Screen(int screen) {// This void is for display Properties
+        boolean tring;
+        tring = Display_Properties(screen); // ang haba kasi nung display_propeties kaya ginawan ko ng paraan
+        if (!tring) { // ang sakit kasi sa kamay mag scroll up eh XD
+            noterror_dis = false;
+        }
+    }
+
+    public static void main(String[] args) {
+        try (Scanner command = new Scanner(System.in)) {
+            clear();
+            loading_Animation();
+            // animation("Loading.....");
+            clear();
+            Boolean loop = true, force = noterror_dis;
+            int locale = 0;// Display location replant
+            int revert = 0;// Function access will be added here start layout | layer 1 | layer 2| layer 3
+                           // | so on
+            // function
+            int Terminate = 0;
+            while (loop) {
+                boolean errorblocker = false;
+                clear();
+                System.err.println("AppStatus:/Local/" + locale + "/rev/" + revert + "/Ter/" + Terminate + "/acc/"
+                        + patients_avalable);
+                header();
+                Display_Screen(locale);
+                System.err.print("\tEnter choice: -->\t");
+                if (revert % 10 != 0 || revert == 0) {
+                    try {
+                        String Terminated = command.nextLine();
+                        Terminate = Integer.parseInt(Terminated);
+                    } catch (NumberFormatException e) {
+                        errorblocker = true;
+                    }
+                }
+                if (!errorblocker) {
+                    switch (revert) {
+                        case 0:
+                            if (force) {
+                                switch (Terminate) {
+                                    case 1:// goto Consultation Service
+                                    case 2:// goto laboratory
+                                    case 3:// goto room and admin
+                                    case 4:
+                                        locale = Terminate;// transaction records
+                                        revert = Terminate;
+                                        break;
+                                    case 5:// exit
+                                        clear();
+                                        sleep(1000);
+                                        animation("Exiting programm...");
+                                        loop = false;
+                                        break;
+                                    default:// start ka dito lowbat na me
+                                        locale = 0;
+                                        revert = 0;
+                                        break;
+                                }
+                                break;
+                            }
+                        case 1:// goto Consultation Service
+                            if (force) {
+                                switch (Terminate) {
+                                    case 1:
+                                    case 2:
+                                    case 3:
+                                        locale = Terminate + 10;
+                                        revert = 10;
+                                        break;
+                                    case 4:
+                                        locale = 0;
+                                        revert = 0;
+                                    default:
+                                        break;
+                                }
+                                break;
+                            }
+                        case 2:
+                            if (force) {
+                                switch (Terminate) {
+                                    case 1:
+                                        locale = Terminate + 20;
+                                        revert = 20;
+                                        break;
+                                    case 2:
+                                    case 3:
+                                        System.err.println("\n No Variables is included here yet...");
+                                        sleep(1000);
+                                        break;
+                                    case 4:
+                                        locale = 0 // i just realize i have free will whawhahwhawhwhahwa
+                                        ;// whaaaa XD
+                                        revert = 0 // no one can stop me hahhahahaha
+                                        ;// LMAO
+                                    default: // la ako magawa bahang baha dito sa bahay XD
+                                        break;
+                                }
+                                break;
+                            }
+                        case 3:
+                            if (force) {
+                                switch (Terminate) {
+                                    case 1:
+                                    case 2:
+                                        locale = Terminate + 30;
+                                        revert = 30;
+                                        break;
+                                    case 3:
+                                        System.err.println("\n No Variables is included here yet...");
+                                        sleep(1000);
+                                        break;
+                                    case 4:
+                                        locale = 0;
+                                        revert = 0;
+                                }
+                                break;
+                            }
+                        case 4:
+                            if (force) {
+                                switch (Terminate) {
+                                    case 1:
+                                    case 2:
+                                    case 3:
+                                        locale = Terminate + 40;
+                                        revert = 40;
+                                        break;
+                                    case 4:
+                                        locale = 0;
+                                        revert = 0;
+                                }
+                                break;
+                            }
+                        case 10:// Registration Functions heehe
+                            if (force) {
+                                switch (Terminate) {
+                                    case 1: // Register new consultation
+                                        consultation_function1(command);
+                                        locale = 1;
+                                        revert = 1;
+                                        break;
+                                    case 2:
+                                        consultation_function2(command);
+                                        /*
+                                         * command imported due to some error that
+                                         * i didnt know that but chatgpt suggested
+                                         * i import scanner not create a duplicate
+                                         * so yeah learned in a hard way, there's
+                                         * first time on everything
+                                         */
+                                        revert = 1;
+                                        locale = 1;
+                                        break;
+                                    case 3:
+                                        consultation_function3(command);
+                                        revert = 1;
+                                        locale = 1;
+                                        break;
+                                }
+                                break;
+                            }
+                        case 20:// Laborartory Functions
+                            break;
+                        case 30:// Room and Acdmission Functions
+                            break;
+                        case 40:// Records Functions
+                            break;
+                        default:
+                            noterror_dis = false;
+                            break;
+                    }
+                }
+                clear(); // Clear the console
+                animation("Loading.....");
+            }
+        }
+        // this problem here fix,
+        // command.close();// happy now COMPILER ^v^ kainis pangit tingan namay yello eh
+        // XD
+    }
+
     // New registration
     public static void consultation_function1(Scanner command) {// dont judge me i just learned this one ^v^ - Kurt
         String[] conclu_option = { "FirstName", "LastName", "Age" };// Optional loopers
@@ -493,184 +674,4 @@ public class Grilling extends ui {
         }
     }
 
-    public static void Display_Screen(int screen) {// This void is for display Properties
-        boolean tring;
-        tring = Display_Properties(screen); // ang haba kasi nung display_propeties kaya ginawan ko ng paraan
-        if (!tring) { // ang sakit kasi sa kamay mag scroll up eh XD
-            noterror_dis = false;
-        }
-    }
-
-    public static void main(String[] args) {
-        try (Scanner command = new Scanner(System.in)) {
-            clear();
-            loading_Animation();
-            // animation("Loading.....");
-            clear();
-            Boolean loop = true, force = noterror_dis;
-            int locale = 0;// Display location replant
-            int revert = 0;// Function access will be added here start layout | layer 1 | layer 2| layer 3
-                           // | so on
-            // function
-            int Terminate = 0;
-            while (loop) {
-                boolean errorblocker = false;
-                clear();
-                System.err.println("AppStatus:/Local/" + locale + "/rev/" + revert + "/Ter/" + Terminate + "/acc/"
-                        + patients_avalable);
-                header();
-                Display_Screen(locale);
-                System.err.print("\tEnter choice: -->\t");
-                if (revert % 10 != 0 || revert == 0) {
-                    try {
-                        String Terminated = command.nextLine();
-                        Terminate = Integer.parseInt(Terminated);
-                    } catch (NumberFormatException e) {
-                        errorblocker = true;
-                    }
-                }
-                if (!errorblocker) {
-                    switch (revert) {
-                        case 0:
-                            if (force) {
-                                switch (Terminate) {
-                                    case 1:// goto Consultation Service
-                                    case 2:// goto laboratory
-                                    case 3:// goto room and admin
-                                    case 4:
-                                        locale = Terminate;// transaction records
-                                        revert = Terminate;
-                                        break;
-                                    case 5:// exit
-                                        clear();
-                                        sleep(1000);
-                                        animation("Exiting programm...");
-                                        loop = false;
-                                        break;
-                                    default:// start ka dito lowbat na me
-                                        locale = 0;
-                                        revert = 0;
-                                        break;
-                                }
-                                break;
-                            }
-                        case 1:// goto Consultation Service
-                            if (force) {
-                                switch (Terminate) {
-                                    case 1:
-                                    case 2:
-                                    case 3:
-                                        locale = Terminate + 10;
-                                        revert = 10;
-                                        break;
-                                    case 4:
-                                        locale = 0;
-                                        revert = 0;
-                                    default:
-                                        break;
-                                }
-                                break;
-                            }
-                        case 2:
-                            if (force) {
-                                switch (Terminate) {
-                                    case 1:
-                                        locale = Terminate + 20;
-                                        revert = 20;
-                                        break;
-                                    case 2:
-                                    case 3:
-                                        System.err.println("\n No Variables is included here yet...");
-                                        sleep(1000);
-                                        break;
-                                    case 4:
-                                        locale = 0 // i just realize i have free will whawhahwhawhwhahwa
-                                        ;// whaaaa XD
-                                        revert = 0 // no one can stop me hahhahahaha
-                                        ;// LMAO
-                                    default: // la ako magawa bahang baha dito sa bahay XD
-                                        break;
-                                }
-                                break;
-                            }
-                        case 3:
-                            if (force) {
-                                switch (Terminate) {
-                                    case 1:
-                                    case 2:
-                                        locale = Terminate + 30;
-                                        revert = 30;
-                                        break;
-                                    case 3:
-                                        System.err.println("\n No Variables is included here yet...");
-                                        sleep(1000);
-                                        break;
-                                    case 4:
-                                        locale = 0;
-                                        revert = 0;
-                                }
-                                break;
-                            }
-                        case 4:
-                            if (force) {
-                                switch (Terminate) {
-                                    case 1:
-                                    case 2:
-                                    case 3:
-                                        locale = Terminate + 40;
-                                        revert = 40;
-                                        break;
-                                    case 4:
-                                        locale = 0;
-                                        revert = 0;
-                                }
-                                break;
-                            }
-                        case 10:// Registration Functions heehe
-                            if (force) {
-                                switch (Terminate) {
-                                    case 1: // Register new consultation
-                                        consultation_function1(command);
-                                        locale = 1;
-                                        revert = 1;
-                                        break;
-                                    case 2:
-                                        consultation_function2(command);
-                                        /*
-                                         * command imported due to some error that
-                                         * i didnt know that but chatgpt suggested
-                                         * i import scanner not create a duplicate
-                                         * so yeah learned in a hard way, there's
-                                         * first time on everything
-                                         */
-                                        revert = 1;
-                                        locale = 1;
-                                        break;
-                                    case 3:
-                                        consultation_function3(command);
-                                        revert = 1;
-                                        locale = 1;
-                                        break;
-                                }
-                                break;
-                            }
-                        case 20:// Laborartory Functions
-                            break;
-                        case 30:// Room and Acdmission Functions
-                            break;
-                        case 40:// Records Functions
-                            break;
-                        default:
-                            noterror_dis = false;
-                            break;
-                    }
-                }
-                clear(); // Clear the console
-                animation("Loading.....");
-            }
-        }
-        // this problem here fix,
-        // command.close();// happy now COMPILER ^v^ kainis pangit tingan namay yello eh
-        // XD
-    }
 }
