@@ -1,8 +1,8 @@
 class Patients_Database {// Patients Database
-    private static int num = 0;
-    private int PatientID;
-    private String lastname;
-    private String firstname;
+    public boolean AccountisUsed = false;
+    public int PatientID;
+    public String lastname;
+    public String firstname;
     private String fullname;
     private int age = 0;
     private String Bloodtype;
@@ -20,7 +20,12 @@ class Patients_Database {// Patients Database
         this.firstname = first;
         this.fullname = last + ", " + first;
         this.age = Patientage;
-        this.PatientID = ++num;
+        this.AccountisUsed = true;
+    }
+
+    public Boolean Account_Status() {
+        System.err.println("DEBUGG MODE: Account is " + (AccountisUsed ? "Actived" : "Not-Actived"));
+        return AccountisUsed;
     }
 
     public void show_PatientsData() {

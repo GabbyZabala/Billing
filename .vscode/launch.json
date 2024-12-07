@@ -3,6 +3,20 @@
   "configurations": [
     {
       "type": "java",
+      "name": "ZabalaAct5",
+      "request": "launch",
+      "mainClass": "ZabalaAct5",
+      "projectName": "Billing_f24ef731"
+    },
+    {
+      "type": "java",
+      "name": "Main_Grilling",
+      "request": "launch",
+      "mainClass": "Main_Grilling",
+      "projectName": "Billing_f24ef731"
+    },
+    {
+      "type": "java",
       "name": "Grilling_Bruteforce",
       "request": "launch",
       "mainClass": "Grilling_Bruteforce",

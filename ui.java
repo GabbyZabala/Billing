@@ -270,70 +270,32 @@ public class ui {
 
     public static boolean Display_Properties(int lanpla) {
         switch (lanpla) {
-            case 0:
-                main_Menu();
-                break;
-            case 1:
-                consultation_Services();
-                break;// +10
-            case 2:
-                laboratory_Services();
-                break;// +20
-            case 3:
-                room_Record();
-                break;// +30
-            case 4:
-                transaction_Records();
-                break;// +40
-            case 11:
-                register_Consulatation();
-                break;
-            case 12:
-                edit_Consultation();
-                break;
-            case 13:// view Consultation records
-                hsa_edit_Consultation();
-                break;
-            case 21:
-                ls_newLaboratorytest();
-                break;
-            case 22:// Edit Laboratory Pricing
-                break;
-            case 23:// view lab records
-                break;
-            case 24:
-                ls_category_blood_Chemistry();
-                break;// +3 registrar
-            case 25:
-                hematology();
-                break;// +4
-            case 26:
-                clinical_Microscopy();
-                break; // +5
-            case 27:
-                bacteriology();
-                break;// +6
-            case 28:
-                bloodBank_Serology();
-                break;// +7
-            case 31:
-                register_Admission();
-                break;
-            case 32:
-                edit_Rooms();
-                break;
-            case 41:
-                consulation_Record();
-                break;
-            case 42:
-                laboratory_Record();
-                break;
-            case 43:
-                room_Record();
-                break;
-            default:
+            case 0 -> main_Menu();
+            case 1 -> consultation_Services();// +10
+            case 2 -> laboratory_Services();// +20
+            case 3 -> room_Services();// +30
+            case 4 -> transaction_Records();// +40
+            case 11 -> register_Consulatation();
+            case 12 -> edit_Consultation();
+            case 13 -> hsa_edit_Consultation();// view Consultation records
+            case 21 -> ls_newLaboratorytest();
+            // case 22 Edit Laboratory Pricing
+            // case 23 view lab records
+            case 24 -> ls_category_blood_Chemistry();// +3 registrar
+            case 25 -> hematology();// +4
+            case 26 -> clinical_Microscopy(); // +5
+            case 27 -> bacteriology();// +6
+            case 28 -> bloodBank_Serology();// +7
+            case 31 -> register_Admission();
+            case 32 -> edit_Rooms();
+            case 41 -> consulation_Record();
+            case 42 -> laboratory_Record();
+            case 43 -> room_Record();
+            case 101 -> System.out.println();// blank display
+            default -> {
                 Error_Desktop();
                 return false;
+            }
         }
         return true;
     }

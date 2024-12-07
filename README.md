@@ -7,11 +7,12 @@ Project for OOp
   - New Recontruct Code Structure
 
 - MAIN CODE Main_Grilling
+  incase of:
 
   - Problem Detected:
-    - ^: encounters un tracable buggs
+    - ^:
   - Protocol for Contingency
-    - ^: Deploy Brute Force Code, until main code is fixed
+    - ^:
 
 - Version
   - Latest Version:
