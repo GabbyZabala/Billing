@@ -1,4 +1,4 @@
-﻿========== Hospital Billing ==========
+========== Hospital Billing ==========
 ------------ Main Menu ------------
 1.Consultation Services
 2.Laboratory Services

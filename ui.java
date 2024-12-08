@@ -2,7 +2,7 @@ import java.util.Random;
 
 public class ui {
     public static void header() {
-        System.out.println("== Hospital Billing=======");
+        System.out.println("======= Hospital Billing=======");
     }
 
     public static void main_Menu() {// Data number: 0
@@ -25,18 +25,31 @@ public class ui {
     }
 
     // Cosultation Service START here
+    public static void hsa_register_Consulatation() {
+        System.out.println("----------Register New Consultation---------");
+    }
+
     public static void register_Consulatation() {
         String[] choices = { "OPD Consultation", "ER Consultation", "Back to Consultation Services Menu" };
-        System.out.println("----------Register New Consultation---------");
         for (int i = 0; i < choices.length; i++) {
             System.out.println((i + 1) + ": " + choices[i]);
         }
     }
 
+    public static void hsa_edit_Consultation() {
+        System.out.println("----------Edit Consultation Fee---------");
+    }
+
     public static void edit_Consultation() {
         String[] choices = { "Consultation OPD", "Consultation ER", "Exit" };
-        System.out.println("----------Edit Consultation Fee---------");
         for (int i = 0; i < choices.length; i++) {
+            System.out.println((i + 1) + ": " + choices[i]);
+        }
+    }
+
+    public static void edit_ConsultationBrute(int type1toremoveexit) {
+        String[] choices = { "Consultation OPD", "Consultation ER", "Exit" };
+        for (int i = 0; i < choices.length - type1toremoveexit; i++) {
             System.out.println((i + 1) + ": " + choices[i]);
         }
     }
@@ -51,11 +64,24 @@ public class ui {
         }
     }
 
+    // Cosultation Service END here
+    public static void laboratory_Servicesbrute() {// Data number: 2
+        String[] choices = { "Register New Laboratory Test", "Edit Laboratory Pricing", "View Laboratory Records",
+                "Back to Main Menu" };
+        System.out.println("----------Laboratory Services---------");
+        for (int i = 0; i < choices.length; i++) {
+            System.out.println((i + 1) + ": " + choices[i]);
+        }
+    }
+
     // LAB SERVICE START HERE
+    public static void hsa_newLaboratoryTest() {
+        System.out.println("\n------------ Register New Laboratory Test ------------");
+    }
+
     public static void ls_newLaboratorytest() {
         String[] choices = { "Blood Chemistry", "Hermatology", "Clinical Microscopy", "Bacteriology",
                 "Blood Bank and Serology", "Back to Laboratory Services Menu" };
-        System.out.println("----------Register New Laboratory Test---------");
         for (int i = 0; i < choices.length; i++) {
             System.out.println((i + 1) + ": " + choices[i]);
         }
@@ -199,7 +225,7 @@ public class ui {
         }
     }
 
-    public static void sleep(int numbers){// sleep function
+    public static void sleep(int numbers) {// sleep function
         try {
             Thread.sleep(numbers);
         } catch (InterruptedException e) {
@@ -230,7 +256,7 @@ public class ui {
             System.err.print("|\n");
             System.out.println(" ----------------------------------------");
 
-            queue_number += randomNum(5);
+            queue_number += randomNum(20);
             if (queue_number > 40) {
                 queue_number = 40;
                 animation_finish = false;
@@ -242,4 +268,59 @@ public class ui {
         }
     }
 
+    public static boolean Display_Properties(int lanpla) {
+        switch (lanpla) {
+            case 0 -> main_Menu();
+            case 1 -> consultation_Services();// +10
+            case 2 -> laboratory_Services();// +20
+            case 3 -> room_Services();// +30
+            case 4 -> transaction_Records();// +40
+            case 11 -> register_Consulatation();
+            case 12 -> edit_Consultation();
+            case 13 -> hsa_edit_Consultation();// view Consultation records
+            case 21 -> ls_newLaboratorytest();
+            // case 22 Edit Laboratory Pricing
+            // case 23 view lab records
+            case 24 -> ls_category_blood_Chemistry();// +3 registrar
+            case 25 -> hematology();// +4
+            case 26 -> clinical_Microscopy(); // +5
+            case 27 -> bacteriology();// +6
+            case 28 -> bloodBank_Serology();// +7
+            case 31 -> register_Admission();
+            case 32 -> edit_Rooms();
+            case 41 -> consulation_Record();
+            case 42 -> laboratory_Record();
+            case 43 -> room_Record();
+            case 101 -> System.out.println();// blank display
+            default -> {
+                Error_Desktop();
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static void line() {
+        System.out.println("==================================================");
+    }
+
+    public static void records_pages_indecator(boolean showTools, int TotalStatus, int max_number) {
+        String[] stamp = { "Previous", "Next", "Exit" };
+        System.out.println("\nGuide tools: " + (showTools ? "^\t [ Press T to show Tools]" : "v"));
+        if (max_number != 0) {
+            if (showTools) {
+                for (int i = (TotalStatus != 0 || TotalStatus != max_number ? 0 : 1); i < stamp.length; i++) {
+                    // ang sakit mag dynamic ng display hays
+                    System.out.println("\t[ " + (i + 1) + " ]\t"
+                            + stamp[(TotalStatus != max_number ? i : (TotalStatus == 1 ? 0 : i))]);
+                    /*
+                     * naka redbull pala ako ngayon kaya kung gumana to
+                     * diko na sure kung pano to nangyare XDDD
+                     */
+                }
+            }
+        } else {
+            System.out.println("\t[ 3 ]\t" + stamp[2] + "\n");
+        }
+    }
 }
