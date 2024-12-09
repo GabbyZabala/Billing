@@ -79,6 +79,10 @@ public class ui {
         System.out.println("\n------------ Register New Laboratory Test ------------");
     }
 
+    public static void hsa_editLaboratoryPricinh() {
+        System.out.println("----------Edit Laboratory Fee---------");
+    }
+
     public static void ls_newLaboratorytest() {
         String[] choices = { "Blood Chemistry", "Hermatology", "Clinical Microscopy", "Bacteriology",
                 "Blood Bank and Serology", "Back to Laboratory Services Menu" };
