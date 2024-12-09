@@ -1,4 +1,4 @@
-========== Hospital Billing ==========
+﻿========== Hospital Billing ==========
 ------------ Main Menu ------------
 1.Consultation Services
 2.Laboratory Services
@@ -11,8 +11,7 @@ Enter your choice: -->
 ------------ Consultation Services ------------
 1.Register New Consultation
 2.Edit Consultation Fees
-3.View Consultation Records
-4.Back to Main Menu
+3.Back to Main Menu
 Enter your choice: -->
 
 
@@ -54,8 +53,7 @@ Press any button to continue.......
 ------------ Laboratory Services ------------
 1.Register New Laboratory Test
 2.Edit Laboratory Pricing
-3.View Laboratory Records
-4.Back to Main Menu
+3.Back to Main Menu
 
 Enter your choice: -->
 
@@ -255,8 +253,7 @@ Press any button to continue.......
 ------------ Room and Admission Services ------------
 1.Register New Admission
 2.Edit Room Information
-3.View Room Records
-4.Back to Main Menu
+3.Back to Main Menu
 
 Enter your choice: -->
 
@@ -266,13 +263,54 @@ Enter Patient Name: __________
 Enter Patient Age: __________
 
 Select Room Type:
-1.Service Ward...............
-2.Semi-Private Room..........
-3.Private Room...............
+1.Service Ward...............P 450.00/Day
+2.Semi-Private Room..........P 1,000.00/Day
+3.Private Room...............P 1,500.00/Day
 4.Back to Room and Admission Menu
 
 Enter your choice: -->
 
+------------ 1.Service Ward ------------
+* Amenaties - Electric Fan | Hospital Table | One chair
+\Food-----------------P 150.00
+\Room and Board-------P 200.00
+\Bedding----------------P 50.00
+\Waste Mngt-----------P 50.00
+\TOTAL----------------P 450.00/Day
+
+Confirm Selection Of Room? (y/n):
+Patient Name: __________
+Patient Age: __________
+Service Ward...............P 450.00/Day
+Press any button to continue.......
+
+---------- 2.Semi-Private Room ----------
+* Amenaties - Aircon | Table | Two chair
+\Food-----------------P 250.00
+\Room and Board-------P 650.00
+\Bedding----------------P 50.00
+\Waste Mngt-----------P 50.00
+\TOTAL----------------P 1,000.00/Day
+
+Confirm Selection Of Room? (y/n):
+Patient Name: __________
+Patient Age: __________
+2.Semi-Private Room..........P 1,000.00/Day
+Press any button to continue.......
+
+---------- 3.Private Room ----------
+* Amenaties - Cabinet | Aircon | TV | Couch | Table and Chairs
+\Food-----------------P 250.00
+\Room and Board-------P 1,000.00
+\Bedding----------------P 100.00
+\Waste Mngt-----------P 50.00
+\TOTAL----------------P 1,500.00/Day
+
+Confirm Selection Of Room? (y/n):
+Patient Name: __________
+Patient Age: __________
+3.Private Room...............P 1,500.00/Day
+Press any button to continue.......
 
 --------- Edit Rooms ----------
 1.Service Ward Info
@@ -280,6 +318,56 @@ Enter your choice: -->
 3.Private Room Info
 4.Exit
 
+---------- Service Ward Info ----------
+* Amenaties - Electric Fan | Hospital Table | One chair
+1.Food-----------------P 150.00
+2.Room and Board-------P 200.00
+3.Bedding----------------P 50.00
+4.Waste Mngt-----------P 50.00
+
+1.Edit Food Pricing
+2.Edit Room Pricing
+3.Edit Bedding Pricing
+4.Edit Waste Mngt Pricing
+Select choice: -->
+
+Update Price:
+Pricing Updated!
+Press any button to continue.......
+
+---------- Semi-Private Room Info ----------
+* Amenaties - Aircon | Table | Two chair
+1.Food-----------------P 250.00
+2.Room and Board-------P 650.00
+3.Bedding----------------P 50.00
+4.Waste Mngt-----------P 50.00
+
+1.Edit Food Pricing
+2.Edit Room Pricing
+3.Edit Bedding Pricing
+4.Edit Waste Mngt Pricing
+Select choice: -->
+
+Update Price:
+Pricing Updated!
+Press any button to continue.......
+
+---------- Private Room Info ----------
+* Amenaties - Cabinet | Aircon | TV | Couch | Table and Chairs
+1.Food-----------------P 250.00
+2.Room and Board-------P 1,000.00
+3.Bedding----------------P 100.00
+4.Waste Mngt-----------P 50.00
+
+1.Edit Food Pricing
+2.Edit Room Pricing
+3.Edit Bedding Pricing
+4.Edit Waste Mngt Pricing
+Select choice: -->
+
+Update Price:
+Pricing Updated!
+Press any button to continue.......
 
 ==========================================================================================
 ------------ Transaction Records ------------
@@ -289,11 +377,59 @@ Enter your choice: -->
 4. Back to Main Menu
 Enter your choice: -->
 
-
---------- Consultation Record ----------
-1.Consultation History
-2.Exit
+---------- Consultation Record ----------
+1.OPD Consultation Record
+2.ER Consultation Record
+3.Back to Consultation Services Menu
 Enter your choice: -->
+
+----------- OPD Patients ----------
+1.Patient Name (Patient ID)
+2.Patient Name (Patient ID)
+3.Patient Name (Patient ID)
+4.Patient Name (Patient ID)
+5.Back to Consultation Record Menu
+Enter your choice: -->
+
+                  ---------- Record ----------
+Patient Information             |       Physician Information
+                                |
+Patient Name                    |       Doctor Name       
+Patient ID                      |       Doctor ID
+Patient Address                 |       Hospital Address
+----------------------------------------------------------------
+Item                         Description                Amount                   
+
+OPD Consultation        Out Patient Department           P 50               
+                       
+----------------------------------------------------------------
+                                        Total Amount:    P 50
+----------------------------------------------------------------
+Press any button to continue.......
+
+----------- ER Patients ----------
+1.Patient Name (Patient ID)
+2.Patient Name (Patient ID)
+3.Patient Name (Patient ID)
+4.Patient Name (Patient ID)
+5.Back to Consultation Record Menu
+Enter your choice: -->
+
+                  ---------- Record ----------
+Patient Information             |       Physician Information
+                                |
+Patient Name                    |       Doctor Name       
+Patient ID                      |       Doctor ID
+Patient Address                 |       Hospital Address
+----------------------------------------------------------------
+Item                         Description                Amount                   
+
+OPD Consultation            Emergency Room               P 100               
+                       
+----------------------------------------------------------------
+                                        Total Amount:    P 100
+----------------------------------------------------------------
+Press any button to continue.......
 
 
 --------- Laboratory Record ----------
@@ -305,6 +441,127 @@ Enter your choice: -->
 6.Exit
 Enter your choice: -->
 
+----------- Blood Chemistry History ----------
+1.Patient Name (Patient ID)
+2.Patient Name (Patient ID)
+3.Patient Name (Patient ID)
+4.Patient Name (Patient ID)
+5.Back to Laboratory Record Menu
+Enter your choice: -->
+
+                  ---------- Record ----------
+Patient Information             |       Physician Information
+                                |
+Patient Name                    |       Doctor Name       
+Patient ID                      |       Doctor ID
+Patient Address                 |       Hospital Address
+----------------------------------------------------------------
+Item                         Description                Amount                   
+
+                                 
+                       
+----------------------------------------------------------------
+                                        Total Amount:    
+----------------------------------------------------------------
+Press any button to continue.......
+
+----------- Hematology History ----------
+1.Patient Name (Patient ID)
+2.Patient Name (Patient ID)
+3.Patient Name (Patient ID)
+4.Patient Name (Patient ID)
+5.Back to Laboratory Record Menu
+Enter your choice: -->
+
+                  ---------- Record ----------
+Patient Information             |       Physician Information
+                                |
+Patient Name                    |       Doctor Name       
+Patient ID                      |       Doctor ID
+Patient Address                 |       Hospital Address
+----------------------------------------------------------------
+Item                         Description                Amount                   
+
+                                 
+                       
+----------------------------------------------------------------
+                                        Total Amount:    
+----------------------------------------------------------------
+Press any button to continue.......
+
+----------- Clinical Microscopy History ----------
+1.Patient Name (Patient ID)
+2.Patient Name (Patient ID)
+3.Patient Name (Patient ID)
+4.Patient Name (Patient ID)
+5.Back to Laboratory Record Menu
+Enter your choice: -->
+
+                  ---------- Record ----------
+Patient Information             |       Physician Information
+                                |
+Patient Name                    |       Doctor Name       
+Patient ID                      |       Doctor ID
+Patient Address                 |       Hospital Address
+----------------------------------------------------------------
+Item                         Description                Amount                   
+
+                                 
+                       
+----------------------------------------------------------------
+                                        Total Amount:    
+----------------------------------------------------------------
+Press any button to continue.......
+
+----------- Bacteriology History ----------
+1.Patient Name (Patient ID)
+2.Patient Name (Patient ID)
+3.Patient Name (Patient ID)
+4.Patient Name (Patient ID)
+5.Back to Laboratory Record Menu
+Enter your choice: -->
+
+                  ---------- Record ----------
+Patient Information             |       Physician Information
+                                |
+Patient Name                    |       Doctor Name       
+Patient ID                      |       Doctor ID
+Patient Address                 |       Hospital Address
+----------------------------------------------------------------
+Item                         Description                Amount                   
+
+                                 
+                       
+----------------------------------------------------------------
+                                        Total Amount:    
+----------------------------------------------------------------
+Press any button to continue.......
+
+----------- Blood Bank and Serology History ----------
+1.Patient Name (Patient ID)
+2.Patient Name (Patient ID)
+3.Patient Name (Patient ID)
+4.Patient Name (Patient ID)
+5.Back to Laboratory Record Menu
+Enter your choice: -->
+
+                  ---------- Record ----------
+Patient Information             |       Physician Information
+                                |
+Patient Name                    |       Doctor Name       
+Patient ID                      |       Doctor ID
+Patient Address                 |       Hospital Address
+----------------------------------------------------------------
+Item                         Description                Amount                   
+
+                                 
+                       
+----------------------------------------------------------------
+                                        Total Amount:    
+----------------------------------------------------------------
+Press any button to continue.......
+
+
 
 --------- Room Record ----------
 1.SERVICE WARD History
@@ -312,4 +569,76 @@ Enter your choice: -->
 3.PRIVATE ROOM History
 4.Exit
 Enter your choice: -->
+
+--------- SERVICE WARD History ----------
+1.Patient Name (Patient ID)
+2.Patient Name (Patient ID)
+3.Patient Name (Patient ID)
+4.Patient Name (Patient ID)
+5.Back to Room Record Menu
+Enter your choice: -->
+
+                  ---------- Record ----------
+Patient Information             |       Physician Information
+                                |
+Patient Name                    |       Doctor Name       
+Patient ID                      |       Doctor ID
+Patient Address                 |       Hospital Address
+----------------------------------------------------------------
+Item                         Description                Amount                   
+
+                                 
+                       
+----------------------------------------------------------------
+                                        Total Amount:    
+----------------------------------------------------------------
+Press any button to continue.......
+
+--------- SEMI-PRIVATE ROOM History ---------
+1.Patient Name (Patient ID)
+2.Patient Name (Patient ID)
+3.Patient Name (Patient ID)
+4.Patient Name (Patient ID)
+5.Back to Room Record Menu
+Enter your choice: -->
+
+                  ---------- Record ----------
+Patient Information             |       Physician Information
+                                |
+Patient Name                    |       Doctor Name       
+Patient ID                      |       Doctor ID
+Patient Address                 |       Hospital Address
+----------------------------------------------------------------
+Item                         Description                Amount                   
+
+                                 
+                       
+----------------------------------------------------------------
+                                        Total Amount:    
+----------------------------------------------------------------
+Press any button to continue.......
+
+--------- PRIVATE ROOM History -----------
+1.Patient Name (Patient ID)
+2.Patient Name (Patient ID)
+3.Patient Name (Patient ID)
+4.Patient Name (Patient ID)
+5.Back to Room Record Menu
+Enter your choice: -->
+
+                  ---------- Record ----------
+Patient Information             |       Physician Information
+                                |
+Patient Name                    |       Doctor Name       
+Patient ID                      |       Doctor ID
+Patient Address                 |       Hospital Address
+----------------------------------------------------------------
+Item                         Description                Amount                   
+
+                                 
+                       
+----------------------------------------------------------------
+                                        Total Amount:    
+----------------------------------------------------------------
+Press any button to continue.......
 ==========================================================================================
