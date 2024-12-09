@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main_Grilling extends ui {
@@ -78,9 +79,31 @@ public class Main_Grilling extends ui {
                 HAV = 350,
                 Bleeding_Fee = 200,
                 // Room Service Divider
-                Service_Ward = 100.0,
-                SemiPrivate_Room = 90.9,
-                Private_Room = 100;
+                Service_Ward_food = 150,
+                Service_Ward_Room_Board = 200,
+                Service_Ward_Bedding = 50,
+                Service_Ward_Waste_Mngt = 50,
+                SemiPrivate_Room_food = 250,
+                SemiPrivate_Room_Room_Board = 650,
+                SemiPrivate_Room_Bedding = 50,
+                SemiPrivate_Room_Waste_Mgnt = 50,
+                Private_Room_food = 250,
+                Private_Room_Room_Board = 1000,
+                Private_Room_Bedding = 100,
+                Private_Room_Waste_Mngt = 50;
+
+        public double Service_Ward() {
+            return Service_Ward_food + Service_Ward_Bedding + Service_Ward_Room_Board + Service_Ward_Waste_Mngt;
+        }
+
+        public double SemiPrivate_Room() {
+            return SemiPrivate_Room_food + SemiPrivate_Room_Room_Board + SemiPrivate_Room_Bedding
+                    + SemiPrivate_Room_Waste_Mgnt;
+        }
+
+        public double Private_Room() {
+            return Private_Room_food + Private_Room_Room_Board + Private_Room_Bedding + Private_Room_Waste_Mngt;
+        }
     }
 
     public static boolean notError_Display = true;// display catcher in case of error
@@ -186,6 +209,17 @@ public class Main_Grilling extends ui {
             command.nextLine();
         }
         locale = Remstart = Id;
+    }
+
+    public static void RegisterNewAdmission() {
+        int Multishot = -1;
+        int Stage = 0;
+        do {
+            clear();
+            header();
+            hsa_register_Consulatation();
+
+        } while (Multishot != 9);
     }
 
     public static void RegisterNewConsultation() {
@@ -616,7 +650,7 @@ public class Main_Grilling extends ui {
         int Id = 3;
         switch (MultiShot) {
             case 1 -> line();// RegisterNewAdmission();
-            case 2 -> line();// EditRoomInformation();
+            case 2 -> EditRoomInformation();
             case 3 -> line();// ViewRoomRecords();
         }
         if (DEbuggMode) {
@@ -624,5 +658,210 @@ public class Main_Grilling extends ui {
             command.nextLine();
         }
         locale = Remstart = Id;
+    }
+
+    public static ArrayList<String> consultationRecords = new ArrayList<>();
+
+    public static void EditRoomInformation() {
+        int MultiShot = 0;
+        do {
+            clear();
+            header();
+            hsa_edit_rooms();
+            System.out.println("Choice Which of the room you want to edit:");
+            ls_edit_Rooms();
+            System.err.print("Enter choice: --> ");
+            String Cache = command.nextLine();
+            MultiShot = Integer.parseInt(Cache);
+            switch (MultiShot) {
+                case 1 -> ServiceWardINFO();
+                case 2 -> Semi_PrivateRoomINFO();
+                case 3 -> PrivateRoomINFO();
+                default -> System.err.println("error");
+            }
+            if (DEbuggMode) {
+                System.err.println("laBpRI()->" + MultiShot);
+                command.nextLine();
+            }
+        } while (MultiShot != 4);
+    }
+
+    public static void ServiceWardINFO() {
+        Pricing priceof = new Pricing();
+        int PriceDweller = -1;
+
+        while (true) {
+            clear();
+            header();
+            hsa_edit_rooms();
+            System.err.println("Service Ward Total: " + priceof.Service_Ward());
+
+            if (PriceDweller < 1) { // Display part for prices
+                System.out.println("\t [1] Food\t\t\t:\t₱ " + priceof.Service_Ward_food);
+                System.out.println("\t [2] Bedding\t\t\t:\t₱ " + priceof.Service_Ward_Bedding);
+                System.out.println("\t [3] Room Boarding\t\t:\t₱ " + priceof.Service_Ward_Room_Board);
+                System.out.println("\t [4] Waste Managenent\t\t:\t₱ " + priceof.Service_Ward_Waste_Mngt);
+                System.out.println("\t [0] Go Back");
+            } else {
+                switch (PriceDweller) {
+                    case 1 -> System.out.println("\tFood\t\t\t:\t₱ " + priceof.Service_Ward_food);
+                    case 2 -> System.out.println("\tBedding\t\t\t:\t₱ " + priceof.Service_Ward_Bedding);
+                    case 3 -> System.out.println("\tRoom Boarding\t\t:\t₱ " + priceof.Service_Ward_Room_Board);
+                    case 4 -> System.out.println("\tWaste Managenent\t\t:\t₱ " + priceof.Service_Ward_Waste_Mngt);
+                }
+            }
+
+            if (PriceDweller < 1) {
+                try {
+                    System.err.print("\tEnter choice: -->\t");
+                    String nlab = command.nextLine();
+                    PriceDweller = Integer.parseInt(nlab);
+                    if (nlab.equals("0")) {
+                        return;
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("Error: Invalid input. Please enter a number.");
+                }
+            } else {
+                String ednano = switch (PriceDweller) {
+                    case 1 -> "Food";
+                    case 2 -> "Bedding";
+                    case 3 -> "Room Boarding";
+                    case 4 -> "Waste Management";
+                    default -> "ERROR";
+                };
+                System.err.print("Update " + ednano + " Price:\t₱ ");
+                double price = command.nextDouble();
+                command.nextLine();
+
+                switch (PriceDweller) {
+                    case 1 -> priceof.Service_Ward_food = price;
+                    case 2 -> priceof.Service_Ward_Bedding = price;
+                    case 3 -> priceof.Service_Ward_Room_Board = price;
+                    case 4 -> priceof.Service_Ward_Waste_Mngt = price;
+                }
+                PriceDweller = -1;
+            }
+        }
+    }
+
+    public static void Semi_PrivateRoomINFO() {
+        Pricing priceof = new Pricing();
+        int PriceDweller = -1;
+
+        while (true) {
+            clear();
+            header();
+            hsa_edit_rooms();
+            System.err.println("Semi-Private Room Total: " + priceof.SemiPrivate_Room());
+
+            if (PriceDweller < 1) { // Display part for prices
+                System.out.println("\t [1] Food\t\t\t:\t₱ " + priceof.SemiPrivate_Room_food);
+                System.out.println("\t [2] Bedding\t\t\t:\t₱ " + priceof.SemiPrivate_Room_Bedding);
+                System.out.println("\t [3] Room Boarding\t\t:\t₱ " + priceof.SemiPrivate_Room_Room_Board);
+                System.out.println("\t [4] Waste Managenent\t\t:\t₱ " + priceof.SemiPrivate_Room_Waste_Mgnt);
+                System.out.println("\t [0] Go Back");
+            } else {
+                switch (PriceDweller) {
+                    case 1 -> System.out.println("\tFood\t\t\t:\t₱ " + priceof.SemiPrivate_Room_food);
+                    case 2 -> System.out.println("\tBedding\t\t\t:\t₱ " + priceof.SemiPrivate_Room_Bedding);
+                    case 3 -> System.out.println("\tRoom Boarding\t\t:\t₱ " + priceof.SemiPrivate_Room_Room_Board);
+                    case 4 ->
+                        System.out.println("\t Waste Managenent\t\t:\t₱ " + priceof.SemiPrivate_Room_Waste_Mgnt);
+                }
+            }
+
+            if (PriceDweller < 1) {
+                try {
+                    System.err.print("\tEnter choice: -->\t");
+                    String nlab = command.nextLine();
+                    PriceDweller = Integer.parseInt(nlab);
+                    if (nlab.equals("0")) {
+                        return;
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("Error: Invalid input. Please enter a number.");
+                }
+            } else {
+                String ednano = switch (PriceDweller) {
+                    case 1 -> "Food";
+                    case 2 -> "Bedding";
+                    case 3 -> "Room Boarding";
+                    case 4 -> "Waste Management";
+                    default -> "ERROR";
+                };
+                System.err.print("Update " + ednano + " Price:\t₱ ");
+                double price = command.nextDouble();
+                command.nextLine();
+
+                switch (PriceDweller) {
+                    case 1 -> priceof.SemiPrivate_Room_food = price;
+                    case 2 -> priceof.SemiPrivate_Room_Bedding = price;
+                    case 3 -> priceof.SemiPrivate_Room_Room_Board = price;
+                    case 4 -> priceof.SemiPrivate_Room_Waste_Mgnt = price;
+                }
+                PriceDweller = -1;
+            }
+        }
+    }
+
+    public static void PrivateRoomINFO() {
+        Pricing priceof = new Pricing();
+        int PriceDweller = -1;
+
+        while (true) {
+            clear();
+            header();
+            hsa_edit_rooms();
+            System.err.println("Private Room Total: " + priceof.Private_Room());
+
+            if (PriceDweller < 1) { // Display part for prices
+                System.out.println("\t [1] Food\t\t:\t₱ " + priceof.Private_Room_food);
+                System.out.println("\t [2] Bedding\t\t:\t₱ " + priceof.Private_Room_Bedding);
+                System.out.println("\t [3] Room Boarding\t\t:\t₱ " + priceof.Private_Room_Room_Board);
+                System.out.println("\t [4] Waste Managenent\t\t:\t₱ " + priceof.Private_Room_Waste_Mngt);
+                System.out.println("\t [0] Go Back");
+            } else {
+                switch (PriceDweller) {
+                    case 1 -> System.out.println("\tFood\t\t\t:\t₱ " + priceof.Private_Room_food);
+                    case 2 -> System.out.println("\tBedding\t\t\t:\t₱ " + priceof.Private_Room_Bedding);
+                    case 3 -> System.out.println("\tRoom Boarding\t\t:\t₱ " + priceof.Private_Room_Room_Board);
+                    case 4 ->
+                        System.out.println("\t Waste Managenent\t\t:\t₱ " + priceof.Private_Room_Waste_Mngt);
+                }
+            }
+
+            if (PriceDweller < 1) {
+                try {
+                    System.err.print("\tEnter choice: -->\t");
+                    String nlab = command.nextLine();
+                    PriceDweller = Integer.parseInt(nlab);
+                    if (nlab.equals("0")) {
+                        return;
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("Error: Invalid input. Please enter a number.");
+                }
+            } else {
+                String ednano = switch (PriceDweller) {
+                    case 1 -> "Food";
+                    case 2 -> "Bedding";
+                    case 3 -> "Room Boarding";
+                    case 4 -> "Waste Management";
+                    default -> "ERROR";
+                };
+                System.err.print("Update " + ednano + " Price:\t₱ ");
+                double price = command.nextDouble();
+                command.nextLine();
+
+                switch (PriceDweller) {
+                    case 1 -> priceof.Private_Room_food = price;
+                    case 2 -> priceof.Private_Room_Bedding = price;
+                    case 3 -> priceof.Private_Room_Room_Board = price;
+                    case 4 -> priceof.Private_Room_Waste_Mngt = price;
+                }
+                PriceDweller = -1;
+            }
+        }
     }
 }

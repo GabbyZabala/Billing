@@ -153,9 +153,12 @@ public class ui {
         }
     }
 
-    public static void edit_Rooms() {
-        String[] choices = { "SERVICE WARD INFO", "SEMI-PRIVATE ROOM INFO", "PRIVATE ROOM", "Exit" };
+    public static void hsa_edit_rooms() {
         System.out.println("----------Edit Rooms---------");
+    }
+
+    public static void ls_edit_Rooms() {
+        String[] choices = { "SERVICE WARD INFO", "SEMI-PRIVATE ROOM INFO", "PRIVATE ROOM", "Exit" };
         for (int i = 0; i < choices.length; i++) {
             System.out.println((i + 1) + ": " + choices[i]);
         }
@@ -291,7 +294,7 @@ public class ui {
             case 27 -> bacteriology();// +6
             case 28 -> bloodBank_Serology();// +7
             case 31 -> register_Admission();
-            case 32 -> edit_Rooms();
+            // case 32 -> edit_Rooms();
             case 41 -> consulation_Record();
             case 42 -> laboratory_Record();
             case 43 -> room_Record();
