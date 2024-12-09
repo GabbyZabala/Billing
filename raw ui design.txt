@@ -274,7 +274,7 @@ Enter your choice: -->
 * Amenaties - Electric Fan | Hospital Table | One chair
 \Food-----------------P 150.00
 \Room and Board-------P 200.00
-\Bedding----------------P 50.00
+\Bedding--------------P 50.00
 \Waste Mngt-----------P 50.00
 \TOTAL----------------P 450.00/Day
 
@@ -288,7 +288,7 @@ Press any button to continue.......
 * Amenaties - Aircon | Table | Two chair
 \Food-----------------P 250.00
 \Room and Board-------P 650.00
-\Bedding----------------P 50.00
+\Bedding--------------P 50.00
 \Waste Mngt-----------P 50.00
 \TOTAL----------------P 1,000.00/Day
 
@@ -302,7 +302,7 @@ Press any button to continue.......
 * Amenaties - Cabinet | Aircon | TV | Couch | Table and Chairs
 \Food-----------------P 250.00
 \Room and Board-------P 1,000.00
-\Bedding----------------P 100.00
+\Bedding--------------P 100.00
 \Waste Mngt-----------P 50.00
 \TOTAL----------------P 1,500.00/Day
 
@@ -431,7 +431,7 @@ OPD Consultation            Emergency Room               P 100
 ----------------------------------------------------------------
 Press any button to continue.......
 
-
+==========================================================================================
 --------- Laboratory Record ----------
 1.Blood Chemistry
 2.Hematology
@@ -561,7 +561,7 @@ Item                         Description                Amount
 ----------------------------------------------------------------
 Press any button to continue.......
 
-
+==========================================================================================
 
 --------- Room Record ----------
 1.SERVICE WARD History
