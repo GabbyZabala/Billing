@@ -1,5 +1,8 @@
 import java.util.ArrayList;
 import java.util.Scanner;
+//  just the code history in my github account
+//      https://github.com/GabbyZabala/Billing
+//  too tired to explain T^T
 
 public class Main_Grilling extends ui {
 
@@ -10,37 +13,11 @@ public class Main_Grilling extends ui {
      * / \ DEbugger Parts here / \
      * .| . . . . . . . . . . . |.
      */
-    int Found[] = new int[10];
-    int foundnum = 0;
-    public static Patients_Database[] patients = new Patients_Database[10];
-    public int available_patients = 0;
-
-    class Patients_Action {
-
-        public void check_same_account(String Name, String Lance) {
-            for (int i = 0; i > available_patients; i++) {
-                if (patients[i].firstname.equals(Name)) {
-                    Found[foundnum] = i;
-                    foundnum++;
-                }
-            }
-            if (foundnum != 0) {
-                for (int f = 0; f > Found.length; f++) {
-                    System.out.print("[ " + f + " ]");
-                    patients[Found[f]].show_PatientsData();
-                }
-            }
-        }
-
-        public void add_newPatient(String firstname, String lastname) {
-            patients[available_patients] = new Patients_Database(lastname, firstname, available_patients);
-        }
-    }
 
     public static class Pricing {// Pricing Properties
-        double Hospital_bill = 0.0, // for getting the total
-                // Consultation Fee
-                OPD = 100.9,
+        double// for getting the total
+              // Consultation Fee
+        OPD = 100.9,
                 ER = 109.0,
                 // Lab testing Divider
                 // Blood Chemistry
@@ -121,7 +98,7 @@ public class Main_Grilling extends ui {
 
     public static void main(String[] args) {
         do {
-            String Terminal = "";
+            String Terminal;
             clear();
             if (locale != 5) {
                 System.out.println((!DEbuggMode ? "\n"
@@ -200,7 +177,7 @@ public class Main_Grilling extends ui {
     public static void ConsultationServiceFunctions(int MultiShot) {
         int Id = 1;
         switch (MultiShot) {
-            case 1 -> line();// RegisterNewConsultation();
+            case 1 -> RegisterNewConsultation();// line();//
             case 2 -> EditConsultationFees();
             case 3 -> line();// ViewConsultationRecords();
         }
@@ -211,19 +188,87 @@ public class Main_Grilling extends ui {
         locale = Remstart = Id;
     }
 
-    public static void RegisterNewAdmission() {
+    public static ArrayList<String> consultationRecords = new ArrayList<>();
+    public static Patients_Database_Array db = new Patients_Database_Array();
+
+    public static void RegisterNewConsultation() {
+        boolean CheckAccount_Recorded = false;
+        boolean age_available = false;
         int Multishot = -1;
         int Stage = 0;
+        String firstname = "";
+        String lastname = "";
+        int Age = -1;
+        String Date = " ";
         do {
+            boolean pass = false;
             clear();
             header();
             hsa_register_Consulatation();
-
+            switch (Stage) {
+                case 0 -> {
+                    System.out.print("Enter FirstName:\t");
+                    String anel = command.nextLine();
+                    firstname = anel;
+                    pass = true;
+                }
+                case 1 -> {
+                    System.err.println("FirtName: " + firstname);
+                    System.out.print("Enter Lastname:\t");
+                    String lena = command.nextLine();
+                    lastname = lena;
+                    pass = true;
+                }
+                case 2 -> {
+                    try {
+                        int search = db.checkSameAccount(firstname, lastname);
+                        command.nextLine();
+                        if (search >= 0 && !CheckAccount_Recorded) {
+                            if (DEbuggMode) {
+                                db.showAccount();
+                            }
+                            animation("Getting Duplicate... Done");
+                            lastname = db.Getlastname();
+                            firstname = db.Getfirstname();
+                            age_available = db.AskAgeData();
+                            CheckAccount_Recorded = true;
+                        }
+                        System.out.println("Patients name:\t" + lastname + ", " + firstname);
+                        if (!age_available && !CheckAccount_Recorded) {
+                            System.out.print("Enter Age:\t");
+                            String AgeComs = command.nextLine();
+                            Age = Integer.parseInt(AgeComs);
+                        } else {
+                            animation("Fetching patients Age.....");
+                            Age = db.GetAge();
+                            System.out.println("Patient age:\t" + Age);
+                        }
+                        pass = true;
+                    } catch (NumberFormatException e) {
+                        System.out.println(e);
+                        command.nextLine();
+                    }
+                }
+                case 3 -> {
+                    clear();
+                    header();
+                    hsa_register_Consulatation();
+                    System.out.println("Patients name:\t" + lastname + ", " + firstname);
+                    System.out.println("Patient age:\t" + Age);
+                    System.out.println("Enter Date:\tLAYOUT [ Day-Month-Year]");
+                    System.out.print("[]-> \t");
+                    Date = command.nextLine();
+                    register_Consulatation();
+                    System.out.print("Choose consultation type: ");
+                    int type = command.nextInt();
+                    pass = true;
+                }
+            }
+            if (pass) {
+                Stage++;
+            }
         } while (Multishot != 9);
-    }
-
-    public static void RegisterNewConsultation() {
-
+        db.clearFoundData();
     }
 
     public static void EditConsultationFees() {
@@ -285,7 +330,7 @@ public class Main_Grilling extends ui {
     }
 
     public static void LaboratoryPricing() {
-        int MultiShot = 0;
+        int MultiShot;
         do {
             clear();
             header();
@@ -660,10 +705,8 @@ public class Main_Grilling extends ui {
         locale = Remstart = Id;
     }
 
-    public static ArrayList<String> consultationRecords = new ArrayList<>();
-
     public static void EditRoomInformation() {
-        int MultiShot = 0;
+        int MultiShot;
         do {
             clear();
             header();
