@@ -10,7 +10,7 @@ class Patients_Database {
     public int age = -1;
     public String Bloodtype;
 
-    public List<String> account_lodge = new ArrayList<>();
+    public List<String[]> account_lodge = new ArrayList<>(); // Changed to String array
     public List<String> consultation_data = new ArrayList<>();
 
     // Constructor
@@ -37,9 +37,9 @@ class Patients_Database {
         this.Bloodtype = Blood;
     }
 
-    // Add account activity
-    public void addAccountLodge(String name_input) {
-        this.account_lodge.add(name_input);
+    // Add account activity (Modified to accept type and date)
+    public void addAccountLodge(String type, String date) {
+        this.account_lodge.add(new String[] { type, date });
     }
 
     // Add consultation data
@@ -47,13 +47,11 @@ class Patients_Database {
         this.consultation_data.add(date);
     }
 
-    // View consultations
+    // View consultations (Modified to display type and date)
     public void viewConsultations() {
         System.out.println("Consultation History:");
-        for (int i = 0; i < account_lodge.size(); i++) {
-            String lodge = account_lodge.get(i);
-            String date = i < consultation_data.size() ? consultation_data.get(i) : "[No Date]";
-            System.out.println(lodge + " - " + date);
+        for (String[] entry : account_lodge) {
+            System.out.println("Type: " + entry[0] + " - Date: " + entry[1]);
         }
     }
 }

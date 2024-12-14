@@ -6,33 +6,34 @@ class Patients_Database_Array {
     public List<Patients_Database> patients = new ArrayList<>();
     private int nextPatientID = 1; // Auto-increment for Patient IDs
     public int[] foundIndices = new int[10]; // To store indices of matching patients
-    private int Found_Account;
+    private int Found_Account = -1; // Initialize Found_Account
 
-    // Add a new patient
-    public void addPatient(String last, String first, int age) {
+    // Add a new patient (Modified to return the index)
+    public int addPatient(String last, String first, int age) {
         Patients_Database newPatient = new Patients_Database(last, first, age, nextPatientID++);
         patients.add(newPatient);
+        return patients.size() - 1; // Return the index of the newly added patient
     }
 
-    // Check for accounts with the same name
+    // Check for accounts with the same name (Modified)
     public int checkSameAccount(String firstName, String lastName) {
-        int output_found = -1;
-        boolean found_passage = false;
+        Found_Account = -1; // Reset Found_Account before searching
 
         for (int i = 0; i < patients.size(); i++) {
             Patients_Database patient = patients.get(i);
             if (patient.firstname.equals(firstName) && patient.lastname.equals(lastName)) {
-                output_found = i;// local output
-                Found_Account = i;// global use
-                found_passage = true;
+                Found_Account = i;
+                break; // Stop searching once a match is found
             }
         }
-        if (found_passage) {
-            System.out.println("Duplicate accounts found!");
+
+        if (Found_Account != -1) {
+            System.out.println("Duplicate account found!");
         } else {
             System.out.println("No duplicate accounts found!");
         }
-        return output_found;
+
+        return Found_Account;
     }
 
     public boolean AskAgeData() {

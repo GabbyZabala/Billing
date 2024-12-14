@@ -178,8 +178,8 @@ public class Main_Grilling extends ui {
         int Id = 1;
         switch (MultiShot) {
             case 1 -> RegisterNewConsultation();// line();//
-            case 2 -> EditConsultationFees();
-            case 3 -> line();// ViewConsultationRecords();
+            case 2 -> EditConsultationFees();// line();//
+            case 3 -> ViewConsultationRecords();// line();//
         }
         if (DEbuggMode) {
             System.err.println(MultiShot);
@@ -192,37 +192,42 @@ public class Main_Grilling extends ui {
     public static Patients_Database_Array db = new Patients_Database_Array();
 
     public static void RegisterNewConsultation() {
+        Boolean endLoop = false;
         boolean CheckAccount_Recorded = false;
         boolean age_available = false;
-        int Multishot = -1;
         int Stage = 0;
         String firstname = "";
         String lastname = "";
         int Age = -1;
         String Date = " ";
+        String typeStr = ""; // Initialize typeStr
+        double fee = 0; // Initialize fee
+        Pricing priceof = new Pricing();
+
         do {
             boolean pass = false;
             clear();
             header();
             hsa_register_Consulatation();
+
             switch (Stage) {
                 case 0 -> {
                     System.out.print("Enter FirstName:\t");
-                    String anel = command.nextLine();
-                    firstname = anel;
+                    firstname = command.nextLine();
                     pass = true;
                 }
                 case 1 -> {
                     System.err.println("FirtName: " + firstname);
                     System.out.print("Enter Lastname:\t");
-                    String lena = command.nextLine();
-                    lastname = lena;
+                    lastname = command.nextLine();
                     pass = true;
                 }
                 case 2 -> {
                     try {
                         int search = db.checkSameAccount(firstname, lastname);
-                        command.nextLine();
+                        if (DEbuggMode) {
+                            command.nextLine();
+                        }
                         if (search >= 0 && !CheckAccount_Recorded) {
                             if (DEbuggMode) {
                                 db.showAccount();
@@ -233,7 +238,9 @@ public class Main_Grilling extends ui {
                             age_available = db.AskAgeData();
                             CheckAccount_Recorded = true;
                         }
+
                         System.out.println("Patients name:\t" + lastname + ", " + firstname);
+
                         if (!age_available && !CheckAccount_Recorded) {
                             System.out.print("Enter Age:\t");
                             String AgeComs = command.nextLine();
@@ -244,9 +251,12 @@ public class Main_Grilling extends ui {
                             System.out.println("Patient age:\t" + Age);
                         }
                         pass = true;
+
                     } catch (NumberFormatException e) {
                         System.out.println(e);
-                        command.nextLine();
+                        if (DEbuggMode) {
+                            command.nextLine();
+                        }
                     }
                 }
                 case 3 -> {
@@ -255,19 +265,152 @@ public class Main_Grilling extends ui {
                     hsa_register_Consulatation();
                     System.out.println("Patients name:\t" + lastname + ", " + firstname);
                     System.out.println("Patient age:\t" + Age);
-                    System.out.println("Enter Date:\tLAYOUT [ Day-Month-Year]");
+                    System.out.println(
+                            "Enter Date:\tLAYOUT MUST BE \"00-00-0000\" [ Day-Month-Year]\n\tfill the fron with 0 if you only need single digit like 09 not 9");
                     System.out.print("[]-> \t");
                     Date = command.nextLine();
-                    register_Consulatation();
+
+                    if (Date.length() != 10) {
+                        System.out.println(
+                                "Invalid input: The string must have exactly 10 characters, including dashes ('-').");
+                    } else {
+                        // Initialize variables
+                        String[] parts = new String[3]; // Store the 3 sets (first, second, optional third)
+                        int partIndex = 0;
+                        StringBuilder currentPart = new StringBuilder();
+
+                        // Loop through the string
+                        for (int i = 0; i < Date.length(); i++) {
+                            char ch = Date.charAt(i);
+
+                            if (ch == '-') {
+                                // When '-' is found, save the current part and reset
+                                if (partIndex < 3) { // Prevent ArrayIndexOutOfBoundsException
+                                    parts[partIndex] = currentPart.toString();
+                                    partIndex++;
+                                }
+                                currentPart.setLength(0); // Clear the StringBuilder
+                            } else {
+                                // Append the character to the current part
+                                currentPart.append(ch);
+                            }
+                        }
+
+                        // Add the last part after the loop
+                        if (partIndex < 3) { // Prevent ArrayIndexOutOfBoundsException
+                            parts[partIndex] = currentPart.toString();
+                        }
+
+                        boolean checkpoint = false;
+                        try {
+                            for (int l = 0; l < parts.length; l++) {
+                                boolean loopers = true;
+                                int Check = Integer.parseInt(parts[l]);
+
+                                switch (l) {
+                                    case 0 -> {
+                                        if (DEbuggMode) {
+                                            System.out.println("First set: " + parts[0]);
+                                            command.nextLine();
+                                        }
+                                        if (Check > 31) {
+                                            loopers = false;
+                                        }
+                                    }
+                                    case 1 -> {
+                                        if (DEbuggMode) {
+                                            System.out.println("Second set: " + parts[1]);
+                                            command.nextLine();
+                                        }
+                                        if (Check > 12) {
+                                            loopers = false;
+                                        }
+                                    }
+                                    case 2 -> {
+                                        if (DEbuggMode) {
+                                            if (parts[2] != null && parts[2].length() == 4) {
+                                                System.out.println("Third set: " + parts[2]);
+                                            } else {
+                                                System.out.println("No valid third set.");
+                                            }
+                                        }
+                                        checkpoint = true;
+                                    }
+                                }
+                                if (!loopers) {
+                                    break;
+                                }
+                            }
+                        } catch (NumberFormatException e) {
+                            System.out.println("Invalid number format in date parts: " + e.getMessage());
+                            if (DEbuggMode) {
+                                command.nextLine();
+                            }
+                            break; // Exit the case if invalid input is detected
+                        }
+
+                        // Check if the date passed the validation
+                        if (checkpoint) {
+                            pass = true;
+                        } else {
+                            System.out.println("Invalid date format or out-of-range values.");
+                        }
+                        command.nextLine();
+                    }
+                }
+
+                case 4 -> {
+                    clear();
+                    header();
+                    hsa_register_Consulatation();
+                    System.out.println("Patients name:\t" + lastname + ", " + firstname);
+                    System.out.println("Patient age:\t" + Age);
+                    System.out.println("Consultation Date: " + Date);
                     System.out.print("Choose consultation type: ");
-                    int type = command.nextInt();
+                    register_Consulatation();
+                    int type = -1; // Initialize type to an invalid value
+
+                    if (command.hasNextInt()) {
+                        type = command.nextInt();
+                        command.nextLine(); // Consume the newline character after reading the integer
+                    } else {
+                        // Handle the case where the user doesn't enter an integer
+                        System.out.println("Invalid input. Please enter a number for the consultation type.");
+                        command.nextLine(); // Clear the invalid input
+                        break; // Exit the switch and re-prompt the user
+                    }
+
                     pass = true;
+                    typeStr = (type == 1) ? "OPD" : "ER";
+
+                    switch (type) {
+                        case 1 -> fee = priceof.OPD;
+                        case 2 -> fee = priceof.ER;
+                    }
+
+                    int patientIndex;
+                    if (CheckAccount_Recorded) {
+                        // If a duplicate was found, use the existing index
+                        patientIndex = db.checkSameAccount(firstname, lastname);
+                    } else {
+                        // If no duplicate, add a new patient
+                        patientIndex = db.addPatient(lastname, firstname, Age);
+                    }
+
+                    // Add consultation to account_lodge (with type and date)
+                    db.patients.get(patientIndex).addAccountLodge(typeStr, Date);
+
+                    consultationRecords
+                            .add("Name: " + lastname + ", " + firstname + "/tDate: " + Date + ", Type: " + typeStr
+                                    + ", Fee: ₱" + fee);
+                    System.out.println("Consultation Registered! Total Fee: ₱" + fee);
+                    endLoop = true;
                 }
             }
             if (pass) {
                 Stage++;
             }
-        } while (Multishot != 9);
+        } while (!endLoop);
         db.clearFoundData();
     }
 
@@ -315,6 +458,18 @@ public class Main_Grilling extends ui {
         }
     }
 
+    public static void ViewConsultationRecords() {
+        clear();
+        header();
+        System.out.println("NOTE: This is only for Viewing no editing");
+        System.out.println("\n--- Consultation Records ---");
+        for (String record : consultationRecords) {
+            System.out.println(record);
+        }
+        System.out.print("Press Enter to continue...");
+        command.nextLine();// use to halt view
+    }
+
     public static void LaboratoryServicesFunctions(int MultiShot) {
         int Id = 2;
         switch (MultiShot) {
@@ -327,6 +482,232 @@ public class Main_Grilling extends ui {
             command.nextLine();
         }
         locale = Remstart = Id;
+    }
+
+    public static ArrayList<String> ViewLaboratoryRecords = new ArrayList<>();
+
+    // REGISTRY NEW LAB NOT WORKING YET
+    public static void RegisterNewLaboratoryTest() {
+        Boolean endLoop = false;
+        boolean CheckAccount_Recorded = false;
+        boolean age_available = false;
+        int Stage = 0;
+        String firstname = "";
+        String lastname = "";
+        int Age = -1;
+        String Date = " ";
+        String typeStr = ""; // Initialize typeStr
+        double fee = 0; // Initialize fee
+        Pricing priceof = new Pricing();
+
+        do {
+            boolean pass = false;
+            clear();
+            header();
+            hsa_register_Consulatation();
+
+            switch (Stage) {
+                case 0 -> {
+                    System.out.print("Enter FirstName:\t");
+                    firstname = command.nextLine();
+                    pass = true;
+                }
+                case 1 -> {
+                    System.err.println("FirtName: " + firstname);
+                    System.out.print("Enter Lastname:\t");
+                    lastname = command.nextLine();
+                    pass = true;
+                }
+                case 2 -> {
+                    try {
+                        int search = db.checkSameAccount(firstname, lastname);
+                        if (DEbuggMode) {
+                            command.nextLine();
+                        }
+                        if (search >= 0 && !CheckAccount_Recorded) {
+                            if (DEbuggMode) {
+                                db.showAccount();
+                            }
+                            animation("Getting Duplicate... Done");
+                            lastname = db.Getlastname();
+                            firstname = db.Getfirstname();
+                            age_available = db.AskAgeData();
+                            CheckAccount_Recorded = true;
+                        }
+
+                        System.out.println("Patients name:\t" + lastname + ", " + firstname);
+
+                        if (!age_available && !CheckAccount_Recorded) {
+                            System.out.print("Enter Age:\t");
+                            String AgeComs = command.nextLine();
+                            Age = Integer.parseInt(AgeComs);
+                        } else {
+                            animation("Fetching patients Age.....");
+                            Age = db.GetAge();
+                            System.out.println("Patient age:\t" + Age);
+                        }
+                        pass = true;
+
+                    } catch (NumberFormatException e) {
+                        System.out.println(e);
+                        if (DEbuggMode) {
+                            command.nextLine();
+                        }
+                    }
+                }
+                case 3 -> {
+                    clear();
+                    header();
+                    hsa_register_Consulatation();
+                    System.out.println("Patients name:\t" + lastname + ", " + firstname);
+                    System.out.println("Patient age:\t" + Age);
+                    System.out.println(
+                            "Enter Date:\tLAYOUT MUST BE \"00-00-0000\" [ Day-Month-Year]\n\tfill the fron with 0 if you only need single digit like 09 not 9");
+                    System.out.print("[]-> \t");
+                    Date = command.nextLine();
+
+                    if (Date.length() != 10) {
+                        System.out.println(
+                                "Invalid input: The string must have exactly 10 characters, including dashes ('-').");
+                    } else {
+                        // Initialize variables
+                        String[] parts = new String[3]; // Store the 3 sets (first, second, optional third)
+                        int partIndex = 0;
+                        StringBuilder currentPart = new StringBuilder();
+
+                        // Loop through the string
+                        for (int i = 0; i < Date.length(); i++) {
+                            char ch = Date.charAt(i);
+
+                            if (ch == '-') {
+                                // When '-' is found, save the current part and reset
+                                if (partIndex < 3) { // Prevent ArrayIndexOutOfBoundsException
+                                    parts[partIndex] = currentPart.toString();
+                                    partIndex++;
+                                }
+                                currentPart.setLength(0); // Clear the StringBuilder
+                            } else {
+                                // Append the character to the current part
+                                currentPart.append(ch);
+                            }
+                        }
+
+                        // Add the last part after the loop
+                        if (partIndex < 3) { // Prevent ArrayIndexOutOfBoundsException
+                            parts[partIndex] = currentPart.toString();
+                        }
+
+                        boolean checkpoint = false;
+                        try {
+                            for (int l = 0; l < parts.length; l++) {
+                                boolean loopers = true;
+                                int Check = Integer.parseInt(parts[l]);
+
+                                switch (l) {
+                                    case 0 -> {
+                                        if (DEbuggMode) {
+                                            System.out.println("First set: " + parts[0]);
+                                            command.nextLine();
+                                        }
+                                        if (Check > 31) {
+                                            loopers = false;
+                                        }
+                                    }
+                                    case 1 -> {
+                                        if (DEbuggMode) {
+                                            System.out.println("Second set: " + parts[1]);
+                                            command.nextLine();
+                                        }
+                                        if (Check > 12) {
+                                            loopers = false;
+                                        }
+                                    }
+                                    case 2 -> {
+                                        if (DEbuggMode) {
+                                            if (parts[2] != null && parts[2].length() == 4) {
+                                                System.out.println("Third set: " + parts[2]);
+                                            } else {
+                                                System.out.println("No valid third set.");
+                                            }
+                                        }
+                                        checkpoint = true;
+                                    }
+                                }
+                                if (!loopers) {
+                                    break;
+                                }
+                            }
+                        } catch (NumberFormatException e) {
+                            System.out.println("Invalid number format in date parts: " + e.getMessage());
+                            if (DEbuggMode) {
+                                command.nextLine();
+                            }
+                            break; // Exit the case if invalid input is detected
+                        }
+
+                        // Check if the date passed the validation
+                        if (checkpoint) {
+                            pass = true;
+                        } else {
+                            System.out.println("Invalid date format or out-of-range values.");
+                        }
+                        command.nextLine();
+                    }
+                }
+
+                case 4 -> {
+                    clear();
+                    header();
+                    hsa_register_Consulatation();
+                    System.out.println("Patients name:\t" + lastname + ", " + firstname);
+                    System.out.println("Patient age:\t" + Age);
+                    System.out.println("Consultation Date: " + Date);
+                    System.out.print("Choose consultation type: ");
+                    register_Consulatation();
+                    int type = -1; // Initialize type to an invalid value
+
+                    if (command.hasNextInt()) {
+                        type = command.nextInt();
+                        command.nextLine(); // Consume the newline character after reading the integer
+                    } else {
+                        // Handle the case where the user doesn't enter an integer
+                        System.out.println("Invalid input. Please enter a number for the consultation type.");
+                        command.nextLine(); // Clear the invalid input
+                        break; // Exit the switch and re-prompt the user
+                    }
+
+                    pass = true;
+                    typeStr = (type == 1) ? "OPD" : "ER";
+
+                    switch (type) {
+                        case 1 -> fee = priceof.OPD;
+                        case 2 -> fee = priceof.ER;
+                    }
+
+                    int patientIndex;
+                    if (CheckAccount_Recorded) {
+                        // If a duplicate was found, use the existing index
+                        patientIndex = db.checkSameAccount(firstname, lastname);
+                    } else {
+                        // If no duplicate, add a new patient
+                        patientIndex = db.addPatient(lastname, firstname, Age);
+                    }
+
+                    // Add consultation to account_lodge (with type and date)
+                    db.patients.get(patientIndex).addAccountLodge(typeStr, Date);
+
+                    consultationRecords
+                            .add("Name: " + lastname + ", " + firstname + "/tDate: " + Date + ", Type: " + typeStr
+                                    + ", Fee: ₱" + fee);
+                    System.out.println("Consultation Registered! Total Fee: ₱" + fee);
+                    endLoop = true;
+                }
+            }
+            if (pass) {
+                Stage++;
+            }
+        } while (!endLoop);
+        db.clearFoundData();
     }
 
     public static void LaboratoryPricing() {
@@ -691,6 +1072,18 @@ public class Main_Grilling extends ui {
         }
     }
 
+    public static void ViewLaboratoryRecords() {
+        clear();
+        header();
+        System.out.println("NOTE: This is only for Viewing no editing");
+        System.out.println("\n--- Laboratory Records ---");
+        for (String record : ViewLaboratoryRecords) {
+            System.out.println(record);
+        }
+        System.out.print("Press Enter to continue...");
+        command.nextLine();// use to halt view
+    }
+
     public static void RoomandAdmissionServicesFunctions(int MultiShot) {
         int Id = 3;
         switch (MultiShot) {
@@ -907,4 +1300,5 @@ public class Main_Grilling extends ui {
             }
         }
     }
+
 }
