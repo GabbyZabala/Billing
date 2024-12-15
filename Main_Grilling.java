@@ -190,6 +190,8 @@ public class Main_Grilling extends ui {
     }
 
     public static ArrayList<String> consultationRecords = new ArrayList<>();
+    public static ArrayList<String> ViewLaboratoryRecords = new ArrayList<>();
+    public static ArrayList<String> ViewRoomRecords = new ArrayList<>();
     public static Patients_Database_Array db = new Patients_Database_Array();
 
     public static void RegisterNewConsultation() {
@@ -485,8 +487,6 @@ public class Main_Grilling extends ui {
         }
         locale = Remstart = Id;
     }
-
-    public static ArrayList<String> ViewLaboratoryRecords = new ArrayList<>();
 
     public static void RegisterNewLaboratoryTest() {
         boolean endLoop = false;
@@ -1292,7 +1292,7 @@ public class Main_Grilling extends ui {
         switch (MultiShot) {
             case 1 -> line();// RegisterRoomNewAdmission();//
             case 2 -> EditRoomInformation();// line();//
-            case 3 -> line();// ViewRoomRecords();//
+            case 3 -> ViewRoomRecords();// line();//
         }
         if (DEbuggMode) {
             System.err.println(MultiShot);
@@ -1300,8 +1300,6 @@ public class Main_Grilling extends ui {
         }
         locale = Remstart = Id;
     }
-
-    public static ArrayList<String> ViewRoomRecords = new ArrayList<>();
 
     public static void RegisterRoomNewAdmission() {
 
@@ -1510,4 +1508,15 @@ public class Main_Grilling extends ui {
         }
     }
 
+    public static void ViewRoomRecords() {
+        clear();
+        header();
+        System.out.println("NOTE: This is only for Viewing no editing");
+        System.out.println("\n--- Rooms Records ---");
+        for (String record : ViewRoomRecords) {
+            System.out.println(record);
+        }
+        System.out.print("Press Enter to continue...");
+        command.nextLine();// use to halt view
+    }
 }
