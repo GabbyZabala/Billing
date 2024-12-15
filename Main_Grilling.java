@@ -1301,6 +1301,12 @@ public class Main_Grilling extends ui {
         locale = Remstart = Id;
     }
 
+    public static ArrayList<String> ViewRoomRecords = new ArrayList<>();
+
+    public static void RegisterRoomNewAdmission() {
+
+    }
+
     public static void EditRoomInformation() {
         int MultiShot;
         do {
