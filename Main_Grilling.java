@@ -2319,5 +2319,5 @@ public class Main_Grilling extends ui {
 /*
  * Nababaliw na ako sa bugs fixS
  * hahhahahah HAHAAHHAHAHA
- * bugs Encounter: 54
+ * bugs Encounter: 154
  */
