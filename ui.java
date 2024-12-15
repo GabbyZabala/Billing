@@ -30,7 +30,7 @@ public class ui {
     }
 
     public static void register_Consulatation() {
-        String[] choices = { "OPD Consultation", "ER Consultation", "Back to Consultation Services Menu" };
+        String[] choices = { "OPD Consultation", "ER Consultation" };
         for (int i = 0; i < choices.length; i++) {
             System.out.println((i + 1) + ": " + choices[i]);
         }
@@ -176,7 +176,7 @@ public class ui {
 
     // TRANSACTION RECORDS START HERE
     public static void consulation_Record() {
-        String[] choices = { "Consultation History", "Exit" };
+        String[] choices = { "OPD Records", "ER Records", "Go Back" };
         System.out.println("----------Consultation Record---------");
         for (int i = 0; i < choices.length; i++) {
             System.out.println((i + 1) + ": " + choices[i]);
@@ -184,8 +184,9 @@ public class ui {
     }
 
     public static void laboratory_Record() {
-        String[] choices = { "Blood Chemistry", "Hematology", "Clinical Microcopy", "Bacteriology",
-                "Blood Bank and Serology", "Exit" };
+        String[] choices = { "Blood Chemistry Records", "Hematology Records", "Clinical Microcopy Records",
+                "Bacteriology Records",
+                "Blood Bank and Serology Records", "Go Back" };
         System.out.println("----------Laborartory Record---------");
         for (int i = 0; i < choices.length; i++) {
             System.out.println((i + 1) + ": " + choices[i]);
@@ -193,7 +194,8 @@ public class ui {
     }
 
     public static void room_Record() {
-        String[] choices = { "SERVICE WARD History", "SEMI-PRIVATE ROOM History", "PRIVATE ROOM History", "Exit" };
+        String[] choices = { "SERVICE WARD History", "SEMI-PRIVATE ROOM History",
+                "PRIVATE ROOM History", "Go Back" };
         System.out.println("----------Room Record---------");
         for (int i = 0; i < choices.length; i++) {
             System.out.println((i + 1) + ": " + choices[i]);

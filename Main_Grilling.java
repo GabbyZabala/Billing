@@ -117,10 +117,11 @@ public class Main_Grilling extends ui {
                         case 1 -> ConsultationService(Data_Changer);// 1.Consultation Services
                         case 2 -> LaboratoryServices(Data_Changer);// 2.Laboratory Services
                         case 3 -> RoomandAdmissionServices(Data_Changer);// 3.Room and Admission Services
-                        // 4.Transaction Records
+                        case 4 -> TransactionRecords(Data_Changer);
                         case 10 -> ConsultationServiceFunctions(Data_Changer);
                         case 20 -> LaboratoryServicesFunctions(Data_Changer);
                         case 30 -> RoomandAdmissionServicesFunctions(Data_Changer);
+                        case 40 -> TransactionRecordsFunctions(Data_Changer);
                         default -> System.out.print("Error Reload page");
                     }
                 } catch (NumberFormatException e) {
@@ -165,6 +166,17 @@ public class Main_Grilling extends ui {
 
     public static void RoomandAdmissionServices(int MultiShot) {
         int Id = 30;
+        switch (MultiShot) {
+            case 1, 2, 3 -> {
+                Data_Changer = MultiShot;
+                Remstart = Id;
+            }
+            case 4 -> locale = Remstart = 0;// back to main menu
+        }
+    }
+
+    public static void TransactionRecords(int MultiShot) {
+        int Id = 40;
         switch (MultiShot) {
             case 1, 2, 3 -> {
                 Data_Changer = MultiShot;
@@ -369,10 +381,10 @@ public class Main_Grilling extends ui {
                     System.out.println("Patients name:\t" + lastname + ", " + firstname);
                     System.out.println("Patient age:\t" + Age);
                     System.out.println("Consultation Date: " + Date);
-                    System.out.print("Choose consultation type: ");
+                    System.out.println("Choose consultation type: ");
                     register_Consulatation();
                     int type = -1; // Initialize type to an invalid value
-
+                    System.out.print("[]->\t");
                     if (command.hasNextInt()) {
                         type = command.nextInt();
                         command.nextLine(); // Consume the newline character after reading the integer
@@ -1376,7 +1388,7 @@ public class Main_Grilling extends ui {
                 case 3 -> {// for date checking
                     clear();
                     header();
-                    register_Admission();
+                    System.out.println("----------Register New Admission---------");
                     System.out.println("Patients name:\t" + Patient_Name);
                     System.out.println("Patient age:\t" + Age);
                     System.out.println(
@@ -1765,4 +1777,547 @@ public class Main_Grilling extends ui {
         System.out.print("Press Enter to continue...");
         command.nextLine();// use to halt view
     }
+
+    // Transaction Records
+    public static void TransactionRecordsFunctions(int MultiShot) {
+        int Id = 4;
+        switch (MultiShot) {
+            case 1 -> ConsultationRecords();// line();//
+            case 2 -> LaboratoryRecords();// line();//
+            case 3 -> RoomRecords();// line();//
+
+        }
+        if (DEbuggMode) {
+            System.err.println(MultiShot);
+            command.nextLine();
+        }
+        locale = Remstart = Id;
+    }
+
+    public static void ConsultationRecords() {
+        int MultiShot;
+        do {
+            clear();
+            header();
+            consulation_Record(); // Display the menu for Consultation Records
+            System.err.print("Enter choice: --> ");
+            if (command.hasNextInt()) {
+                MultiShot = command.nextInt();
+                command.nextLine(); // Consume newline
+            } else {
+                System.out.println("Invalid input. Please enter a number.");
+                command.nextLine(); // Clear invalid input
+                MultiShot = -1; // Keep looping
+                continue;
+            }
+
+            switch (MultiShot) {
+                case 1 -> OPDConsultationRecord();
+                case 2 -> ERConsultationRecord();
+                case 3 -> {
+                    return; // Back to Transaction Records Menu
+                }
+                default -> System.out.println("Invalid choice.");
+            }
+        } while (MultiShot != 3);
+    }
+
+    public static void OPDConsultationRecord() {
+        clear();
+        header();
+        System.out.println("----------- OPD Patients ----------");
+
+        // Create a list to store OPD patients
+        ArrayList<Patients_Database> opdPatients = new ArrayList<>();
+        for (Patients_Database patient : db.patients) {
+            for (String[] entry : patient.account_lodge) {
+                if (entry[0].equals("OPD")) { // Check if the type is OPD
+                    opdPatients.add(patient);
+                    break; // Add patient only once, even if multiple OPD entries
+                }
+            }
+        }
+        if (opdPatients.isEmpty()) {
+            System.out.println("No OPD Patients found.");
+            System.out.println("\nPress Enter to continue...");
+            command.nextLine(); // use to halt view
+            return; // Early exit if no OPD patients
+        } else {
+            // Display the list of OPD patients
+            for (int i = 0; i < opdPatients.size(); i++) {
+                Patients_Database patient = opdPatients.get(i);
+                System.out.println((i + 1) + ". " + patient.fullname + " (Patient ID: " + patient.PatientID + ")");
+            }
+            System.out.println((opdPatients.size() + 1) + ". Back to Consultation Record Menu");
+
+            // Get the user's choice
+            System.out.print("Enter choice: ");
+            int choice = command.nextInt();
+            command.nextLine(); // Consume newline
+
+            if (choice >= 1 && choice <= opdPatients.size()) {
+                // Display details for the selected patient
+                Patients_Database selectedPatient = opdPatients.get(choice - 1);
+                displayPatientRecord(selectedPatient, "OPD");
+            } else if (choice == opdPatients.size() + 1) {
+                return; // Go back to the previous menu
+            } else {
+                System.out.println("Invalid choice.");
+            }
+        }
+        System.out.println("\nPress Enter to continue...");
+        command.nextLine(); // use to halt view
+    }
+
+    public static void ERConsultationRecord() {
+        clear();
+        header();
+        System.out.println("----------- ER Patients ----------");
+
+        // Create a list to store ER patients
+        ArrayList<Patients_Database> erPatients = new ArrayList<>();
+        for (Patients_Database patient : db.patients) {
+            for (String[] entry : patient.account_lodge) {
+                if (entry[0].equals("ER")) { // Check if the type is ER
+                    erPatients.add(patient);
+                    break; // Add patient only once, even if multiple ER entries
+                }
+            }
+        }
+        if (erPatients.isEmpty()) {
+            System.out.println("No ER Patients found.");
+            System.out.println("\nPress Enter to continue...");
+            command.nextLine(); // use to halt view
+            return; // Early exit if no ER patients
+        } else {
+            // Display the list of ER patients
+            for (int i = 0; i < erPatients.size(); i++) {
+                Patients_Database patient = erPatients.get(i);
+                System.out.println((i + 1) + ". " + patient.fullname + " (Patient ID: " + patient.PatientID + ")");
+            }
+            System.out.println((erPatients.size() + 1) + ". Back to Consultation Record Menu");
+
+            // Get the user's choice
+            System.out.print("Enter choice: ");
+            int choice = command.nextInt();
+            command.nextLine(); // Consume newline
+
+            if (choice >= 1 && choice <= erPatients.size()) {
+                // Display details for the selected patient
+                Patients_Database selectedPatient = erPatients.get(choice - 1);
+                displayPatientRecord(selectedPatient, "ER");
+            } else if (choice == erPatients.size() + 1) {
+                return; // Go back to the previous menu
+            } else {
+                System.out.println("Invalid choice.");
+            }
+        }
+        System.out.println("\nPress Enter to continue...");
+        command.nextLine(); // use to halt view
+    }
+
+    // Helper function to display patient details and consultation records
+    private static void displayPatientRecord(Patients_Database patient, String type) {
+        clear();
+        header();
+        System.out.println("---------- Record ----------");
+        patient.show_PatientData();
+        System.out.println("----------------------------------------------------------------");
+        System.out.println("Item                         Description                Amount");
+
+        double totalAmount = 0;
+        Pricing priceof = new Pricing();
+
+        for (String[] entry : patient.account_lodge) {
+            if (entry[0].equals(type)) {
+                String item = type + " Consultation";
+                String description = (type.equals("OPD")) ? "Out Patient Department" : "Emergency Room";
+                double amount = (type.equals("OPD")) ? priceof.OPD : priceof.ER;
+                totalAmount += amount;
+
+                System.out.printf("%-28s %-25s ₱%.2f\n", item, description, amount);
+            }
+        }
+
+        System.out.println("----------------------------------------------------------------");
+        System.out.printf("                                                 Total Amount: ₱%.2f\n", totalAmount);
+        System.out.println("----------------------------------------------------------------");
+        System.out.println("\nPress Enter to continue...");
+        command.nextLine(); // use to halt view
+    }
+
+    public static void LaboratoryRecords() {
+        int MultiShot;
+        do {
+            clear();
+            header();
+            laboratory_Record(); // Display the menu for Laboratory Records
+            System.err.print("Enter choice: --> ");
+            if (command.hasNextInt()) {
+                MultiShot = command.nextInt();
+                command.nextLine(); // Consume newline
+            } else {
+                System.out.println("Invalid input. Please enter a number.");
+                command.nextLine(); // Clear invalid input
+                MultiShot = -1; // Keep looping
+                continue;
+            }
+
+            switch (MultiShot) {
+                case 1 -> BloodChemistryRecord();
+                case 2 -> HematologyRecord();
+                case 3 -> ClinicalMicroscopyRecord();
+                case 4 -> BacteriologyRecord();
+                case 5 -> BloodBankAndSerologyRecord();
+                case 6 -> {
+                    return; // Back to Transaction Records Menu
+                }
+                default -> System.out.println("Invalid choice.");
+            }
+        } while (MultiShot != 6);
+    }
+
+    public static void BloodChemistryRecord() {
+        displayLaboratoryCategoryRecords("Blood Chemistry");
+    }
+
+    public static void HematologyRecord() {
+        displayLaboratoryCategoryRecords("Hematology");
+    }
+
+    public static void ClinicalMicroscopyRecord() {
+        displayLaboratoryCategoryRecords("Clinical Microscopy");
+    }
+
+    public static void BacteriologyRecord() {
+        displayLaboratoryCategoryRecords("Bacteriology");
+    }
+
+    public static void BloodBankAndSerologyRecord() {
+        displayLaboratoryCategoryRecords("Blood Bank and Serology");
+    }
+
+    // Helper function to display records for a specific laboratory category
+    private static void displayLaboratoryCategoryRecords(String category) {
+        clear();
+        header();
+        System.out.println("----------- " + category + " Patients ----------");
+
+        // Create a list to store patients for the given category
+        ArrayList<Patients_Database> categoryPatients = new ArrayList<>();
+        for (Patients_Database patient : db.patients) {
+            for (String[] entry : patient.account_lodge) {
+                // Check if the first part matches the category
+                if (entry[0].startsWith(category)) {
+                    categoryPatients.add(patient);
+                    break; // Add patient only once
+                }
+            }
+        }
+
+        if (categoryPatients.isEmpty()) {
+            System.out.println("No " + category + " Patients found.");
+            System.out.println("\nPress Enter to continue...");
+            command.nextLine();
+            return;
+        }
+
+        // Display the list of patients for the category
+        for (int i = 0; i < categoryPatients.size(); i++) {
+            Patients_Database patient = categoryPatients.get(i);
+            System.out.println((i + 1) + ". " + patient.fullname + " (Patient ID: " + patient.PatientID + ")");
+        }
+        System.out.println((categoryPatients.size() + 1) + ". Back to Laboratory Record Menu");
+
+        // Get the user's choice
+        System.out.print("Enter choice: ");
+        int choice = command.nextInt();
+        command.nextLine(); // Consume newline
+
+        if (choice >= 1 && choice <= categoryPatients.size()) {
+            // Display details for the selected patient
+            Patients_Database selectedPatient = categoryPatients.get(choice - 1);
+            displayPatientLaboratoryRecord(selectedPatient, category);
+        } else if (choice == categoryPatients.size() + 1) {
+            return; // Go back to the previous menu
+        } else {
+            System.out.println("Invalid choice.");
+        }
+
+        System.out.println("\nPress Enter to continue...");
+        command.nextLine();
+    }
+
+    // Helper function to display patient details and laboratory records
+    private static void displayPatientLaboratoryRecord(Patients_Database patient, String category) {
+        clear();
+        header();
+        System.out.println("---------- Record ----------");
+        patient.show_PatientData();
+        System.out.println("----------------------------------------------------------------");
+        System.out.println("Item                         Description                     Amount");
+
+        double totalAmount = 0;
+
+        for (String[] entry : patient.account_lodge) {
+            if (entry[0].startsWith(category)) {
+                String labTest = entry[0]; // Get the full lab test name from account_lodge
+                String description = getTestDescription(labTest); // Get description based on test
+                double amount = getTestFeeRecords(category, labTest); // Use helper function
+                totalAmount += amount;
+
+                System.out.printf("%-28s %-30s ₱%.2f\n", labTest, description, amount);
+            }
+        }
+
+        System.out.println("----------------------------------------------------------------");
+        System.out.printf("                                                     Total Amount: ₱%.2f\n", totalAmount);
+        System.out.println("----------------------------------------------------------------");
+        System.out.println("\nPress Enter to continue...");
+        command.nextLine();
+    }
+
+    // Helper function to get the fee for a specific test
+    private static double getTestFeeRecords(String category, String test) {
+        Pricing priceof = new Pricing();
+
+        // Extract the specific test from the labTest string (e.g., "Bua" from "Blood
+        // Chemistry - Bua")
+        String specificTest = test.substring(test.indexOf(" - ") + 3);
+
+        return switch (category) {
+            case "Blood Chemistry" -> switch (specificTest) {
+                case "Bua" -> priceof.Bua;
+                case "Bun" -> priceof.Bun;
+                case "Cholesterol" -> priceof.Cholesterol;
+                case "Creatinine" -> priceof.Creatine;
+                case "FBS:RBS" -> priceof.FBS_RBS;
+                case "Triglycerides" -> priceof.Triglycerides;
+                case "AST/ GOT" -> priceof.AST_GOT;
+                case "ALT/ GPT" -> priceof.AST_GPT;
+                case "HDL/ LDL" -> priceof.HDL_LDL;
+                default -> 0.0;
+            };
+            case "Hematology" -> switch (specificTest) {
+                case "CBC" -> priceof.CBC;
+                case "CT/BT" -> priceof.CT_BT;
+                case "Hgb/Hct" -> priceof.Hgb_Hct;
+                case "Peripheral Smear Staining" -> priceof.Peripheral_Smear_Staining;
+                case "Peripheral Smear Reading" -> priceof.Peripheral_Smear_Reading;
+                case "Platelet Count" -> priceof.Platelet_Count;
+                default -> 0.0;
+            };
+            case "Clinical Microscopy" -> switch (specificTest) {
+                case "Fecalysis" -> priceof.Fecalysis;
+                case "Occult Blood Test" -> priceof.Occult_Blood_Test;
+                case "Pregnancy Test" -> priceof.Pregnancy_Test;
+                case "Urinalysis" -> priceof.Urinalysis;
+                default -> 0.0;
+            };
+            case "Bacteriology" -> switch (specificTest) {
+                case "Sputum Exam/ AFB" -> priceof.Sputum_Exam_AFB;
+                case "Slit Skin Smear" -> priceof.Slit_Skin_Smear;
+                case "Gram Stain" -> priceof.Gram_Stain;
+                case "KOH Mount" -> priceof.KOH_Mount;
+                case "RF/Igm" -> priceof.RF_Igm;
+                case "Typhidot" -> priceof.Typhidot;
+                default -> 0.0;
+            };
+            case "Blood Bank and Serology" -> switch (specificTest) {
+                case "Blood Typing" -> priceof.Blood_Typing;
+                case "HbSAg" -> priceof.HbSAg;
+                case "HCV" -> priceof.HCV;
+                case "HAV" -> priceof.HAV;
+                case "Bleeding Fee" -> priceof.Bleeding_Fee;
+                default -> 0.0;
+            };
+            default -> 0.0;
+        };
+    }
+
+    // Helper function to get the description of a test
+    private static String getTestDescription(String labTest) {
+        // You can customize these descriptions as needed
+        return switch (labTest) {
+            case "Blood Chemistry - Bua" -> "Blood Uric Acid Test";
+            case "Blood Chemistry - Bun" -> "Blood Urea Nitrogen Test";
+            case "Blood Chemistry - Cholesterol" -> "Cholesterol Test";
+            case "Blood Chemistry - Creatinine" -> "Creatinine Test";
+            case "Blood Chemistry - FBS:RBS" -> "Fasting Blood Sugar/Random Blood Sugar Test";
+            case "Blood Chemistry - Triglycerides" -> "Triglycerides Test";
+            case "Blood Chemistry - AST/ GOT" -> "Aspartate Aminotransferase/Glutamic Oxaloacetic Transaminase Test";
+            case "Blood Chemistry - ALT/ GPT" -> "Alanine Aminotransferase/Glutamic Pyruvic Transaminase Test";
+            case "Blood Chemistry - HDL/ LDL" -> "High-Density Lipoprotein/Low-Density Lipoprotein Test";
+            case "Hematology - CBC" -> "Complete Blood Count";
+            case "Hematology - CT/BT" -> "Clotting Time/Bleeding Time";
+            case "Hematology - Hgb/Hct" -> "Hemoglobin/Hematocrit";
+            case "Hematology - Peripheral Smear Staining" -> "Peripheral Smear Staining";
+            case "Hematology - Peripheral Smear Reading" -> "Peripheral Smear Reading";
+            case "Hematology - Platelet Count" -> "Platelet Count";
+            case "Clinical Microscopy - Fecalysis" -> "Fecalysis";
+            case "Clinical Microscopy - Occult Blood Test" -> "Occult Blood Test";
+            case "Clinical Microscopy - Pregnancy Test" -> "Pregnancy Test";
+            case "Clinical Microscopy - Urinalysis" -> "Urinalysis";
+            case "Bacteriology - Sputum Exam/ AFB" -> "Sputum Exam/Acid-Fast Bacilli";
+            case "Bacteriology - Slit Skin Smear" -> "Slit Skin Smear";
+            case "Bacteriology - Gram Stain" -> "Gram Stain";
+            case "Bacteriology - KOH Mount" -> "KOH Mount";
+            case "Bacteriology - RF/Igm" -> "Rheumatoid Factor/Immunoglobulin M";
+            case "Bacteriology - Typhidot" -> "Typhidot";
+            case "Blood Bank and Serology - Blood Typing" -> "Blood Typing";
+            case "Blood Bank and Serology - HbSAg" -> "Hepatitis B Surface Antigen";
+            case "Blood Bank and Serology - HCV" -> "Hepatitis C Virus";
+            case "Blood Bank and Serology - HAV" -> "Hepatitis A Virus";
+            case "Blood Bank and Serology - Bleeding Fee" -> "Bleeding Fee";
+            default -> "Laboratory Test"; // Default description if not found
+        };
+    }
+
+    public static void RoomRecords() {
+        int MultiShot;
+        do {
+            clear();
+            header();
+            room_Record(); // Display the menu for Room Records
+            System.err.print("Enter choice: --> ");
+            if (command.hasNextInt()) {
+                MultiShot = command.nextInt();
+                command.nextLine(); // Consume newline
+            } else {
+                System.out.println("Invalid input. Please enter a number.");
+                command.nextLine(); // Clear invalid input
+                MultiShot = -1; // Keep looping
+                continue;
+            }
+
+            switch (MultiShot) {
+                case 1 -> ServiceWardRoomRecord();
+                case 2 -> SemiPrivateRoomRecord();
+                case 3 -> PrivateRoomRecord();
+                case 4 -> {
+                    return; // Back to Transaction Records Menu
+                }
+                default -> System.out.println("Invalid choice.");
+            }
+        } while (MultiShot != 4);
+    }
+
+    public static void ServiceWardRoomRecord() {
+        displayRoomCategoryRecords("Service Ward");
+    }
+
+    public static void SemiPrivateRoomRecord() {
+        displayRoomCategoryRecords("Semi-Private Room");
+    }
+
+    public static void PrivateRoomRecord() {
+        displayRoomCategoryRecords("Private Room");
+    }
+
+    // Helper function to display records for a specific room category
+    private static void displayRoomCategoryRecords(String category) {
+        clear();
+        header();
+        System.out.println("----------- " + category + " Patients ----------");
+
+        // Create a list to store patients for the given category
+        ArrayList<Patients_Database> categoryPatients = new ArrayList<>();
+        for (Patients_Database patient : db.patients) {
+            for (String[] entry : patient.account_lodge) {
+                if (entry[0].startsWith("Room: " + category)) { // Check for "Room: " + category
+                    categoryPatients.add(patient);
+                    break; // Add patient only once
+                }
+            }
+        }
+
+        if (categoryPatients.isEmpty()) {
+            System.out.println("No " + category + " Patients found.");
+            System.out.println("\nPress Enter to continue...");
+            command.nextLine();
+            return;
+        }
+
+        // Display the list of patients for the category
+        for (int i = 0; i < categoryPatients.size(); i++) {
+            Patients_Database patient = categoryPatients.get(i);
+            System.out.println((i + 1) + ". " + patient.fullname + " (Patient ID: " + patient.PatientID + ")");
+        }
+        System.out.println((categoryPatients.size() + 1) + ". Back to Room Record Menu");
+
+        // Get the user's choice
+        System.out.print("Enter choice: ");
+        int choice = command.nextInt();
+        command.nextLine(); // Consume newline
+
+        if (choice >= 1 && choice <= categoryPatients.size()) {
+            // Display details for the selected patient
+            Patients_Database selectedPatient = categoryPatients.get(choice - 1);
+            displayPatientRoomRecord(selectedPatient, category);
+        } else if (choice == categoryPatients.size() + 1) {
+            return; // Go back to the previous menu
+        } else {
+            System.out.println("Invalid choice.");
+        }
+
+        System.out.println("\nPress Enter to continue...");
+        command.nextLine();
+    }
+
+    // Helper function to display patient details and room records
+    private static void displayPatientRoomRecord(Patients_Database patient, String category) {
+        clear();
+        header();
+        System.out.println("---------- Record ----------");
+        patient.show_PatientData();
+        System.out.println("----------------------------------------------------------------");
+        System.out.println("Item                         Description                     Amount");
+
+        double totalAmount = 0;
+
+        for (String[] entry : patient.account_lodge) {
+            if (entry[0].startsWith("Room: " + category)) {
+                String roomType = entry[0];
+                String description = getRoomDescription(category); // Get description of room
+                double amount = getRoomFee(category); // Get fee based on category
+                totalAmount += amount;
+
+                System.out.printf("%-28s %-30s ₱%.2f\n", roomType, description, amount);
+            }
+        }
+
+        System.out.println("----------------------------------------------------------------");
+        System.out.printf("                                                     Total Amount: ₱%.2f\n", totalAmount);
+        System.out.println("----------------------------------------------------------------");
+        System.out.println("\nPress Enter to continue...");
+        command.nextLine();
+    }
+
+    // Helper function to get the fee for a specific room category
+    private static double getRoomFee(String category) {
+        Pricing priceof = new Pricing();
+        return switch (category) {
+            case "Service Ward" -> priceof.Service_Ward();
+            case "Semi-Private Room" -> priceof.SemiPrivate_Room();
+            case "Private Room" -> priceof.Private_Room();
+            default -> 0.0; // Invalid category
+        };
+    }
+
+    // Helper function to get the description for a room category
+    private static String getRoomDescription(String category) {
+        return switch (category) {
+            case "Service Ward" -> "Service Ward Room";
+            case "Semi-Private Room" -> "Semi-Private Room";
+            case "Private Room" -> "Private Room";
+            default -> "Room"; // Default description
+        };
+    }
 }
+
+// Makers Notes
+/*
+ * Nababaliw na ako sa bugs fixS
+ * hahhahahah HAHAAHHAHAHA
+ * bugs Encounter: 54
+ */

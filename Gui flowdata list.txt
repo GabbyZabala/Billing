@@ -111,15 +111,128 @@
 		------------ Transaction Records ------------
  		1. Consultation Records
 				--------- Consultation Record ----------
- 				1.Consultation History
- 				2.Exit
+ 				1.OPD Consultation Record
+					----------- OPD Patients ----------
+						1.Patient Name (Patient ID)
+						2.Patient Name (Patient ID)
+						3.Patient Name (Patient ID)
+						4.Patient Name (Patient ID)
+						5.Back to Consultation Record Menu
+								if(Patient is picked, all of this will be showed with its patients ID)
+									                  ---------- Record ----------
+										show_PatientData()
+										----------------------------------------------------------------
+										Item                         Description                Amount                   
+
+										OPD Consultation        Out Patient Department           P 50 					
+										----------------------------------------------------------------
+																				Total Amount:    P 50
+										----------------------------------------------------------------
+				2.ER Consultation Record
+					----------- ER Patients ----------
+						1.Patient Name (Patient ID)
+						2.Patient Name (Patient ID)
+						3.Patient Name (Patient ID)
+						4.Patient Name (Patient ID)
+						5.Back to Consultation Record Menu
+								if(Patient is picked, all of this will be showed with its patients ID)
+									                  ---------- Record ----------
+										show_PatientData()
+										----------------------------------------------------------------
+										Item                         Description                Amount                   
+
+										ER Consultation         Out Patient Department           P 50 					
+										----------------------------------------------------------------
+																				Total Amount:    P 50
+										----------------------------------------------------------------
+				3.Back to Consultation Services Menu
  		2. Laboratory Records
 				--------- Laboratory Record ----------
  				1.Blood Chemistry
+					----------- Blood Chemistry Patients ----------
+						1.Patient Name (Patient ID)
+						2.Patient Name (Patient ID)
+						3.Patient Name (Patient ID)
+						4.Patient Name (Patient ID)
+						5.Back to Consultation Record Menu
+								if(Patient is picked, all of this will be showed with its patients ID)
+									                  ---------- Record ----------
+										show_PatientData()
+										----------------------------------------------------------------
+										Item                         Description                Amount                   
+
+										Blood Chemistry        Out Patient Department           P 50 					
+										----------------------------------------------------------------
+																				Total Amount:    P 50
+										----------------------------------------------------------------
  				2.Hematology
+					----------- Hematology Patients ----------
+						1.Patient Name (Patient ID)
+						2.Patient Name (Patient ID)
+						3.Patient Name (Patient ID)
+						4.Patient Name (Patient ID)
+						5.Back to Consultation Record Menu
+								if(Patient is picked, all of this will be showed with its patients ID)
+									                  ---------- Record ----------
+										show_PatientData()
+										----------------------------------------------------------------
+										Item                         Description                Amount                   
+
+										Hematology		        Out Patient Department           P 50 					
+										----------------------------------------------------------------
+																				Total Amount:    P 50
+										----------------------------------------------------------------
  				3.Clinical Microscopy
+					----------- Clinical Microscopy Patients ----------
+						1.Patient Name (Patient ID)
+						2.Patient Name (Patient ID)
+						3.Patient Name (Patient ID)
+						4.Patient Name (Patient ID)
+						5.Back to Consultation Record Menu
+								if(Patient is picked, all of this will be showed with its patients ID)
+									                  ---------- Record ----------
+										show_PatientData()
+										----------------------------------------------------------------
+										Item                         Description                Amount                   
+
+										Clinical Microscopy      Out Patient Department          P 50 					
+										----------------------------------------------------------------
+																				Total Amount:    P 50
+										----------------------------------------------------------------
  				4.Bacteriology
+					----------- Bacteriology Patients ----------
+						1.Patient Name (Patient ID)
+						2.Patient Name (Patient ID)
+						3.Patient Name (Patient ID)
+						4.Patient Name (Patient ID)
+						5.Back to Consultation Record Menu
+								if(Patient is picked, all of this will be showed with its patients ID)
+									                  ---------- Record ----------
+										show_PatientData()
+										----------------------------------------------------------------
+										Item                         Description                Amount                   
+
+										Bacteriology		      Out Patient Departmen          P 50 					
+										----------------------------------------------------------------
+																				Total Amount:    P 50
+										----------------------------------------------------------------
  				5.Blood Bank and Serology
+					----------- .Blood Bank and Serology Patients ----------
+						1.Patient Name (Patient ID)
+						2.Patient Name (Patient ID)
+						3.Patient Name (Patient ID)
+						4.Patient Name (Patient ID)
+						5.Back to Consultation Record Menu
+								if(Patient is picked, all of this will be showed with its patients ID)
+									                  ---------- Record ----------
+										show_PatientData()
+										----------------------------------------------------------------
+										Item                         Description                Amount                   
+
+										.Blood Bank and Serology   Out Patient Departmen         P 50 					
+										----------------------------------------------------------------
+																				Total Amount:    P 50
+										----------------------------------------------------------------
  				6.Exit
  		3. Room Admission Records
 				--------- Room Record ----------
