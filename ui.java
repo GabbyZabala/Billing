@@ -76,7 +76,7 @@ public class ui {
 
     // LAB SERVICE START HERE
     public static void hsa_newLaboratoryTest() {
-        System.out.println("\n------------ Register New Laboratory Test ------------");
+        System.out.println("------------ Register New Laboratory Test ------------");
     }
 
     public static void hsa_editLaboratoryPricinh() {

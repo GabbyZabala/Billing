@@ -475,9 +475,9 @@ public class Main_Grilling extends ui {
     public static void LaboratoryServicesFunctions(int MultiShot) {
         int Id = 2;
         switch (MultiShot) {
-            case 1 -> RegisterNewLaboratoryTest();// line();//
+            case 1 -> line();// RegisterNewLaboratoryTest();//
             case 2 -> LaboratoryPricing();// line();//
-            case 3 -> ViewLaboratoryRecords();// line();//
+            case 3 -> line();// ViewLaboratoryRecords();//
         }
         if (DEbuggMode) {
             System.err.println("lab()->" + MultiShot);
@@ -488,8 +488,9 @@ public class Main_Grilling extends ui {
 
     public static ArrayList<String> ViewLaboratoryRecords = new ArrayList<>();
 
+    // REGISTRY NEW LAB NOT WORKING YET
     public static void RegisterNewLaboratoryTest() {
-        boolean endLoop = false;
+        Boolean endLoop = false;
         boolean CheckAccount_Recorded = false;
         boolean age_available = false;
         int Stage = 0;
@@ -497,19 +498,15 @@ public class Main_Grilling extends ui {
         String lastname = "";
         int Age = -1;
         String Date = " ";
-        double fee = 0;
-
-        // Data Collection
-        String Patient_Name = "";
-        String Patient_Blood = "";
-        String Category_Type = "";
-        String Selected_Test = "";
+        String typeStr = ""; // Initialize typeStr
+        double fee = 0; // Initialize fee
+        Pricing priceof = new Pricing();
 
         do {
             boolean pass = false;
             clear();
             header();
-            hsa_newLaboratoryTest();
+            hsa_register_Consulatation();
 
             switch (Stage) {
                 case 0 -> {
@@ -529,7 +526,6 @@ public class Main_Grilling extends ui {
                         if (DEbuggMode) {
                             command.nextLine();
                         }
-
                         if (search >= 0 && !CheckAccount_Recorded) {
                             if (DEbuggMode) {
                                 db.showAccount();
@@ -541,8 +537,7 @@ public class Main_Grilling extends ui {
                             CheckAccount_Recorded = true;
                         }
 
-                        Patient_Name = lastname + ", " + firstname;
-                        System.out.println("Patients name:\t" + Patient_Name);
+                        System.out.println("Patients name:\t" + lastname + ", " + firstname);
 
                         if (!age_available && !CheckAccount_Recorded) {
                             System.out.print("Enter Age:\t");
@@ -553,8 +548,8 @@ public class Main_Grilling extends ui {
                             Age = db.GetAge();
                             System.out.println("Patient age:\t" + Age);
                         }
-
                         pass = true;
+
                     } catch (NumberFormatException e) {
                         System.out.println(e);
                         if (DEbuggMode) {
@@ -563,18 +558,11 @@ public class Main_Grilling extends ui {
                     }
                 }
                 case 3 -> {
-                    // Get Blood Type (might need to add validation here)
-                    System.out.print("Enter Blood Type:\t");
-                    Patient_Blood = command.nextLine();
-                    pass = true;
-                }
-                case 4 -> {
                     clear();
                     header();
-                    hsa_newLaboratoryTest();
-                    System.out.println("Patients name:\t" + Patient_Name);
+                    hsa_register_Consulatation();
+                    System.out.println("Patients name:\t" + lastname + ", " + firstname);
                     System.out.println("Patient age:\t" + Age);
-                    System.out.println("Patient Blood:\t" + Patient_Blood);
                     System.out.println(
                             "Enter Date:\tLAYOUT MUST BE \"00-00-0000\" [ Day-Month-Year]\n\tfill the fron with 0 if you only need single digit like 09 not 9");
                     System.out.print("[]-> \t");
@@ -668,248 +656,60 @@ public class Main_Grilling extends ui {
                         command.nextLine();
                     }
                 }
-                case 5 -> {
-                    // Select Laboratory Category
+
+                case 4 -> {
                     clear();
                     header();
-                    hsa_newLaboratoryTest();
-                    System.out.println("Patients name:\t" + Patient_Name);
+                    hsa_register_Consulatation();
+                    System.out.println("Patients name:\t" + lastname + ", " + firstname);
                     System.out.println("Patient age:\t" + Age);
-                    System.out.println("Patient Blood:\t" + Patient_Blood);
-                    System.out.println("Date:\t" + Date);
+                    System.out.println("Consultation Date: " + Date);
+                    System.out.print("Choose consultation type: ");
+                    register_Consulatation();
+                    int type = -1; // Initialize type to an invalid value
 
-                    System.out.println("Select Laboratory Category:");
-                    ls_newLaboratorytest(); // Display the category choices
-
-                    int categoryChoice = -1;
                     if (command.hasNextInt()) {
-                        categoryChoice = command.nextInt();
-                        command.nextLine(); // Consume newline
+                        type = command.nextInt();
+                        command.nextLine(); // Consume the newline character after reading the integer
                     } else {
-                        System.out.println("Invalid input. Please enter a number.");
-                        command.nextLine(); // Clear invalid input
-                        break;
+                        // Handle the case where the user doesn't enter an integer
+                        System.out.println("Invalid input. Please enter a number for the consultation type.");
+                        command.nextLine(); // Clear the invalid input
+                        break; // Exit the switch and re-prompt the user
                     }
 
-                    // Process Category Choice
-                    switch (categoryChoice) {
-                        case 1 -> {
-                            Category_Type = "Blood Chemistry";
-                            Selected_Test = selectBloodChemistryTest();
-                        }
-                        case 2 -> {
-                            Category_Type = "Hematology";
-                            Selected_Test = selectHematologyTest();
-                        }
-                        case 3 -> {
-                            Category_Type = "Clinical Microscopy";
-                            Selected_Test = selectClinicalMicroscopyTest();
-                        }
-                        case 4 -> {
-                            Category_Type = "Bacteriology";
-                            Selected_Test = selectBacteriologyTest();
-                        }
-                        case 5 -> {
-                            Category_Type = "Blood Bank and Serology";
-                            Selected_Test = selectBloodBankAndSerologyTest();
-                        }
-                        case 6 -> {
-                            endLoop = true; // Back to Laboratory Services Menu
-                            break;
-                        }
-                        default -> {
-                            System.out.println("Invalid category choice.");
-                        }
+                    pass = true;
+                    typeStr = (type == 1) ? "OPD" : "ER";
+
+                    switch (type) {
+                        case 1 -> fee = priceof.OPD;
+                        case 2 -> fee = priceof.ER;
                     }
 
-                    // If a test was selected, calculate the fee
-                    if (!Selected_Test.isEmpty()) {
-                        fee = getTestFee(Category_Type, Selected_Test);
-                        pass = true;
-                    }
-                }
-                case 6 -> {
-                    // Register the test
                     int patientIndex;
                     if (CheckAccount_Recorded) {
+                        // If a duplicate was found, use the existing index
                         patientIndex = db.checkSameAccount(firstname, lastname);
                     } else {
+                        // If no duplicate, add a new patient
                         patientIndex = db.addPatient(lastname, firstname, Age);
                     }
 
-                    // Update patient's blood type if available
-                    if (!Patient_Blood.isEmpty()) {
-                        db.patients.get(patientIndex).addBloodtype(Patient_Blood);
-                    }
+                    // Add consultation to account_lodge (with type and date)
+                    db.patients.get(patientIndex).addAccountLodge(typeStr, Date);
 
-                    // Add laboratory test to account_lodge
-                    db.patients.get(patientIndex).addAccountLodge(Category_Type + " - " + Selected_Test, Date);
-
-                    // Add to ViewLaboratoryRecords (for viewing purposes)
-                    ViewLaboratoryRecords.add("Name: " + Patient_Name + ", Date: " + Date + ", Category: "
-                            + Category_Type + ", Test: " + Selected_Test + ", Fee: ₱" + fee);
-
-                    System.out.println("Laboratory Test Registered! Total Fee: ₱" + fee);
+                    consultationRecords
+                            .add("Name: " + lastname + ", " + firstname + "/tDate: " + Date + ", Type: " + typeStr
+                                    + ", Fee: ₱" + fee);
+                    System.out.println("Consultation Registered! Total Fee: ₱" + fee);
                     endLoop = true;
                 }
             }
-
             if (pass) {
                 Stage++;
             }
         } while (!endLoop);
         db.clearFoundData();
-    }
-
-    // Helper functions to select tests from each category
-    // (You'll need to implement these based on your menu structure)
-    private static String selectBloodChemistryTest() {
-        // ... (Display Blood Chemistry tests and get user selection)
-        clear();
-        header();
-        ls_category_blood_Chemistry();
-        System.out.print("Enter choice: ");
-        int choice = command.nextInt();
-        command.nextLine(); // Consume newline
-
-        return switch (choice) {
-            case 1 -> "Bua";
-            case 2 -> "Bun";
-            case 3 -> "Cholesterol";
-            case 4 -> "Creatinine";
-            case 5 -> "FBS:RBS";
-            case 6 -> "Triglycerides";
-            case 7 -> "AST/ GOT";
-            case 8 -> "ALT/ GPT";
-            case 9 -> "HDL/ LDL";
-            default -> "";
-        };
-    }
-
-    private static String selectHematologyTest() {
-        // ...
-        clear();
-        header();
-        hematology();
-        System.out.print("Enter choice: ");
-        int choice = command.nextInt();
-        command.nextLine(); // Consume newline
-        return switch (choice) {
-            case 1 -> "CBC";
-            case 2 -> "CT/BT";
-            case 3 -> "Hgb/Hct";
-            case 4 -> "Peripheral Smear Staining";
-            case 5 -> "Peripheral Smear Reading";
-            case 6 -> "Platelet Count";
-            default -> "";
-        };
-    }
-
-    private static String selectClinicalMicroscopyTest() {
-        // ...
-        clear();
-        header();
-        clinical_Microscopy();
-        System.out.print("Enter choice: ");
-        int choice = command.nextInt();
-        command.nextLine(); // Consume newline
-        return switch (choice) {
-            case 1 -> "Fecalysis";
-            case 2 -> "Occult Blood Test";
-            case 3 -> "Pregnancy Test";
-            case 4 -> "Urinalysis";
-            default -> "";
-        };
-    }
-
-    private static String selectBacteriologyTest() {
-        // ...
-        clear();
-        header();
-        bacteriology();
-        System.out.print("Enter choice: ");
-        int choice = command.nextInt();
-        command.nextLine(); // Consume newline
-        return switch (choice) {
-            case 1 -> "Sputum Exam/ AFB";
-            case 2 -> "Slit Skin Smear";
-            case 3 -> "Gram Stain";
-            case 4 -> "KOH Mount";
-            case 5 -> "RF/Igm";
-            case 6 -> "Typhidot";
-            default -> "";
-        };
-    }
-
-    private static String selectBloodBankAndSerologyTest() {
-        // ...
-        clear();
-        header();
-        bloodBank_Serology();
-        System.out.print("Enter choice: ");
-        int choice = command.nextInt();
-        command.nextLine(); // Consume newline
-        return switch (choice) {
-            case 1 -> "Blood Typing";
-            case 2 -> "HbSAg";
-            case 3 -> "HCV";
-            case 4 -> "HAV";
-            case 5 -> "Bleeding Fee";
-            default -> "";
-        };
-    }
-
-    // Helper function to get the fee for a specific test
-    private static double getTestFee(String category, String test) {
-        Pricing priceof = new Pricing();
-        return switch (category) {
-            case "Blood Chemistry" -> switch (test) {
-                case "Bua" -> priceof.Bua;
-                case "Bun" -> priceof.Bun;
-                case "Cholesterol" -> priceof.Cholesterol;
-                case "Creatinine" -> priceof.Creatine;
-                case "FBS:RBS" -> priceof.FBS_RBS;
-                case "Triglycerides" -> priceof.Triglycerides;
-                case "AST/ GOT" -> priceof.AST_GOT;
-                case "ALT/ GPT" -> priceof.AST_GPT;
-                case "HDL/ LDL" -> priceof.HDL_LDL;
-                default -> 0.0;
-            };
-            case "Hematology" -> switch (test) {
-                case "CBC" -> priceof.CBC;
-                case "CT/BT" -> priceof.CT_BT;
-                case "Hgb/Hct" -> priceof.Hgb_Hct;
-                case "Peripheral Smear Staining" -> priceof.Peripheral_Smear_Staining;
-                case "Peripheral Smear Reading" -> priceof.Peripheral_Smear_Reading;
-                case "Platelet Count" -> priceof.Platelet_Count;
-                default -> 0.0;
-            };
-            case "Clinical Microscopy" -> switch (test) {
-                case "Fecalysis" -> priceof.Fecalysis;
-                case "Occult Blood Test" -> priceof.Occult_Blood_Test;
-                case "Pregnancy Test" -> priceof.Pregnancy_Test;
-                case "Urinalysis" -> priceof.Urinalysis;
-                default -> 0.0;
-            };
-            case "Bacteriology" -> switch (test) {
-                case "Sputum Exam/ AFB" -> priceof.Sputum_Exam_AFB;
-                case "Slit Skin Smear" -> priceof.Slit_Skin_Smear;
-                case "Gram Stain" -> priceof.Gram_Stain;
-                case "KOH Mount" -> priceof.KOH_Mount;
-                case "RF/Igm" -> priceof.RF_Igm;
-                case "Typhidot" -> priceof.Typhidot;
-                default -> 0.0;
-            };
-            case "Blood Bank and Serology" -> switch (test) {
-                case "Blood Typing" -> priceof.Blood_Typing;
-                case "HbSAg" -> priceof.HbSAg;
-                case "HCV" -> priceof.HCV;
-                case "HAV" -> priceof.HAV;
-                case "Bleeding Fee" -> priceof.Bleeding_Fee;
-                default -> 0.0;
-            };
-            default -> 0.0;
-        };
     }
 
     public static void LaboratoryPricing() {
