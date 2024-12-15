@@ -214,18 +214,18 @@ public class Main_Grilling extends ui {
             hsa_register_Consulatation();
 
             switch (Stage) {
-                case 0 -> {
+                case 0 -> {// Firstname Input
                     System.out.print("Enter FirstName:\t");
                     firstname = command.nextLine();
                     pass = true;
                 }
-                case 1 -> {
+                case 1 -> {// Lastname Input
                     System.err.println("FirtName: " + firstname);
                     System.out.print("Enter Lastname:\t");
                     lastname = command.nextLine();
                     pass = true;
                 }
-                case 2 -> {
+                case 2 -> {// Duplicate Account Checker
                     try {
                         int search = db.checkSameAccount(firstname, lastname);
                         if (DEbuggMode) {
@@ -262,7 +262,7 @@ public class Main_Grilling extends ui {
                         }
                     }
                 }
-                case 3 -> {
+                case 3 -> {// Date Input
                     clear();
                     header();
                     hsa_register_Consulatation();
@@ -362,7 +362,7 @@ public class Main_Grilling extends ui {
                     }
                 }
 
-                case 4 -> {
+                case 4 -> {// Last step and saving
                     clear();
                     header();
                     hsa_register_Consulatation();
@@ -512,18 +512,18 @@ public class Main_Grilling extends ui {
             hsa_newLaboratoryTest();
 
             switch (Stage) {
-                case 0 -> {
+                case 0 -> {// Firstname Input
                     System.out.print("Enter FirstName:\t");
                     firstname = command.nextLine();
                     pass = true;
                 }
-                case 1 -> {
+                case 1 -> {// LastName Input
                     System.err.println("FirtName: " + firstname);
                     System.out.print("Enter Lastname:\t");
                     lastname = command.nextLine();
                     pass = true;
                 }
-                case 2 -> {
+                case 2 -> {// Check for dupplicate & Age
                     try {
                         int search = db.checkSameAccount(firstname, lastname);
                         if (DEbuggMode) {
@@ -562,13 +562,13 @@ public class Main_Grilling extends ui {
                         }
                     }
                 }
-                case 3 -> {
+                case 3 -> {// Blood Input
                     // Get Blood Type (might need to add validation here)
                     System.out.print("Enter Blood Type:\t");
                     Patient_Blood = command.nextLine();
                     pass = true;
                 }
-                case 4 -> {
+                case 4 -> {// Date Input
                     clear();
                     header();
                     hsa_newLaboratoryTest();
@@ -668,7 +668,7 @@ public class Main_Grilling extends ui {
                         command.nextLine();
                     }
                 }
-                case 5 -> {
+                case 5 -> {// Library check
                     // Select Laboratory Category
                     clear();
                     header();
@@ -728,7 +728,7 @@ public class Main_Grilling extends ui {
                         pass = true;
                     }
                 }
-                case 6 -> {
+                case 6 -> {// Saving
                     // Register the test
                     int patientIndex;
                     if (CheckAccount_Recorded) {
@@ -762,7 +762,7 @@ public class Main_Grilling extends ui {
     }
 
     // Helper functions to select tests from each category
-    // (You'll need to implement these based on your menu structure)
+    // v[need to implement these based on your menu structure]v
     private static String selectBloodChemistryTest() {
         // ... (Display Blood Chemistry tests and get user selection)
         clear();
@@ -1290,7 +1290,7 @@ public class Main_Grilling extends ui {
     public static void RoomandAdmissionServicesFunctions(int MultiShot) {
         int Id = 3;
         switch (MultiShot) {
-            case 1 -> line();// RegisterRoomNewAdmission();//
+            case 1 -> RegisterRoomNewAdmission();// line();//
             case 2 -> EditRoomInformation();// line();//
             case 3 -> ViewRoomRecords();// line();//
         }
@@ -1302,7 +1302,253 @@ public class Main_Grilling extends ui {
     }
 
     public static void RegisterRoomNewAdmission() {
+        boolean endLoop = false;
+        boolean CheckAccount_Recorded = false;
+        boolean age_available = false;
+        int Stage = 0;
+        String firstname = "";
+        String lastname = "";
+        int Age = -1;
+        String Date = " ";
+        String Room_Type = "";
+        double fee = 0;
+        Pricing priceof = new Pricing();
 
+        // Data Collection
+        String Patient_Name = "";
+
+        do {
+            boolean pass = false;
+            clear();
+            header();
+            System.out.println("----------Room and Admission Services---------");
+            switch (Stage) {
+                case 0 -> {// Firstname Input
+                    System.out.print("Enter FirstName:\t");
+                    firstname = command.nextLine();
+                    pass = true;
+                }
+                case 1 -> {// Lastname input
+                    System.err.println("FirtName: " + firstname);
+                    System.out.print("Enter Lastname:\t");
+                    lastname = command.nextLine();
+                    pass = true;
+                }
+                case 2 -> {// Account Dupplication Check
+                    try {
+                        int search = db.checkSameAccount(firstname, lastname);
+                        if (DEbuggMode) {
+                            command.nextLine();
+                        }
+
+                        if (search >= 0 && !CheckAccount_Recorded) {
+                            if (DEbuggMode) {
+                                db.showAccount();
+                            }
+                            animation("Getting Duplicate... Done");
+                            lastname = db.Getlastname();
+                            firstname = db.Getfirstname();
+                            age_available = db.AskAgeData();
+                            CheckAccount_Recorded = true;
+                        }
+
+                        Patient_Name = lastname + ", " + firstname;
+                        System.out.println("Patients name:\t" + Patient_Name);
+
+                        if (!age_available && !CheckAccount_Recorded) {
+                            System.out.print("Enter Age:\t");
+                            String AgeComs = command.nextLine();
+                            Age = Integer.parseInt(AgeComs);
+                        } else {
+                            animation("Fetching patients Age.....");
+                            Age = db.GetAge();
+                            System.out.println("Patient age:\t" + Age);
+                        }
+
+                        pass = true;
+                    } catch (NumberFormatException e) {
+                        System.out.println(e);
+                        if (DEbuggMode) {
+                            command.nextLine();
+                        }
+                    }
+                }
+                case 3 -> {// for date checking
+                    clear();
+                    header();
+                    register_Admission();
+                    System.out.println("Patients name:\t" + Patient_Name);
+                    System.out.println("Patient age:\t" + Age);
+                    System.out.println(
+                            "Enter Date:\tLAYOUT MUST BE \"00-00-0000\" [ Day-Month-Year]\n\tfill the fron with 0 if you only need single digit like 09 not 9");
+                    System.out.print("[]-> \t");
+                    Date = command.nextLine();
+
+                    // Validate Date (Your existing date validation logic)
+                    if (Date.length() != 10) {
+                        System.out.println(
+                                "Invalid input: The string must have exactly 10 characters, including dashes ('-').");
+                    } else {
+                        // Initialize variables
+                        String[] parts = new String[3]; // Store the 3 sets (first, second, optional third)
+                        int partIndex = 0;
+                        StringBuilder currentPart = new StringBuilder();
+
+                        // Loop through the string
+                        for (int i = 0; i < Date.length(); i++) {
+                            char ch = Date.charAt(i);
+
+                            if (ch == '-') {
+                                // When '-' is found, save the current part and reset
+                                if (partIndex < 3) { // Prevent ArrayIndexOutOfBoundsException
+                                    parts[partIndex] = currentPart.toString();
+                                    partIndex++;
+                                }
+                                currentPart.setLength(0); // Clear the StringBuilder
+                            } else {
+                                // Append the character to the current part
+                                currentPart.append(ch);
+                            }
+                        }
+
+                        // Add the last part after the loop
+                        if (partIndex < 3) { // Prevent ArrayIndexOutOfBoundsException
+                            parts[partIndex] = currentPart.toString();
+                        }
+
+                        boolean checkpoint = false;
+                        try {
+                            for (int l = 0; l < parts.length; l++) {
+                                boolean loopers = true;
+                                int Check = Integer.parseInt(parts[l]);
+
+                                switch (l) {
+                                    case 0 -> {
+                                        if (DEbuggMode) {
+                                            System.out.println("First set: " + parts[0]);
+                                            command.nextLine();
+                                        }
+                                        if (Check > 31) {
+                                            loopers = false;
+                                        }
+                                    }
+                                    case 1 -> {
+                                        if (DEbuggMode) {
+                                            System.out.println("Second set: " + parts[1]);
+                                            command.nextLine();
+                                        }
+                                        if (Check > 12) {
+                                            loopers = false;
+                                        }
+                                    }
+                                    case 2 -> {
+                                        if (DEbuggMode) {
+                                            if (parts[2] != null && parts[2].length() == 4) {
+                                                System.out.println("Third set: " + parts[2]);
+                                            } else {
+                                                System.out.println("No valid third set.");
+                                            }
+                                        }
+                                        checkpoint = true;
+                                    }
+                                }
+                                if (!loopers) {
+                                    break;
+                                }
+                            }
+                        } catch (NumberFormatException e) {
+                            System.out.println("Invalid number format in date parts: " + e.getMessage());
+                            if (DEbuggMode) {
+                                command.nextLine();
+                            }
+                            break; // Exit the case if invalid input is detected
+                        }
+
+                        // Check if the date passed the validation
+                        if (checkpoint) {
+                            pass = true;
+                        } else {
+                            System.out.println("Invalid date format or out-of-range values.");
+                        }
+                        command.nextLine();
+                    }
+                }
+                case 4 -> {// final checkpoint
+                    // Select Room Type
+                    clear();
+                    header();
+                    System.out.println("----------Room and Admission Services---------");
+                    System.out.println("Patients name:\t" + Patient_Name);
+                    System.out.println("Patient age:\t" + Age);
+                    System.out.println("Date:\t" + Date);
+
+                    System.out.println("Select Room Type:");
+                    System.out.println("\t1. Service Ward");
+                    System.out.println("\t2. Semi-Private Room");
+                    System.out.println("\t3. Private Room");
+                    System.out.println("\t4. Back to Room and Admission Menu");
+
+                    int roomChoice = -1;
+                    if (command.hasNextInt()) {
+                        roomChoice = command.nextInt();
+                        command.nextLine(); // Consume newline
+                    } else {
+                        System.out.println("Invalid input. Please enter a number.");
+                        command.nextLine(); // Clear invalid input
+                        break;
+                    }
+
+                    // Process Room Choice
+                    switch (roomChoice) {
+                        case 1 -> {
+                            Room_Type = "Service Ward";
+                            fee = priceof.Service_Ward();
+                            pass = true;
+                        }
+                        case 2 -> {
+                            Room_Type = "Semi-Private Room";
+                            fee = priceof.SemiPrivate_Room();
+                            pass = true;
+                        }
+                        case 3 -> {
+                            Room_Type = "Private Room";
+                            fee = priceof.Private_Room();
+                            pass = true;
+                        }
+                        case 4 -> {
+                            endLoop = true; // Back to Room and Admission Menu
+                        }
+                        default -> {
+                            System.out.println("Invalid room choice.");
+                        }
+                    }
+                }
+                case 5 -> {// saving point
+                    // Register the admission
+                    int patientIndex;
+                    if (CheckAccount_Recorded) {
+                        patientIndex = db.checkSameAccount(firstname, lastname);
+                    } else {
+                        patientIndex = db.addPatient(lastname, firstname, Age);
+                    }
+
+                    // Add room admission to account_lodge
+                    db.patients.get(patientIndex).addAccountLodge("Room: " + Room_Type, Date);
+
+                    // Add to ViewRoomRecords (for viewing purposes)
+                    ViewRoomRecords.add("Name: " + Patient_Name + ", Date: " + Date + ", Room Type: " + Room_Type
+                            + ", Fee: ₱" + fee);
+
+                    System.out.println("Room Admission Registered! Total Fee: ₱" + fee);
+                    endLoop = true;
+                }
+            }
+
+            if (pass) {
+                Stage++;
+            }
+        } while (!endLoop);
+        db.clearFoundData();
     }
 
     public static void EditRoomInformation() {
