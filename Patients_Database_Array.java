@@ -21,7 +21,7 @@ class Patients_Database_Array {
 
         for (int i = 0; i < patients.size(); i++) {
             Patients_Database patient = patients.get(i);
-            if (patient.firstname.equals(firstName) && patient.lastname.equals(lastName)) {
+            if (patient.firstname.equalsIgnoreCase(firstName) && patient.lastname.equalsIgnoreCase(lastName)) {
                 Found_Account = i;
                 break; // Stop searching once a match is found
             }
