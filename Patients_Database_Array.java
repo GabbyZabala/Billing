@@ -54,11 +54,6 @@ class Patients_Database_Array {
     public String Getlastname() {
         return patients.get(Found_Account).lastname;
     }
-
-    public int Getage() {
-        return patients.get(Found_Account).age;
-    }
-
     public void showAccount() {
         System.out.println(Found_Account);
     }
